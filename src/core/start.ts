@@ -15,7 +15,7 @@ function compScan(dirPath: string) {
         return
     }
     for (const file of files) {
-        const filePath = dirPath + "/" + file
+        const filePath = dirPath + "\\" + file
         const stat = fs.statSync(filePath)
         if (stat.isDirectory()) {
             compScan(filePath)
@@ -41,7 +41,8 @@ function compScan(dirPath: string) {
  */
 export default function start() {
     count = 0
-    import(process.cwd() + "/a2.config.js").then(({ default: config }) => {
+    console.log(process.cwd() + "\\a2.config.js");
+    import(process.cwd() + "\\a2.config.js").then(({ default: config }) => {
         a2config = config
         let compDirPath = config.componentScan
         if (!['/', '\\'].includes(compDirPath)) {

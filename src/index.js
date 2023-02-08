@@ -1,12 +1,18 @@
 import start from "./core/start";
-import * as requestMethod from "./decorators/RequestMethod";
-import * as paramType from './decorators/ParamType'
+import { RequestMapping, Get, Post, Put, Delete } from "./decorators/RequestMethod";
+import { Query, Body } from "./decorators/ParamType";
 import Controll from "./decorators/Controll";
 
-
-module.exports = {
+exports = {
     start,
-    ...requestMethod,
-    ...paramType,
-    Controll
+    Controll,
+    Query,
+    Body,
+    RequestMapping,
+    Get,
+    Post,
+    Put,
+    Delete
 }
+
+export default start
