@@ -3,7 +3,7 @@ import { RequestMapping, Get, Post, Put, Delete } from "./decorators/RequestMeth
 import { Query, Body } from "./decorators/ParamType";
 import Controll from "./decorators/Controll";
 
-exports = {
+export {
     start,
     Controll,
     Query,

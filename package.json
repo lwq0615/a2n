@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register src/index.js --files",
+    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register test/index.js --files",
     "build": "webpack --config webpack.config.js",
     "babel": "babel src --out-dir lib"
   },
