@@ -1,10 +1,8 @@
-import * as express from "express";
-import test from './test'
-
-const app = express();
 
 
 
+console.log(111);
+import('./test')
 
 // app.get('/', function (req, res) {
 //    res.send('Hello World');

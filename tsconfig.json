@@ -10,6 +10,7 @@
     "target": "es5", // 打包后编译成什么形式
     "allowJs": true, // 在ts文件中允许引入js文件
     "moduleResolution": "node", // 引入模块的方式
-    "experimentalDecorators": true // 允许使用装饰器
+    "experimentalDecorators": true, // 允许使用装饰器
+    "allowSyntheticDefaultImports": true
   }
 }

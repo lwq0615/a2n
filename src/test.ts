@@ -1,18 +1,22 @@
-import GetMapping from "./decorators/GetMapping";
+import { Get, Post } from "./decorators/RequestMethod";
 import Controll from "./decorators/Controll";
+import { Body, Query } from "./decorators/ParamType";
 
 @Controll
 export default class UserController{
 
-  @GetMapping("/getUser")
+  @Get("/get")
   public getUser(){
     return {
-      name: 'lwq'
+      name: 'get'
     }
   }
 
-  public setUser(){
-
+  @Post("/post")
+  public postUser(@Query query:any, @Body body: any){
+    return {
+      name: 'post'
+    }
   }
 
 }

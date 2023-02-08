@@ -1,21 +1,26 @@
-
-export interface Route{
-  path: string,
-  handler: Function
-}
+import { regRoutes } from '@/core/express'
+import { Route } from '@/core/types'
 
 
-export const routes: {controller: object, methods: Route[]} = {
+/**
+ * 存放路由信息
+ */
+export const routes: { controller: object, methods: { [methodName: string]: Route } } = {
   controller: null,
-  methods: []
+  methods: {}
 }
 
-const Controll: ClassDecorator = function(target: object){
-  console.log(routes.controller);
-  
-  for (const item of routes.methods) {
-      console.log(item);
-      
+
+/**
+ * 在加载到Controll时将路由信息进行注册
+ */
+const Controll = function (baseUrl: string | object) {
+  if(typeof baseUrl === 'string'){
+    return function (obj: any) {
+      regRoutes(Object.values(routes.methods), baseUrl)
+    } as undefined
+  }else{
+    regRoutes(Object.values(routes.methods), '')
   }
 }
 
