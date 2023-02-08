@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
-export function start(port: number, callback: any){
+export function listen(port: number, callback: any){
   app.listen(port, callback)
 }
 
@@ -18,8 +18,6 @@ export function start(port: number, callback: any){
  * 将路由注册到express
  */
 export const regRoutes = function (list: Route[], baseUrl: string) {
-  console.log("开始注册");
-  
   list.forEach(route => {
     // 规范化路由路径
     const pathArr: string[] = [];

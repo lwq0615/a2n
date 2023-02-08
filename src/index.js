@@ -1,18 +1,12 @@
+import start from "./core/start";
+import * as requestMethod from "./decorators/RequestMethod";
+import * as paramType from './decorators/ParamType'
+import Controll from "./decorators/Controll";
 
 
-
-console.log(111);
-import('./test')
-
-// app.get('/', function (req, res) {
-//    res.send('Hello World');
-// })
- 
-// const server = app.listen(8081, function () {
- 
-//   const host = server.address().address
-//   const port = server.address().port
- 
-//   console.log("应用实例，访问地1址为 http://%s:%s", host, port)
- 
-// })
+module.exports = {
+    start,
+    ...requestMethod,
+    ...paramType,
+    Controll
+}
