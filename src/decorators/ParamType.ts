@@ -52,17 +52,17 @@ export function Body(target: any, methodName?: string, paramIndex?: number) {
 }
 
 export function Request(target: any, methodName: string, paramIndex: number) {
-  return getParamDecorators(target, methodName, paramIndex, ParamType.REQUEST)
+  regParam(target, methodName, paramIndex, {type: ParamType.REQUEST})
 }
 
 export function Response(target: any, methodName: string, paramIndex: number) {
-  return getParamDecorators(target, methodName, paramIndex, ParamType.RESPONSE)
+  regParam(target, methodName, paramIndex, {type: ParamType.RESPONSE})
 }
 
 export function Req(target: any, methodName: string, paramIndex: number) {
-  return getParamDecorators(target, methodName, paramIndex, ParamType.REQUEST)
+  regParam(target, methodName, paramIndex, {type: ParamType.REQUEST})
 }
 
 export function Res(target: any, methodName: string, paramIndex: number) {
-  return getParamDecorators(target, methodName, paramIndex, ParamType.RESPONSE)
+  regParam(target, methodName, paramIndex, {type: ParamType.RESPONSE})
 }

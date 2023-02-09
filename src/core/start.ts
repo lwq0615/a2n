@@ -1,10 +1,10 @@
-import { listen } from "./express"
+import { start as listen } from "./express"
 
 const fs = require('fs')
 
 
-let count = 0
 let a2config:any = null
+let scan: Function = null
 
 /**
  * 扫描目录下的Controll
@@ -21,34 +21,28 @@ function compScan(dirPath: string) {
             compScan(filePath)
         } else {
             console.log(`scan file '${filePath}'`);
-            count++
-            import(filePath).then(res => {
-                if(--count === 0){
-                    listen(a2config.port, () => {
-                        console.log("The service was successfully started on port '"+a2config.port+"'");
-                    })
-                }
-            })
+            scan(filePath)
         }
     }
 
 }
 
 
-
 /**
  * 开启服务
  */
-export default function start() {
-    count = 0
+export default function start(scanFun: (path: string) => any) {
+    scan = scanFun
     console.log(process.cwd() + "\\a2n.config.js");
-    import(process.cwd() + "\\a2n.config.js").then(({ default: config }) => {
-        a2config = config
-        let compDirPath = config.componentScan
-        if (!['/', '\\'].includes(compDirPath)) {
-            compDirPath = '\\' + compDirPath
-        }
-        compScan(process.cwd() + compDirPath)
+    const { default: config } = scan(process.cwd() + "\\a2n.config.js")
+    a2config = config
+    let compDirPath = a2config.componentScan || 'src'
+    if (!['/', '\\'].includes(compDirPath)) {
+        compDirPath = '\\' + compDirPath
+    }
+    compScan(process.cwd() + compDirPath)
+    listen(a2config.port, () => {
+        console.log("The service was successfully started on port '"+a2config.port+"'");
     })
 }
 

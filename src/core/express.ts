@@ -7,12 +7,10 @@ const app = express();
 /**
  * 解析post请求参数
  */
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-export function listen(port: number, callback: any) {
-  app.listen(port, callback)
-}
+
 
 /**
  * 将路由注册到express
@@ -51,4 +49,10 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
       res.send(await route.handler(...params))
     })
   })
+}
+
+
+
+export function start(port: number, callback: any) {
+  app.listen(port, callback)
 }

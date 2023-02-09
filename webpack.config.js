@@ -2,7 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   target: 'node',
   entry: './src/index.ts',
   module: {
@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   output: {
-    filename: 'main.js',
+    filename: 'a2n.bundle.js',
     path: path.resolve(__dirname, 'dist'),
     library: 'a2n',
     libraryTarget: 'umd'

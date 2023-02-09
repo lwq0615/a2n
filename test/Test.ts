@@ -1,11 +1,11 @@
-import { Query, Controll, Get } from "@/index";
+import { Controll, Get, Query } from '../src/index';
 
 
-@Controll
+@Controll("/")
 export default class Test{
 
   @Get("/get")
-  public get(@Query('name') query: object){
+  get(@Query('name') query: any){
     console.log(query);
     return query
   }
