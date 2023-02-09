@@ -18,7 +18,16 @@ export interface Route {
   path: string
   type: Method
   handler: Function,
-  params: ParamType[]
+  params: ParamInfo[]
+}
+
+
+/**
+ * 参数信息
+ */
+export interface ParamInfo{
+  type: ParamType,
+  name?: string
 }
 
 
@@ -27,5 +36,7 @@ export interface Route {
  */
 export enum ParamType{
   QUERY = 'query',
-  BODY = 'body'
+  BODY = 'body',
+  REQUEST = 'request',
+  RESPONSE = 'response'
 }

@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
-export function listen(port: number, callback: any){
+export function listen(port: number, callback: any) {
   app.listen(port, callback)
 }
 
@@ -33,13 +33,19 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
       const bodyParams = req.body
       const paramMap = {
         [ParamType.QUERY]: urlParams,
-        [ParamType.BODY]: bodyParams
+        [ParamType.BODY]: bodyParams,
+        [ParamType.REQUEST]: req,
+        [ParamType.RESPONSE]: res
       }
       const params: any[] = []
       // 参数注入
-      if(Array.isArray(route.params)){
+      if (Array.isArray(route.params)) {
         for (const paramIndex in route.params) {
-          params[paramIndex] = paramMap[route.params[paramIndex]];
+          if (route.params[paramIndex].name) {
+            params[paramIndex] = paramMap[route.params[paramIndex].type][route.params[paramIndex].name];
+          } else {
+            params[paramIndex] = paramMap[route.params[paramIndex].type];
+          }
         }
       }
       res.send(await route.handler(...params))
