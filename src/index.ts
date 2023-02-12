@@ -1,11 +1,14 @@
 import Controll from "./decorators/Controll";
-import { start } from "./core/express";
+import { start, app } from "./core/express";
+import Module from "./decorators/Module";
 
 export * from './decorators/ParamType';
 export * from './decorators/RequestMethod';
 
 export {
+    app,
     start,
+    Module,
     Controll
 }
 

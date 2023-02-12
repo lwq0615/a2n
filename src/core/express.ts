@@ -1,8 +1,10 @@
 import * as express from "express";
 import { Route, ParamType } from '@/core/types'
+import { a2nModules } from "@/decorators/Module";
 
 const bodyParser = require('body-parser')
 const app = express();
+const paths: Set<string> = new Set()
 
 /**
  * 解析post请求参数
@@ -24,7 +26,12 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
         pathArr.push(item)
       }
     })
+    const size = paths.size
     let realPath = '/' + pathArr.join("/")
+    paths.add(realPath)
+    if(paths.size === size){
+      throw new Error("重复的接口路径'"+realPath+"'")
+    }
     // 注册路由
     app[route.type](realPath, async (req: any, res: any) => {
       const urlParams = req.query
@@ -51,8 +58,19 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
   })
 }
 
+export {
+  app
+}
 
+interface StartParam {
+  config: any,
+  modules: any[],
+  callback?: () => void
+}
 
-export function start(port: number, callback: any) {
-  app.listen(port, callback)
+export function start(startParam: StartParam) {
+  for (const Module of startParam.modules) {
+    new Module()
+  }
+  app.listen(startParam.config.port, startParam.callback)
 }

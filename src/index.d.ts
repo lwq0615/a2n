@@ -3,6 +3,11 @@
 declare namespace a2n {
 
   /**
+   * express对象，不推荐操作此对象
+   */
+  var app: any
+
+  /**
    * 启动服务器
    */
   function start(port: number, callback: any): undefined
