@@ -1,6 +1,5 @@
 import * as express from "express";
 import { Route, ParamType } from '@/core/types'
-import { a2nModules } from "@/decorators/Module";
 
 const bodyParser = require('body-parser')
 const app = express();
@@ -64,13 +63,9 @@ export {
 
 interface StartParam {
   config: any,
-  modules: any[],
   callback?: () => void
 }
 
 export function start(startParam: StartParam) {
-  for (const Module of startParam.modules) {
-    new Module()
-  }
   app.listen(startParam.config.port, startParam.callback)
 }
