@@ -62,10 +62,12 @@ export {
 }
 
 interface StartParam {
-  config: any,
+  config: {
+    port?: number
+  },
   callback?: () => void
 }
 
 export function start(startParam: StartParam) {
-  app.listen(startParam.config.port, startParam.callback)
+  app.listen(startParam.config.port || 8080, startParam.callback)
 }

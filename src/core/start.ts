@@ -41,8 +41,8 @@ export default function start(scanFun: (path: string) => any) {
         compDirPath = '\\' + compDirPath
     }
     compScan(process.cwd() + compDirPath)
-    listen(a2config.port, () => {
-        console.log("The service was successfully started on port '"+a2config.port+"'");
+    listen({
+        config: a2config
     })
 }
 
