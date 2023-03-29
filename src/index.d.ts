@@ -1,6 +1,6 @@
 
 
-declare function a2n(): void;
+// declare function a2n(callback?: () => void): void;
 
 declare namespace a2n {
 
@@ -12,7 +12,7 @@ declare namespace a2n {
   /**
    * 启动服务器
    */
-  function start(callback?: () => void): undefined
+  // function start(callback?: () => void): undefined
 
   /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express

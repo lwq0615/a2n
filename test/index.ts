@@ -1,7 +1,7 @@
-import start from '@/core/start'
+const openServer = require("@/core/start")
 
 
-start(() => {
+openServer(() => {
   console.log("server start");
 })
 
