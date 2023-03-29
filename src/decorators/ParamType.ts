@@ -7,9 +7,9 @@ import { routes } from './Controll'
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   /**
-       * 上一个操作methodParam的param不属于当前正在处理的class
-       * 说明上一个操作routes.methodParam的param的method上没有添加 @GET | @POST | @PUT | @DELETE 装饰器
-       */
+   * 上一个操作methodParam的param不属于当前正在处理的class
+   * 说明上一个操作routes.methodParam的param的method上没有添加 @GET | @POST | @PUT | @DELETE 装饰器
+   */
   if (routes.controller !== target) {
     // 清除上一个class遗留的参数
     routes.methods = {}
@@ -35,7 +35,7 @@ function getParamDecorators(target: any, methodName: string, paramIndex: number,
   }
   if (typeof target === 'string') {
     paramInfo.name = target
-    return function(target: any, methodName: string, paramIndex: number){
+    return function (target: any, methodName: string, paramIndex: number) {
       regParam(target, methodName, paramIndex, paramInfo)
     } as undefined
   } else {
@@ -52,17 +52,17 @@ export function Body(target: any, methodName?: string, paramIndex?: number) {
 }
 
 export function Request(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, {type: ParamType.REQUEST})
+  regParam(target, methodName, paramIndex, { type: ParamType.REQUEST })
 }
 
 export function Response(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, {type: ParamType.RESPONSE})
+  regParam(target, methodName, paramIndex, { type: ParamType.RESPONSE })
 }
 
 export function Req(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, {type: ParamType.REQUEST})
+  regParam(target, methodName, paramIndex, { type: ParamType.REQUEST })
 }
 
 export function Res(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, {type: ParamType.RESPONSE})
+  regParam(target, methodName, paramIndex, { type: ParamType.RESPONSE })
 }

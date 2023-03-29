@@ -10,7 +10,7 @@ declare namespace a2n {
   /**
    * 启动服务器
    */
-  function start(port: number, callback: () => void): undefined
+  function start(callback?: () => void): undefined
 
   /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express

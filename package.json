@@ -1,18 +1,16 @@
 {
   "name": "a2n",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "基于express的轻量级服务器",
-  "main": "dist/a2n.bundle.js",
+  "main": "src/index.ts",
   "type": "commonjs",
   "types": "src/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register test/index.ts --files",
+    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm test/index.ts --files",
     "build": "webpack --config webpack.config.js"
   },
   "files": [
-    "dist",
-    "src/index.d.ts"
+    "src"
   ],
   "keywords": [
     "express",
@@ -23,13 +21,11 @@
   "author": "liweiqiang",
   "license": "ISC",
   "dependencies": {
-    "@types/express": "^4.17.17",
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
-  },
-  "devDependencies": {
+    "webpack-cli": "^5.0.1",
+    "@types/express": "^4.17.17",
     "clean-webpack-plugin": "^4.0.0",
     "nodemon": "^2.0.20",
     "ts-loader": "^9.4.2",

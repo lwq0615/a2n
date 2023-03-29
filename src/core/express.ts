@@ -1,5 +1,6 @@
 import * as express from "express";
 import { Route, ParamType } from '@/core/types'
+import { StartParam } from "@/core/types";
 
 const bodyParser = require('body-parser')
 const app = express();
@@ -59,13 +60,6 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
 
 export {
   app
-}
-
-interface StartParam {
-  config: {
-    port?: number
-  },
-  callback?: () => void
 }
 
 export function start(startParam: StartParam) {

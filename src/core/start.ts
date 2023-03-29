@@ -1,29 +1,25 @@
 import { start as listen } from "./express"
-
 const fs = require('fs')
-
-
-let a2config:any = null
-let scan: Function = null
+const path = require('path')
 
 /**
  * 扫描目录下的Controll
  */
-function compScan(dirPath: string) {
-    const files = fs.readdirSync(dirPath)
-    if (!files || !files.length) {
-        return
+async function compScan(dirPath: string) {
+  const files = fs.readdirSync(dirPath)
+  if (!files || !files.length) {
+    return
+  }
+  for (const file of files) {
+    const filePath = dirPath + "\\" + file
+    const stat = fs.statSync(filePath)
+    if (stat.isDirectory()) {
+      compScan(filePath)
+    } else {
+      console.log(`scan file '${filePath}'`);
+      await import(filePath)
     }
-    for (const file of files) {
-        const filePath = dirPath + "\\" + file
-        const stat = fs.statSync(filePath)
-        if (stat.isDirectory()) {
-            compScan(filePath)
-        } else {
-            console.log(`scan file '${filePath}'`);
-            scan(filePath)
-        }
-    }
+  }
 
 }
 
@@ -31,18 +27,24 @@ function compScan(dirPath: string) {
 /**
  * 开启服务
  */
-export default function start(scanFun: (path: string) => any) {
-    scan = scanFun
-    console.log(process.cwd() + "\\a2n.config.js");
-    const { default: config } = scan(process.cwd() + "\\a2n.config.js")
-    a2config = config
-    let compDirPath = a2config.componentScan || 'src'
-    if (!['/', '\\'].includes(compDirPath)) {
-        compDirPath = '\\' + compDirPath
-    }
-    compScan(process.cwd() + compDirPath)
-    listen({
-        config: a2config
-    })
+export default async function start(callback?: () => void) {
+  let config = {
+    port: 8080,
+    componentScan: 'src'
+  }
+  try {
+    const { default: a2nConfig } = await import(path.resolve(process.cwd(), "a2n.config.js"))
+    console.log('\nfind config file ' + process.cwd() + "\\a2n.config.js\n");
+    config = a2nConfig
+  } catch (e) {
+    console.error('\nCannot find config file ' + path.resolve(process.cwd(), "a2n.config.js, use default config\n"))
+  }
+  let compDirPath = config.componentScan || 'src'
+  console.log('scan components in folder ' + path.resolve(process.cwd(), compDirPath));
+  await compScan(path.resolve(process.cwd(), compDirPath))
+  listen({
+    config,
+    callback
+  })
 }
 
