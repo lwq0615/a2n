@@ -1,5 +1,7 @@
 
 
+declare function a2n(): void;
+
 declare namespace a2n {
 
   /**
