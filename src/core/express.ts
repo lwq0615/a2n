@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { Route, ParamType } from '@/core/types'
 import { StartParam } from "@/core/types";
 
