@@ -1,4 +1,4 @@
-const openServer = require("@/core/start")
+import openServer from "@/core/start"
 
 
 openServer(() => {
