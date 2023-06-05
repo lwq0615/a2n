@@ -20,12 +20,7 @@ app.use(bodyParser.json());
 export const regRoutes = function (list: Route[], baseUrl: string) {
   list.forEach(route => {
     // 规范化路由路径
-    const pathArr: string[] = [];
-    (baseUrl + route.path).split("/").forEach((item: string) => {
-      if (item !== '') {
-        pathArr.push(item)
-      }
-    })
+    const pathArr: string[] = (baseUrl + route.path).split("/").filter((item: string) => item)
     const size = paths.size
     let realPath = '/' + pathArr.join("/")
     paths.add(realPath)
