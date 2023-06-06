@@ -1,10 +1,7 @@
-import Controll from "./decorators/Controll";
-import { app, start } from "./core/express";
-export * from './decorators/ParamType';
-export * from './decorators/RequestMethod';
+import openServer from "@/core/start"
 
-export {
-    app,
-    start,
-    Controll
-}
+
+openServer(() => {
+  console.log("server start");
+})
+

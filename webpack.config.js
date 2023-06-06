@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   target: 'node',
-  entry: './src/index.ts',
+  entry: './package/index.ts',
   module: {
     rules: [
       {
@@ -17,7 +17,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'package')
     }
   },
   output: {

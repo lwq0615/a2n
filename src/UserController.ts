@@ -1,4 +1,4 @@
-import { Controll, Get, Query } from '../src/index';
+import { Controll, Get, Query } from '@/index';
 
 
 @Controll("/")

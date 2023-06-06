@@ -6,7 +6,7 @@
   "type": " CommonJS",
   "types": "src/index.d.ts",
   "scripts": {
-    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm test/index.ts --files",
+    "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm src/index.ts --files",
     "build": "webpack --config webpack.config.js"
   },
   "files": [
