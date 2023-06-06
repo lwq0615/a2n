@@ -3,7 +3,7 @@
   "version": "0.0.14",
   "description": "基于express的轻量级服务器",
   "main": "dist/a2n.bundle.js",
-  "type": " CommonJS",
+  "type": "commonjs",
   "types": "src/index.d.ts",
   "scripts": {
     "serve": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm src/index.ts --files",
