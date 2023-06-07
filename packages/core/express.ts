@@ -1,6 +1,6 @@
 import * as express from "express";
-import { Route, ParamType } from '@/core/types'
-import { StartParam } from "@/core/types";
+import { Route, ParamType } from '@/types'
+import { StartParam } from "@/types";
 
 const bodyParser = require('body-parser')
 const app = express();

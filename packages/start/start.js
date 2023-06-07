@@ -1,11 +1,11 @@
-import { start as listen } from "./express"
+import { start as listen } from "core/express"
 const fs = require('fs')
 const path = require('path')
 
 /**
  * 扫描目录下的Controll
  */
-async function compScan(dirPath: string) {
+async function compScan(dirPath) {
   const files = fs.readdirSync(dirPath)
   if (!files || !files.length) {
     return
@@ -27,7 +27,7 @@ async function compScan(dirPath: string) {
 /**
  * 开启服务
  */
-export default async function start(callback?: () => void) {
+export default async function start(callback) {
   let config = {
     port: 8080,
     componentScan: 'src'

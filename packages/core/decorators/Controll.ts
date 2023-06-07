@@ -1,5 +1,5 @@
-import { regRoutes } from '@/core/express'
-import { Route } from '@/core/types'
+import { regRoutes } from '@/express'
+import { Route } from '@/types'
 
 
 /**

@@ -1,0 +1,11 @@
+{
+  "name": "start",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "author": "liweiqiang",
+  "main": "start.js",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+  }
+}
