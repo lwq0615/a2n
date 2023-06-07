@@ -2,7 +2,7 @@
   "name": "a2n",
   "version": "0.0.15",
   "description": "基于express的轻量级服务器",
-  "main": "packages/core/dist/a2n.bundle.js",
+  "main": "dist/a2n.bundle.js",
   "type": "module",
   "types": "packages/core/index.d.ts",
   "author": "liweiqiang",
