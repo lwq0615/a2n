@@ -1,6 +1,6 @@
 import { start as listen } from "@/index"
-import fs from 'fs'
-import path from 'path'
+const fs = require('fs')
+const path = require('path')
 
 /**
  * 扫描目录下的Controll

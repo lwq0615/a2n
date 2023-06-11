@@ -6,8 +6,8 @@
     },
     "outDir": "dist",
     "noImplicitAny": true, // 不允许隐式any类型
-    "module": "ESNext", // 模块引入方式
-    "target": "ES6", // 打包后编译成什么形式
+    "module": "CommonJS", // 模块引入方式
+    "target": "ES5", // 打包后编译成什么形式
     "allowJs": true, // 在ts文件中允许引入js文件
     "moduleResolution": "node", // 引入模块的方式
     "experimentalDecorators": true, // 允许使用装饰器

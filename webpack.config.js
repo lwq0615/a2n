@@ -1,14 +1,7 @@
-import path from 'path'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-import {fileURLToPath} from 'url';
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// const path = require('path');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-
-export default {
+module.exports = {
   mode: 'development',
   target: 'node',
   entry: './packages/core/index.ts',

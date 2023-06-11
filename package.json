@@ -3,7 +3,7 @@
   "version": "0.0.15",
   "description": "基于express的轻量级服务器",
   "main": "dist/a2n.bundle.js",
-  "type": "module",
+  "type": "commonjs",
   "types": "packages/core/index.d.ts",
   "author": "liweiqiang",
   "license": "ISC",
