@@ -1,5 +1,5 @@
 import { routes } from '@/decorators/Controll'
-import { Method, Route } from '@/types'
+import { Method, Route } from '@/decorators/types'
 
 
 function getMapping(path: string, type: Method): MethodDecorator {

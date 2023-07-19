@@ -1,4 +1,4 @@
-import { ParamInfo, ParamType, Route } from '@/types'
+import { ParamInfo, ParamType, Route } from '@/decorators/types'
 import { routes } from '@/decorators/Controll'
 
 

@@ -1,4 +1,4 @@
-
+import { AroundInterceptor, Interceptor } from './aop/types'
 
 // declare function a2n(callback?: () => void): void;
 
@@ -59,6 +59,28 @@ declare namespace a2n {
    * 将requset对象注入到接口参数
    */
   var Res: (target: any, methodName?: string, paramIndex?: number) => undefined
+
+  /**
+   * 添加拦截器
+   */
+  var addInterceptor: (interceptor: Interceptor) => void
+
+  /**
+   * 注销拦截器
+   */
+  var removeInterceptor: (interceptor: Interceptor) => void
+
+  /**
+   * 设置环绕拦截器
+   * 只允许存在一个环绕拦截器，新的拦截器会覆盖旧的
+   * 环绕拦截器会在普通的拦截器之后执行
+   */
+  var setAroundInterceptor: (interceptor: AroundInterceptor) => void
+
+  /**
+   * 注销环绕拦截器
+   */
+  var removeAroundInterceptor: () => void
 
 }
 

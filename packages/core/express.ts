@@ -1,5 +1,7 @@
 import * as express from "express";
-import { Route, ParamType, StartParam } from "@/types"
+import { Request, Response } from "express";
+import { Route, ParamType } from "@/decorators/types"
+import { doFilter } from "./aop";
 
 const bodyParser = require('body-parser')
 const app = express();
@@ -27,7 +29,7 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
       throw new Error("重复的接口路径'"+realPath+"'")
     }
     // 注册路由
-    app[route.type](realPath, async (req: any, res: any) => {
+    app[route.type](realPath, async (req: Request, res: Response) => {
       const urlParams = req.query
       const bodyParams = req.body
       const paramMap = {
@@ -47,13 +49,22 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
           }
         }
       }
-      res.send(await route.handler(...params))
+      // 拦截器
+      const callback = async () => await route.handler(...params)
+      doFilter(callback, req, res)
     })
   })
 }
 
 export {
   app
+}
+
+interface StartParam {
+  config: {
+    port?: number
+  },
+  callback?: () => void
 }
 
 export function start(startParam: StartParam) {

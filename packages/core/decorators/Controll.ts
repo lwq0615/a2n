@@ -1,5 +1,5 @@
 import { regRoutes } from '@/express'
-import { Route } from '@/types'
+import { Route } from '@/decorators/types'
 
 
 /**
