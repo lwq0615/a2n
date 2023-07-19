@@ -62,9 +62,10 @@ export {
   app
 }
 
-interface StartParam {
+export interface StartParam {
   config: {
-    port?: number
+    port?: number,
+    componentScan?: string
   },
   callback?: () => void
 }

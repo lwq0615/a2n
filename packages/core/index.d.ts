@@ -1,7 +1,6 @@
 import { AroundInterceptor, Interceptor, ErrHandler } from './aop/types'
 import { Express } from 'express-serve-static-core';
-
-// declare function a2n(callback?: () => void): void;
+import { StartParam } from './express'
 
 declare namespace a2n {
 
@@ -13,7 +12,7 @@ declare namespace a2n {
   /**
    * 启动服务器
    */
-  // function start(callback?: () => void): undefined
+  function start(config: StartParam): undefined
 
   /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
@@ -104,6 +103,17 @@ declare namespace a2n {
    * 注销异常处理器
    */
   var removeErrHandler: (errHandler: ErrHandler) => void
+
+  /**
+   * 所有bean注入容器完成时调用
+   */
+  var initBeanFinish: Function
+
+  /**
+   * 获取容器中的bean
+   * @param Cons bean的构造器类型（Class对象）
+   */
+  var getBean: (Cons: object) => any
 
 }
 
