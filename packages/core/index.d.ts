@@ -1,4 +1,5 @@
-import { AroundInterceptor, Interceptor } from './aop/types'
+import { AroundInterceptor, Interceptor, ErrHandler } from './aop/types'
+import { Express } from 'express-serve-static-core';
 
 // declare function a2n(callback?: () => void): void;
 
@@ -7,7 +8,7 @@ declare namespace a2n {
   /**
    * express对象，不推荐操作此对象
    */
-  var app: any
+  var app: Express
 
   /**
    * 启动服务器
@@ -18,6 +19,18 @@ declare namespace a2n {
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
    */
   var Controll: (p: string | object) => undefined
+
+  /**
+   * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
+   */
+  var Service: (p: object) => undefined
+
+  /**
+   * 为属性进行依赖注入
+   * @param Cons 依赖注入的对象构造器类型
+   * @param required 在容器中没有查询到该类型对象时是否抛出异常
+   */
+  var Autowired: (Cons: any, required?: boolean) => PropertyDecorator
 
   /**
    * 将类上的方法注册为接口，参数是接口地址
@@ -81,6 +94,16 @@ declare namespace a2n {
    * 注销环绕拦截器
    */
   var removeAroundInterceptor: () => void
+
+  /**
+   * 添加异常处理器
+   */
+  var addErrHandler: (errHandler: ErrHandler) => void
+
+  /**
+   * 注销异常处理器
+   */
+  var removeErrHandler: (errHandler: ErrHandler) => void
 
 }
 

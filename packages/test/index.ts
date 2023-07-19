@@ -1,7 +1,7 @@
 import openServer from "@/start"
 
-openServer(() => {
-  console.log("server start");
+openServer((config) => {
+  console.log("server start " + config.port);
 })
 
 

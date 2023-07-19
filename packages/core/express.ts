@@ -2,9 +2,10 @@ import * as express from "express";
 import { Request, Response } from "express";
 import { Route, ParamType } from "@/decorators/types"
 import { doFilter } from "./aop";
+import { Express } from 'express-serve-static-core';
 
 const bodyParser = require('body-parser')
-const app = express();
+const app: Express = express();
 const paths: Set<string> = new Set()
 
 /**
@@ -49,6 +50,7 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
           }
         }
       }
+      res.contentType("application/json")
       // 拦截器
       const callback = async () => await route.handler(...params)
       doFilter(callback, req, res)

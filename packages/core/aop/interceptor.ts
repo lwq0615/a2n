@@ -1,5 +1,6 @@
 import { AroundInterceptor, Interceptor } from '@/aop/types'
 import { Request, Response } from "express";
+import { doErrHandler } from './exception';
 
 /**
  * 数组存储拦截器，数组内拦截器会顺序执行
@@ -40,13 +41,15 @@ export async function doFilter(callback: Function, req: Request, res: Response) 
         return
       }
     }
+    let result = null
     // 环绕拦截器
     if (aroundInterceptor) {
-      res.send(await aroundInterceptor(callback, req, res))
+      result = await aroundInterceptor(callback, req, res)
     } else {
-      res.send(await callback())
+      result = await callback()
     }
+    res.send(result)
   }catch(err) {
-    
+    doErrHandler(err, req, res)
   }
 }

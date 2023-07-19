@@ -1,4 +1,4 @@
-import { start as listen } from "@/index"
+import { start as listen, initBeanFinish } from "@/index"
 const fs = require('fs')
 const path = require('path')
 
@@ -27,7 +27,7 @@ async function compScan(dirPath: string) {
 /**
  * 开启服务
  */
-export default async function start(callback: () => void) {
+export default async function start(callback: (config: any) => void) {
   let config = {
     port: 8080,
     componentScan: 'src'
@@ -42,9 +42,10 @@ export default async function start(callback: () => void) {
   let compDirPath = config.componentScan || 'src'
   console.log('scan components in folder ' + path.resolve(process.cwd(), compDirPath));
   await compScan(path.resolve(process.cwd(), compDirPath))
+  initBeanFinish()
   listen({
     config,
-    callback
+    callback: () => callback(config)
   })
 }
 

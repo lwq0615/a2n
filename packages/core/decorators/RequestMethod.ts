@@ -19,8 +19,7 @@ function getMapping(path: string, type: Method): MethodDecorator {
     // 将当前method注册为handler
     Object.assign(routes.methods[key], {
       path: path,
-      type: type,
-      handler: target[key] as Function,
+      type: type
     })
   }
 }
