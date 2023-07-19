@@ -15,6 +15,9 @@ const Autowired = function (Cons: any, required?: boolean) {
         if (!bean && required) {
           throw new Error("属性'" + fieldName + "'注入失败,没有在容器中查找到bean: " + Cons.name)
         }
+        if (!bean) {
+          return
+        }
         getBean(target.constructor)[fieldName] = bean
       }
     }
