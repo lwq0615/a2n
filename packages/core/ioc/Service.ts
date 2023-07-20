@@ -1,4 +1,4 @@
-import { setBean } from '@/ioc'
+import { setBean } from '@/ioc/beans'
 
 
 

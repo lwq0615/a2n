@@ -1,4 +1,4 @@
-import { getBean, finishTask } from '@/ioc'
+import { getBean, finishTask } from '@/ioc/beans'
 
 
 
