@@ -1,23 +1,14 @@
-import { routes } from '@/decorators/Controll'
-import { Method, Route } from '@/decorators/types'
+import { Method, Route } from '@/control/types'
 
 
 function getMapping(path: string, type: Method): MethodDecorator {
   return function (target: any, key: string, descriptor: object) {
-    /**
-     * 上一个操作routes.methods的method不属于当前正在处理的class
-     * 说明上一个操作routes.methods的method的class上没有添加 @Controll 装饰器
-     */
-    if (routes.controller !== target) {
-      // 清除上一个class遗留的methods
-      routes.methods = {}
-      routes.controller = target
-    }
-    if(!routes.methods[key]){
-      routes.methods[key] = {} as Route
+    const Cons = target.constructor
+    if(!Cons.handlerMethods[key]){
+      Cons.handlerMethods[key] = {} as Route
     }
     // 将当前method注册为handler
-    Object.assign(routes.methods[key], {
+    Object.assign(Cons.handlerMethods[key], {
       path: path,
       type: type
     })

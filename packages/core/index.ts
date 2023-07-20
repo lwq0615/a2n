@@ -1,9 +1,9 @@
-import Controll from "@/decorators/Controll";
+import Controll from "@/control/Controll";
 export { app, start } from "@/express";
-export * from '@/decorators/ParamType';
-export * from '@/decorators/RequestMethod';
-import Service from '@/decorators/Service'
-import Autowired from "./decorators/Autowired";
+export * from '@/control/ParamType';
+export * from '@/control/RequestMethod';
+import Service from '@/ioc/Service'
+import Autowired from "./ioc/Autowired";
 export { initBeanFinish, getBean } from "./ioc";
 export {
     addInterceptor,

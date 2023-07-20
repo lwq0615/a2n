@@ -5,7 +5,7 @@ import { getBean, finishTask } from '@/ioc'
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-const Autowired = function (Cons: any, required?: boolean) {
+const Autowired = function (Cons: any, required: boolean = true) {
   return function (target: any, fieldName: string) {
     const task = () => {
       // 确保该对象有被注册到容器中

@@ -1,28 +1,22 @@
-import { ParamInfo, ParamType, Route } from '@/decorators/types'
-import { routes } from '@/decorators/Controll'
+import { ParamInfo, ParamType, Route } from '@/control/types'
 
 
 /**
  * 注册参数 
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
-  /**
-   * 上一个操作methodParam的param不属于当前正在处理的class
-   * 说明上一个操作routes.methodParam的param的method上没有添加 @GET | @POST | @PUT | @DELETE 装饰器
-   */
-  if (routes.controller !== target) {
-    // 清除上一个class遗留的参数
-    routes.methods = {}
-    routes.controller = target
+  const Cons = target.constructor
+  if(!Cons.handlerMethods) {
+    Cons.handlerMethods = {}
   }
-  if (!routes.methods[methodName]) {
-    routes.methods[methodName] = {} as Route
+  if (!Cons.handlerMethods[methodName]) {
+    Cons.handlerMethods[methodName] = {} as Route
   }
-  if (!Array.isArray(routes.methods[methodName].params)) {
-    routes.methods[methodName].params = []
+  if (!Array.isArray(Cons.handlerMethods[methodName].params)) {
+    Cons.handlerMethods[methodName].params = []
   }
   // 注入参数信息
-  routes.methods[methodName].params[paramIndex] = type
+  Cons.handlerMethods[methodName].params[paramIndex] = type
 }
 
 

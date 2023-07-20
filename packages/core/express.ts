@@ -1,6 +1,6 @@
 import * as express from "express";
 import { Request, Response } from "express";
-import { Route, ParamType } from "@/decorators/types"
+import { Route, ParamType } from "@/control/types"
 import { doFilter } from "./aop";
 import { Express } from 'express-serve-static-core';
 
