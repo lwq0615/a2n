@@ -12,8 +12,11 @@ const Controll = function (source: string | any) {
         Cons.handlerMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
       })
       regRoutes(Object.values(Cons.handlerMethods), source)
-    } as ClassDecorator
+    } as undefined
   } else {
+    if(!(source instanceof Function)) {
+      throw new Error('@Controll只接收string类型或者undefined参数')
+    }
     setBean(source)
     Object.keys(source.handlerMethods).forEach(methodName => {
       source.handlerMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)

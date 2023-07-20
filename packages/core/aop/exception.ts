@@ -3,24 +3,17 @@
  */
 import { ErrHandler } from "./types"
 import { Request, Response } from "express";
+import { getBeans } from "@/ioc";
 
-
-let errHandlers: ErrHandler[] = []
-
-
-export function addErrHandler(handler: ErrHandler) {
-  errHandlers.push(handler)
-}
-
-export function removeErrHandler(handler: ErrHandler) {
-  errHandlers.splice(errHandlers.indexOf(handler), 1)
-}
 
 export function doErrHandler(err: Error, req: Request, res: Response) {
   console.error(err)
   let value: any = 'Internal Server Error'
-  for (const handler of errHandlers) {
-    value = handler(err, req, res, value)
+  for (const errHandler of getBeans(ErrHandler)) {
+    if(typeof errHandler.handler !== 'function') {
+      throw new Error('ErrHandler 必须实现方法handler')
+    }
+    value = errHandler.handler(err, req, res, value)
   }
   res.status(500).send(value)
 }

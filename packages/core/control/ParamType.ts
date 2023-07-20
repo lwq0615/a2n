@@ -45,14 +45,6 @@ export function Body(target: any, methodName?: string, paramIndex?: number) {
   return getParamDecorators(target, methodName, paramIndex, ParamType.BODY)
 }
 
-export function Request(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, { type: ParamType.REQUEST })
-}
-
-export function Response(target: any, methodName: string, paramIndex: number) {
-  regParam(target, methodName, paramIndex, { type: ParamType.RESPONSE })
-}
-
 export function Req(target: any, methodName: string, paramIndex: number) {
   regParam(target, methodName, paramIndex, { type: ParamType.REQUEST })
 }

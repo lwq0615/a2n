@@ -1,13 +1,39 @@
-import { AroundInterceptor, Interceptor, ErrHandler } from './aop/types'
 import { Express } from 'express-serve-static-core';
 import { StartParam } from './express'
+import { Interceptor, AroundInterceptor, ErrHandler } from './index'
+import { Request, Response } from 'express';
 
 declare namespace a2n {
+
+  /**
+   * 拦截器
+   */
+  var Interceptor: Interceptor
+
+  /**
+   * 环绕拦截器
+   */
+  var AroundInterceptor: AroundInterceptor
+
+  /**
+   * 异常处理器
+   */
+  var ErrHandler: ErrHandler
 
   /**
    * express对象，不推荐操作此对象
    */
   var app: Express
+
+  /**
+   * 请求对象
+   */
+  var Request: Request
+
+  /**
+   * 响应对象
+   */
+  var Response: Response
 
   /**
    * 启动服务器
@@ -55,54 +81,12 @@ declare namespace a2n {
   /**
    * 将requset对象注入到接口参数
    */
-  var Request: (target: any, methodName?: string, paramIndex?: number) => undefined
-
-  /**
-   * 将requset对象注入到接口参数
-   */
   var Req: (target: any, methodName?: string, paramIndex?: number) => undefined
 
   /**
    * 将requset对象注入到接口参数
    */
-  var Response: (target: any, methodName?: string, paramIndex?: number) => undefined
-
-  /**
-   * 将requset对象注入到接口参数
-   */
   var Res: (target: any, methodName?: string, paramIndex?: number) => undefined
-
-  /**
-   * 添加拦截器
-   */
-  var addInterceptor: (interceptor: Interceptor) => void
-
-  /**
-   * 注销拦截器
-   */
-  var removeInterceptor: (interceptor: Interceptor) => void
-
-  /**
-   * 设置环绕拦截器
-   * 只允许存在一个环绕拦截器，新的拦截器会覆盖旧的
-   * 环绕拦截器会在普通的拦截器之后执行
-   */
-  var setAroundInterceptor: (interceptor: AroundInterceptor) => void
-
-  /**
-   * 注销环绕拦截器
-   */
-  var removeAroundInterceptor: () => void
-
-  /**
-   * 添加异常处理器
-   */
-  var addErrHandler: (errHandler: ErrHandler) => void
-
-  /**
-   * 注销异常处理器
-   */
-  var removeErrHandler: (errHandler: ErrHandler) => void
 
   /**
    * 所有bean注入容器完成时调用
@@ -111,9 +95,15 @@ declare namespace a2n {
 
   /**
    * 获取容器中的bean
+   * @param Cons bean的构造器类型（Class对象）或者bean名称
+   */
+  var getBean: (Cons: object | string) => any
+
+  /**
+   * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）
    */
-  var getBean: (Cons: object) => any
+  var getBeans: (Cons: object) => []
 
 }
 

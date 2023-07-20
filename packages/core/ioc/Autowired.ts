@@ -8,6 +8,9 @@ import { getBean, finishTask } from '@/ioc'
 const Autowired = function (Cons: any, required: boolean = true) {
   return function (target: any, fieldName: string) {
     const task = () => {
+      if(typeof Cons !== 'string' && !(Cons instanceof Function)) {
+        throw new Error('@Autowired只接收string类型或者构造器类型参数')
+      }
       // 确保该对象有被注册到容器中
       if (getBean(target.constructor)) {
         // 去除容器中的对象，开始进行属性注入

@@ -1,14 +1,13 @@
-import { Controll, Get, Query, Autowired } from '@/index';
+import { Controll, Get, Query, Autowired, Service } from '@/index';
+import UserService from './UserService';
 
 
-@Controll("/")
+@Controll
 export default class Test{
-
-  @Autowired(Test, true)
-  a:Test = null
 
   @Get("/get")
   get(@Query('name') query: any){
+    
     return query
   }
 
