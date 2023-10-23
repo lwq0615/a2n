@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     // 组件扫描路径
     componentScan: 'packages/test',
     // 服务启动端口号

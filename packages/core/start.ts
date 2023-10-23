@@ -33,9 +33,8 @@ export default async function start(callback: (config: any) => void) {
     componentScan: 'src'
   }
   try {
-    const { default: a2nConfig } = await import(path.resolve(process.cwd(), "a2n.config.js"))
+    config = await import("E:/lwq/a2n/a2n.config.js")
     console.log('\nfind config file ' + process.cwd() + "\\a2n.config.js\n");
-    config = a2nConfig
   } catch (e) {
     console.error('\nCannot find config file ' + path.resolve(process.cwd(), "a2n.config.js, use default config\n"))
   }
