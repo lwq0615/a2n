@@ -8,8 +8,8 @@
   "author": "liweiqiang",
   "license": "ISC",
   "scripts": {
-    "serve": "nodemon -e * --ignore dist --exec npm run init",
-    "init": "npm run build:serve && node dist/a2n.serve.js",
+    "serve": "nodemon -e * --ignore dist --exec npm run start",
+    "start": "npm run build:serve && node dist/a2n.serve.js",
     "serve1": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm main/start.ts --files",
     "build:core": "cross-env buildtype=core webpack --config webpack.config.js",
     "build:serve": "cross-env buildtype=serve webpack --config webpack.config.js"
