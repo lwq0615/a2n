@@ -11,5 +11,8 @@ requireComponent.keys().forEach(filepath => {
 initBeanFinish()
 start({
   config,
-  callback: () => console.log("server was start success in port: " + config.port || 8080)
+  callback: () => {
+    console.log("======================success======================")
+    console.log("server was start in port: " + config.port || 8080)
+  }
 })
