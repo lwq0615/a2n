@@ -24,7 +24,7 @@ module.exports = {
   },
   output: {
     filename: process.env.buildtype === 'core' ? 'a2n.bundle.js' : 'a2n.serve.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, process.env.buildtype === 'core' ? 'packages/dist' : 'dist'),
     library: 'a2n',
     libraryTarget: 'umd'
   },

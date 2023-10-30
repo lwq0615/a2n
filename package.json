@@ -15,7 +15,6 @@
     "build:serve": "cross-env buildtype=serve webpack --config webpack.config.js"
   },
   "files": [
-    "dist",
     "packages"
   ],
   "keywords": [
@@ -26,7 +25,7 @@
   ],
   "exports": {
     ".": "./dist/a2n.bundle.js",
-    "./start": "./packages/core/start.ts"
+    "./start": "./main/start.ts"
   },
   "dependencies": {
     "@types/express": "^4.17.17",
