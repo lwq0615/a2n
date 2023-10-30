@@ -48,7 +48,12 @@ declare namespace a2n {
   /**
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */
-  var Service: (p: object) => undefined
+  var Service: (p: string | object) => undefined
+
+  /**
+   * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
+   */
+  var Bean: (p: string | object) => undefined
 
   /**
    * 为属性进行依赖注入

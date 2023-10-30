@@ -13,6 +13,7 @@ start({
   config,
   callback: () => {
     console.log("======================success======================")
-    console.log("server was start in port: " + config.port || 8080)
+    console.log("          server was start in port: " + config.port || 8080)
+    console.log("===================================================")
   }
 })

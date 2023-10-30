@@ -4,5 +4,6 @@ export * from './beans'
 
 export {
   Autowired,
-  Service
+  Service,
+  Service as Bean
 }

@@ -1,9 +1,9 @@
 import { Interceptor } from "@/aop/types";
-import { Service } from "@/index";
+import { Bean } from "@/index";
 import { Request, Response } from "express";
 
 
-@Service('tstt')
+@Bean('tstt')
 export default class UserServicer{
     
     doFilter(req: Request, res: Response): boolean {
