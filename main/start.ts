@@ -1,4 +1,4 @@
-import { start, initBeanFinish } from "@/index"
+import { start } from "@/index"
 const path = require('path')
 const config = require("../a2n.config")
 
@@ -8,7 +8,6 @@ requireComponent.keys().forEach(filepath => {
   requireComponent(filepath)
 })
 
-initBeanFinish()
 start({
   config,
   callback: () => {

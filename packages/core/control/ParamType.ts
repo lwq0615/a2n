@@ -6,17 +6,17 @@ import { ParamInfo, ParamType, Route } from '@/control/types'
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
-  if(!Cons.handlerMethods) {
-    Cons.handlerMethods = {}
+  if(!Cons.__handlerMethods) {
+    Cons.__handlerMethods = {}
   }
-  if (!Cons.handlerMethods[methodName]) {
-    Cons.handlerMethods[methodName] = {} as Route
+  if (!Cons.__handlerMethods[methodName]) {
+    Cons.__handlerMethods[methodName] = {} as Route
   }
-  if (!Array.isArray(Cons.handlerMethods[methodName].params)) {
-    Cons.handlerMethods[methodName].params = []
+  if (!Array.isArray(Cons.__handlerMethods[methodName].params)) {
+    Cons.__handlerMethods[methodName].params = []
   }
   // 注入参数信息
-  Cons.handlerMethods[methodName].params[paramIndex] = type
+  Cons.__handlerMethods[methodName].params[paramIndex] = type
 }
 
 

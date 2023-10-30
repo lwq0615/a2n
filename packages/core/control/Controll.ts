@@ -8,20 +8,20 @@ const Controll = function (source: string | any) {
   if (typeof source === 'string') {
     return function (Cons: any) {
       setBean(Cons)
-      Object.keys(Cons.handlerMethods).forEach(methodName => {
-        Cons.handlerMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
+      Object.keys(Cons.__handlerMethods).forEach(methodName => {
+        Cons.__handlerMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
       })
-      regRoutes(Object.values(Cons.handlerMethods), source)
+      regRoutes(Object.values(Cons.__handlerMethods), source)
     } as undefined
   } else {
     if(!(source instanceof Function)) {
       throw new Error('@Controll只接收string类型或者undefined参数')
     }
     setBean(source)
-    Object.keys(source.handlerMethods).forEach(methodName => {
-      source.handlerMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)
+    Object.keys(source.__handlerMethods).forEach(methodName => {
+      source.__handlerMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)
     })
-    regRoutes(Object.values(source.handlerMethods), '')
+    regRoutes(Object.values(source.__handlerMethods), '')
   }
 }
 

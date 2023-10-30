@@ -11,7 +11,7 @@ export default class Test{
   @Get("/get")
   get(@Query('name') query: any){
     console.log(this.service)
-    return query
+    return this.service.getUser()
   }
 
 }

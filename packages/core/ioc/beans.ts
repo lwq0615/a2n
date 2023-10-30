@@ -4,10 +4,6 @@
 const beanMap: Map<object, any> = new Map()
 const nameBeanMap: { [name: string]: any } = {}
 
-// bean全部注册完成后执行的任务列表
-// 主要目的是依赖注入
-export const finishTask: Function[] = []
-
 
 export function setBean(source: any | string, Cons?: any) {
   if (typeof source === 'string') {
@@ -35,5 +31,8 @@ export function getBeans(Cons: Function): any[] {
 // 通知bean容器，所有的bean都已经注册完成
 export function initBeanFinish() {
   // 开始依赖注入
-  finishTask.forEach(task => task())
+  [...beanMap.keys()].forEach((Cons: any) => {
+    Cons.__autowiredTasks?.forEach((task: Function) => task())
+    Cons.__configTasks?.forEach((task: Function) => task())
+  })
 }

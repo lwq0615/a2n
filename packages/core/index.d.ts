@@ -56,6 +56,11 @@ declare namespace a2n {
   var Bean: (p: string | object) => undefined
 
   /**
+   * 将a2n.config.js配置文件中的值注入属性
+   */
+  var Config: (p: string) => undefined
+
+  /**
    * 为属性进行依赖注入
    * @param Cons 依赖注入的对象构造器类型
    * @param required 在容器中没有查询到该类型对象时是否抛出异常
@@ -92,11 +97,6 @@ declare namespace a2n {
    * 将requset对象注入到接口参数
    */
   var Res: (target: any, methodName?: string, paramIndex?: number) => undefined
-
-  /**
-   * 所有bean注入容器完成时调用
-   */
-  var initBeanFinish: Function
 
   /**
    * 获取容器中的bean

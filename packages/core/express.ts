@@ -3,6 +3,9 @@ import { Request, Response } from "express";
 import { Route, ParamType } from "@/control/types"
 import { doFilter } from "./aop";
 import { Express } from 'express-serve-static-core';
+import { Config } from "./ioc/types";
+import { setConfig } from "./ioc/Config";
+import { initBeanFinish } from "./ioc";
 
 const bodyParser = require('body-parser')
 const app: Express = express();
@@ -63,13 +66,12 @@ export {
 }
 
 export interface StartParam {
-  config: {
-    port?: number,
-    componentScan?: string
-  },
+  config: Config,
   callback?: () => void
 }
 
 export function start(startParam: StartParam) {
+  setConfig(startParam.config)
+  initBeanFinish()
   app.listen(startParam.config.port || 8080, startParam.callback)
 }

@@ -1,5 +1,4 @@
-import { getBean, finishTask } from '@/ioc/beans'
-
+import { getBean } from '@/ioc/beans'
 
 
 /**
@@ -8,7 +7,7 @@ import { getBean, finishTask } from '@/ioc/beans'
 const Autowired = function (Cons: any, required: boolean = true) {
   return function (target: any, fieldName: string) {
     const task = () => {
-      if(typeof Cons !== 'string' && !(Cons instanceof Function)) {
+      if (typeof Cons !== 'string' && !(Cons instanceof Function)) {
         throw new Error('@Autowired只接收string类型或者构造器类型参数')
       }
       // 确保该对象有被注册到容器中
@@ -16,7 +15,7 @@ const Autowired = function (Cons: any, required: boolean = true) {
         // 去除容器中的对象，开始进行属性注入
         const bean = getBean(Cons)
         if (!bean && required) {
-          throw new Error("属性'" + fieldName + "'注入失败,没有在容器中查找到bean: " + Cons.name)
+          throw new Error("属性'" + fieldName + "'注入失败,没有在容器中查找到bean: " + (typeof Cons === 'string' ? Cons : Cons.name))
         }
         if (!bean) {
           return
@@ -24,7 +23,10 @@ const Autowired = function (Cons: any, required: boolean = true) {
         getBean(target.constructor)[fieldName] = bean
       }
     }
-    finishTask.push(task)
+    if (!Array.isArray(target.constructor.__autowiredTasks)) {
+      target.constructor.__autowiredTasks = []
+    }
+    target.constructor.__autowiredTasks.push(task)
   } as PropertyDecorator
 }
 
