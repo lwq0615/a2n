@@ -16,5 +16,5 @@ export function doErrHandler(err: Error, req: Request, res: Response) {
     }
     value = errHandler.handler(err, req, res, value)
   }
-  res.send(value)
+  res.send(JSON.stringify(value))
 }

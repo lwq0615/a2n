@@ -16,14 +16,14 @@ export async function doFilter(callback: Function, req: Request, res: Response) 
       }
     }
     let result = null
-    const aroundInterceptor = getBean(AroundInterceptor)
+    const aroundInterceptor = getBeans(AroundInterceptor)?.[0]
     // 环绕拦截器
     if (aroundInterceptor) {
       result = await aroundInterceptor.doFilter(callback, req, res)
     } else {
       result = await callback()
     }
-    res.send(result)
+    res.send(JSON.stringify(result))
   }catch(err) {
     doErrHandler(err, req, res)
   }

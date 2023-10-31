@@ -2,20 +2,21 @@
   "name": "a2n",
   "version": "0.0.15",
   "description": "基于express的轻量级服务器",
-  "main": "dist/a2n.bundle.js",
+  "main": "core/dist/a2n.core.js",
   "type": "commonjs",
-  "types": "packages/core/index.d.ts",
+  "types": "core/src/index.d.ts",
   "author": "liweiqiang",
   "license": "ISC",
   "scripts": {
     "serve": "nodemon -e * --ignore dist --exec npm run start",
     "start": "npm run build:serve && node dist/a2n.serve.js",
     "serve1": "nodemon -e * --exec ts-node -r tsconfig-paths/register --esm main/start.ts --files",
-    "build:core": "cross-env buildtype=core webpack --config webpack.config.js",
+    "build:core": "cross-env buildtype=core webpack --config core/webpack.config.js",
     "build:serve": "cross-env buildtype=serve webpack --config webpack.config.js"
   },
   "files": [
-    "packages"
+    "core",
+    "main"
   ],
   "keywords": [
     "express",
@@ -24,7 +25,7 @@
     "node"
   ],
   "exports": {
-    ".": "./dist/a2n.bundle.js",
+    ".": "./core/dist/a2n.core.js",
     "./start": "./main/start.ts"
   },
   "dependencies": {

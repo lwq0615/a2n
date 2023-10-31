@@ -55,7 +55,7 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
       }
       res.contentType("application/json")
       // 拦截器
-      const callback = async () => await route.handler(...params)
+      const callback = () => route.handler(...params)
       doFilter(callback, req, res)
     })
   })

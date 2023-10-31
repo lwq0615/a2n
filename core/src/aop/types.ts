@@ -11,8 +11,8 @@ export class Interceptor {
    * @return true：不拦截，false：拦截请求
    */
   doFilter(req: Request, res: Response): boolean {
-    res.send('request filter faild')
-    return false
+    res.send('request filter success')
+    return true
   }
 }
 
@@ -27,8 +27,8 @@ export class AroundInterceptor {
    * @param res 响应对象
    * @return 拦截器返回的值会作为请求响应值
    */
-  async doFilter(callback: Function, req: Request, res: Response): Promise<any> {
-    return await callback()
+  doFilter(callback: Function, req: Request, res: Response): any {
+    return callback()
   }
 }
 

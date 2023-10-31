@@ -7,6 +7,9 @@ const nameBeanMap: { [name: string]: any } = {}
 
 export function setBean(source: any | string, Cons?: any) {
   if (typeof source === 'string') {
+    if (source in nameBeanMap) {
+      throw new Error("重复的bean名称: " + source)
+    }
     nameBeanMap[source] = new Cons()
     beanMap.set(Cons, new Cons())
   } else {
