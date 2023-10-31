@@ -18,7 +18,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
-    alias: {
+    alias: process.env.NODE_ENV === 'test' ? {
+      '@/index': path.resolve(__dirname, 'core/dist/a2n.core.js')
+    } : {
       '@': path.resolve(__dirname, 'core/src')
     }
   },

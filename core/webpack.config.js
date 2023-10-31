@@ -1,5 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CoreBuildPlugin } = require('./CoreBuildPlugin.js');
 
 module.exports = {
   mode: 'development',
@@ -27,6 +28,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CoreBuildPlugin()
   ]
 };

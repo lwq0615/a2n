@@ -9,8 +9,8 @@
   "license": "ISC",
   "scripts": {
     "serve": "cross-env NODE_ENV=tsnode nodemon -e * --exec ts-node -r tsconfig-paths/register --esm main/tsnode.ts --files",
-    "test": "cross-env NODE_ENV=test nodemon -e * --ignore dist --exec npm run start",
-    "start": "npm run build:serve && node dist/a2n.serve.js",
+    "test": "cross-env NODE_ENV=test nodemon -e * --ignore **/dist --exec npm run start",
+    "start": "npm run build:core && npm run build:serve && node dist/a2n.serve.js",
     "build:core": "webpack --config core/webpack.config.js",
     "build:serve": "webpack --config webpack.config.js"
   },

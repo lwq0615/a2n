@@ -1,6 +1,4 @@
-import { Interceptor } from "@/index";
-import { Bean, Config } from "@/index";
-import { Request, Response } from "express";
+import { Bean, Config, Request, Response } from "@/index";
 
 
 @Bean('tstt')
