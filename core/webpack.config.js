@@ -1,6 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { CoreBuildPlugin } = require('./CoreBuildPlugin.js');
+const { DtsBuildPlugin } = require('./DtsBuildPlugin.js');
 
 module.exports = {
   mode: 'development',
@@ -29,6 +29,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CoreBuildPlugin()
+    new DtsBuildPlugin()
   ]
 };

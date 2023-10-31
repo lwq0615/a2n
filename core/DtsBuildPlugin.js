@@ -3,7 +3,7 @@ const fs = require('fs')
 /**
  * 生成a2n.core.d.ts类型声明文件
  */
-class CoreBuildPlugin {
+class DtsBuildPlugin {
 
   // 需要传入自定义插件构造函数的任意选项
   //（这是自定义插件的公开API）
@@ -15,7 +15,7 @@ class CoreBuildPlugin {
   }
 
   apply(compiler) {
-    const pluginName = CoreBuildPlugin.name;
+    const pluginName = DtsBuildPlugin.name;
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       const filename = compiler.options.output.filename.split(".").slice(0, -1).join(".") + '.d.ts'
       fs.readFile('core/src/index.d.ts', (err, data) => {
@@ -38,4 +38,4 @@ class CoreBuildPlugin {
   }
 }
 
-module.exports = { CoreBuildPlugin };
+module.exports = { DtsBuildPlugin };
