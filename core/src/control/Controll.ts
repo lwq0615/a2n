@@ -4,7 +4,7 @@ import { getBean, setBean } from '@/ioc'
 /**
  * 在加载到Controll时将路由信息进行注册
  */
-const Controll = function (source: string | any) {
+export const Controll = function (source: string | any) {
   if (typeof source === 'string') {
     return function (Cons: any) {
       setBean(Cons)

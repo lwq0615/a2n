@@ -4,7 +4,7 @@ import { getBean } from '@/ioc/beans'
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-const Autowired = function (Cons: any, required: boolean = true) {
+export const Autowired = function (Cons: any, required: boolean = true) {
   return function (target: any, fieldName: string) {
     const task = () => {
       if (typeof Cons !== 'string' && !(Cons instanceof Function)) {

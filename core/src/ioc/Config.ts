@@ -1,16 +1,16 @@
 import { getBean } from '@/ioc/beans'
-import { Config } from './types'
+import { Config as ConfigType } from './types'
 
-let config: Config = null
+let config: ConfigType = null
 
-export function setConfig(config2: Config) {
+export function setConfig(config2: ConfigType) {
   config = config2
 }
 
 /**
  * 加载配置文件内容到属性中
  */
-const Config = function (name: string) {
+export const Config = function (name: string) {
   return function (target: any, fieldName: string) {
     const task = () => {
       const objPath: string[] = name.split(".")

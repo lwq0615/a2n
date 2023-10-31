@@ -1,8 +1,18 @@
 import { Express } from 'express-serve-static-core';
-import { StartParam } from './express'
-import { Interceptor, AroundInterceptor, ErrHandler } from './index'
+import {
+  Interceptor,
+  AroundInterceptor,
+  ErrHandler,
+  Service as A2nService,
+  Bean as A2nAutowired
+} from './index'
+import { start as A2nStart } from './express';
+import { Controll as A2nControll } from './control/Controll'
+import * as RequestMethods from './control/RequestMethod'
 import { Request, Response } from 'express';
-
+import * as ParamType from './control/ParamType'
+import { Config as A2nConfig } from './ioc/Config';
+import * as A2nBean from './ioc/beans'
 declare namespace a2n {
 
   /**
@@ -38,77 +48,77 @@ declare namespace a2n {
   /**
    * 启动服务器
    */
-  function start(config: StartParam): undefined
+  var start: typeof A2nStart
 
   /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
    */
-  var Controll: (p: string | object) => undefined
+  var Controll: typeof A2nControll
 
   /**
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */
-  var Service: (p: string | object) => undefined
+  var Service: typeof A2nService
 
   /**
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */
-  var Bean: (p: string | object) => undefined
+  var Bean: typeof Autowired
 
   /**
    * 将a2n.config.js配置文件中的值注入属性
    */
-  var Config: (p: string) => undefined
+  var Config: typeof A2nConfig
 
   /**
    * 为属性进行依赖注入
    * @param Cons 依赖注入的对象构造器类型
    * @param required 在容器中没有查询到该类型对象时是否抛出异常
    */
-  var Autowired: (Cons: any, required?: boolean) => PropertyDecorator
+  var Autowired: typeof A2nAutowired
 
   /**
    * 将类上的方法注册为接口，参数是接口地址
    */
-  var Get: (path: string) => MethodDecorator
-  var Post: (path: string) => MethodDecorator
-  var Put: (path: string) => MethodDecorator
-  var Delete: (path: string) => MethodDecorator
-  var RequestMapping: (path: string) => MethodDecorator
+  var RequestMapping: typeof RequestMethods.RequestMapping
+  var Get: typeof RequestMethods.Get
+  var Post: typeof RequestMethods.Post
+  var Put: typeof RequestMethods.Put
+  var Delete: typeof RequestMethods.Delete
 
   /**
    * 将url上携带的所有参数注入到接口参数
    * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
    */
-  var Query: (target: any, methodName?: string, paramIndex?: number) => undefined
+  var Query: typeof ParamType.Query
 
   /**
    * 将post请求携带的报文参数注入到接口参数
    * 装饰器可以携带一个参数，含义是报文上的某个参数名称，会将该参数的值注入到接口参数
    */
-  var Body: (target: any, methodName?: string, paramIndex?: number) => undefined
+  var Body: typeof ParamType.Body
 
   /**
    * 将requset对象注入到接口参数
    */
-  var Req: (target: any, methodName?: string, paramIndex?: number) => undefined
+  var Req: typeof ParamType.Req
 
   /**
    * 将requset对象注入到接口参数
    */
-  var Res: (target: any, methodName?: string, paramIndex?: number) => undefined
+  var Res: typeof ParamType.Res
 
   /**
    * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）或者bean名称
    */
-  var getBean: (Cons: object | string) => any
+  var getBean: typeof A2nBean.getBean
 
   /**
    * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）
    */
-  var getBeans: (Cons: object) => []
+  var getBeans: typeof A2nBean.getBeans
 
 }
 

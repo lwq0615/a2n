@@ -17,13 +17,11 @@ export function setBean(source: any | string, Cons?: any) {
   }
 }
 
-export function getBean(Cons: object): any {
+export function getBean(Cons: object | string): any {
   if (typeof Cons === 'string') {
     return nameBeanMap[Cons]
-  } else if (Cons instanceof Function) {
-    return beanMap.get(Cons)
   } else {
-    return null
+    return beanMap.get(Cons)
   }
 }
 
