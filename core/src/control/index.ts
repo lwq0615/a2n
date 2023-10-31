@@ -1,7 +1,14 @@
-import Controll from "@/control/Controll";
-export * from '@/control/ParamType';
-export * from '@/control/RequestMethod';
-
+export { Controll } from "@/control/Controll";
 export {
-  Controll
-}
+  Query,
+  Body,
+  Req,
+  Res
+} from '@/control/ParamType';
+export {
+  RequestMapping,
+  Get,
+  Post,
+  Delete,
+  Put
+} from '@/control/RequestMethod';

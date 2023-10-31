@@ -1,4 +1,4 @@
-import { getBean, getBeans } from "@/ioc";
+import { getBeans } from "@/ioc";
 import { Request, Response } from "express";
 import { doErrHandler } from './exception';
 import { Interceptor, AroundInterceptor } from "./types";

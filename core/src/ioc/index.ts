@@ -1,7 +1,12 @@
 import Autowired from './Autowired'
 import Service from './Service'
 import Config from './Config'
-export * from './beans'
+export {
+  setBean,
+  getBean,
+  getBeans,
+  initBeanFinish
+} from './beans'
 
 export {
   Autowired,

@@ -1,3 +1,7 @@
-export * from './interceptor'
-export * from './exception'
-export * from './types'
+export { doFilter } from './interceptor'
+export { doErrHandler } from './exception'
+export {
+  Interceptor,
+  AroundInterceptor,
+  ErrHandler
+} from './types'
