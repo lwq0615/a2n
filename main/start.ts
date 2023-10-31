@@ -2,6 +2,7 @@ import { start } from "@/index"
 const path = require('path')
 const config = require("../a2n.config")
 
+console.log('scan components in folder ' + path.resolve(process.cwd(), config.componentScan || 'src'));
 const requireComponent = require.context('../' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
 requireComponent.keys().forEach(filepath => {
   console.log("scan file: " + path.resolve(process.env.componentScan, filepath))
