@@ -1,5 +1,6 @@
 import * as A2n from './index'
 import { Express } from 'express-serve-static-core';
+import * as express from "express";
 
 
 declare namespace a2n {
@@ -7,17 +8,17 @@ declare namespace a2n {
   /**
    * 拦截器
    */
-  var Interceptor: A2n.Interceptor
+  var Interceptor: typeof A2n.Interceptor
 
   /**
    * 环绕拦截器
    */
-  var AroundInterceptor: A2n.AroundInterceptor
+  var AroundInterceptor: typeof A2n.AroundInterceptor
 
   /**
    * 异常处理器
    */
-  var ErrHandler: A2n.ErrHandler
+  var ErrHandler: typeof A2n.ErrHandler
 
   /**
    * express对象，不推荐操作此对象
@@ -27,12 +28,12 @@ declare namespace a2n {
   /**
    * 请求对象
    */
-  var Request: Request
+  interface Request extends express.Request { }
 
   /**
    * 响应对象
    */
-  var Response: Response
+  interface Response extends express.Response { }
 
   /**
    * 启动服务器
