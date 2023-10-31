@@ -1,6 +1,4 @@
 const fs = require('fs')
-const path = require('path')
-
 
 /**
  * 生成a2n.core.d.ts类型声明文件
@@ -18,8 +16,6 @@ class CoreBuildPlugin {
 
   apply(compiler) {
     const pluginName = CoreBuildPlugin.name;
-    // 绑定到 “thisCompilation” 钩子，
-    // 以便进一步绑定到 compilation 过程更早期的阶段
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       const filename = compiler.options.output.filename.split(".").slice(0, -1).join(".") + '.d.ts'
       fs.readFile('core/src/index.d.ts', (err, data) => {
