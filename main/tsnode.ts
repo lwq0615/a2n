@@ -15,7 +15,7 @@ async function compScan(dirPath: string) {
     const filePath = dirPath + "\\" + file
     const stat = fs.statSync(filePath)
     if (stat.isDirectory()) {
-      compScan(filePath)
+      await compScan(filePath)
     } else {
       console.log(`scan file '${filePath}'`);
       await import(filePath)
