@@ -24,7 +24,7 @@ class DtsBuildPlugin {
           return
         }
         // data 是二进制类型，需要转换成字符串
-        const content = data.toString().replace("./", "../src/")
+        const content = data.toString().replace("'./", "'../src/")
         fs.writeFile('core/dist/' + filename, content, {
           flag: 'w'
         }, (err) => {
