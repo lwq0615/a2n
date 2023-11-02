@@ -1,4 +1,5 @@
 import { getBean } from '@/ioc/beans'
+import { getState } from './beanState'
 
 
 /**
@@ -23,10 +24,7 @@ export const Autowired = function (Cons: any, required: boolean = true) {
         getBean(target.constructor)[fieldName] = bean
       }
     }
-    if (!Array.isArray(target.constructor.__autowiredTasks)) {
-      target.constructor.__autowiredTasks = []
-    }
-    target.constructor.__autowiredTasks.push(task)
+    getState(target.constructor).autowiredTasks.push(task)
   } as PropertyDecorator
 }
 

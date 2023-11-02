@@ -1,4 +1,4 @@
-
+import { getState } from "./beanState"
 
 // bean容器
 const beanMap: Map<object, any> = new Map()
@@ -33,7 +33,10 @@ export function getBeans(Cons: Function): any[] {
 export function initBeanFinish() {
   // 开始依赖注入
   [...beanMap.keys()].forEach((Cons: any) => {
-    Cons.__autowiredTasks?.forEach((task: Function) => task())
-    Cons.__configTasks?.forEach((task: Function) => task())
+    getState(Cons).autowiredTasks.forEach((task: Function) => task())
+    getState(Cons).configTasks?.forEach((task: Function) => task())
+    getState(Cons).initOverTasks?.forEach((methodName: string) => {
+      getBean(Cons)[methodName]()
+    })
   })
 }

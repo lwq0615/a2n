@@ -1,4 +1,5 @@
 import { ParamInfo, ParamType, Route } from '@/control/types'
+import { getState } from '@/ioc/beanState'
 
 
 /**
@@ -6,17 +7,17 @@ import { ParamInfo, ParamType, Route } from '@/control/types'
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
-  if(!Cons.__handlerMethods) {
-    Cons.__handlerMethods = {}
+  if(!getState(Cons).controllMethods) {
+    getState(Cons).controllMethods = {}
   }
-  if (!Cons.__handlerMethods[methodName]) {
-    Cons.__handlerMethods[methodName] = {} as Route
+  if (!getState(Cons).controllMethods[methodName]) {
+    getState(Cons).controllMethods[methodName] = {} as Route
   }
-  if (!Array.isArray(Cons.__handlerMethods[methodName].params)) {
-    Cons.__handlerMethods[methodName].params = []
+  if (!Array.isArray(getState(Cons).controllMethods[methodName].params)) {
+    getState(Cons).controllMethods[methodName].params = []
   }
   // 注入参数信息
-  Cons.__handlerMethods[methodName].params[paramIndex] = type
+  getState(Cons).controllMethods[methodName].params[paramIndex] = type
 }
 
 

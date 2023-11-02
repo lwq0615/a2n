@@ -1,4 +1,4 @@
-export { Controll } from "@/control/Controll";
+export { Control } from "@/control/Control";
 export {
   Query,
   Body,

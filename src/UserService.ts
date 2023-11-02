@@ -1,4 +1,5 @@
 import { Bean, Config, Request, Response } from "@/index";
+import { PostConstruct } from "@/ioc/PostConstruct";
 
 
 @Bean('tstt')

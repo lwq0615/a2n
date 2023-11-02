@@ -1,12 +1,17 @@
-import { Controll, Get, Query, Autowired, Service } from '@/index';
+import { Control, Get, Query, Autowired, Service, PostConstruct } from '@/index';
 import UserService from './UserService';
 
 
-@Controll
+@Control
 export default class Test{
 
   @Autowired(UserService)
   service: UserService = null
+
+  @PostConstruct
+  initOver() {
+    console.log(this.service);
+  }
 
   @Get("/get")
   get(@Query('name') query: any){

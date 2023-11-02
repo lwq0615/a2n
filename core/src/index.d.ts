@@ -43,7 +43,7 @@ declare namespace a2n {
   /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
    */
-  var Controll: typeof A2n.Controll
+  var Control: typeof A2n.Control
 
   /**
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
@@ -75,6 +75,11 @@ declare namespace a2n {
   var Post: typeof A2n.Post
   var Put: typeof A2n.Put
   var Delete: typeof A2n.Delete
+
+  /**
+   * bean依赖注入完成后执行
+   */
+  var PostConstruct: typeof A2n.PostConstruct
 
   /**
    * 将url上携带的所有参数注入到接口参数

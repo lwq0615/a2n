@@ -1,5 +1,6 @@
 import { getBean } from '@/ioc/beans'
 import { Config as ConfigType } from './types'
+import { getState } from './beanState'
 
 let config: ConfigType = null
 
@@ -26,10 +27,7 @@ export const Config = function (name: string) {
       })
       getBean(target.constructor)[fieldName] = value
     }
-    if (!Array.isArray(target.constructor.__configTasks)) {
-      target.constructor.__configTasks = []
-    }
-    target.constructor.__configTasks.push(task)
+    getState(target.constructor).configTasks.push(task)
   } as PropertyDecorator
 }
 

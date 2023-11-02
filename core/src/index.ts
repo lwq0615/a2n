@@ -5,6 +5,7 @@ export {
   Autowired,
   Service,
   Bean,
+  PostConstruct,
   Config
 } from "./ioc";
 export {
@@ -13,7 +14,7 @@ export {
   ErrHandler
 } from '@/aop'
 export {
-  Controll,
+  Control,
   Query,
   Body,
   Req,

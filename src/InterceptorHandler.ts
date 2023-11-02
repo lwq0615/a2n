@@ -1,4 +1,4 @@
-import { Request, Interceptor, Bean, AroundInterceptor } from "../core/dist/a2n.core";
+import { Request, Interceptor, Bean, AroundInterceptor } from "@/index";
 
 
 @Bean
