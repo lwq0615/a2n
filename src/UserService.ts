@@ -1,4 +1,5 @@
-import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope } from "@/index";
+import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope, getBean } from "@/index";
+import Test from "./Test";
 
 @Bean('user')
 @Scope(BeanScope.PROTOTYPE)
@@ -16,6 +17,7 @@ export default class UserServicer {
   }
 
   getUser() {
+    console.log(getBean(Test))
     return "liweiqiang"
   }
 

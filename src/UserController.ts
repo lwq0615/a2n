@@ -3,7 +3,7 @@ import UserService from './UserService';
 
 
 @Control
-export default class Test{
+export default class UserControl{
 
   @Autowired(UserService)
   service: UserService = null
