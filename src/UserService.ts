@@ -1,10 +1,12 @@
-import { Bean, BeanScope, Config, Request, Response, Scope } from "@/index";
+import { Autowired, Bean, BeanScope, Config, Request, Response, Scope } from "@/index";
 import { PostConstruct } from "@/ioc/PostConstruct";
 
-
-@Bean('tstt')
+@Bean('user')
 @Scope(BeanScope.PROTOTYPE)
 export default class UserServicer{
+
+    @Autowired(import("./RoleService"))
+    role: any = null
 
     @Config('datasource.url')
     url: string = null

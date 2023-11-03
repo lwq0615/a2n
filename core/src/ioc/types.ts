@@ -25,6 +25,7 @@ export enum BeanScope{
   PROTOTYPE = 1
 }
 
+// bean状态中心
 export interface BeanState {
   setBeanTask: Function,
   // 控制器处理器
@@ -39,4 +40,9 @@ export interface BeanState {
   initOverTasks: string[],
   // bean创建方式
   scope: BeanScope
+}
+
+// bean多例缓存池对象
+export interface BeanCache {
+  classMap: Map<BeanClass, BeanInstance>
 }
