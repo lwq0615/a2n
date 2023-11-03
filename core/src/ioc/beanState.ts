@@ -1,6 +1,6 @@
-import { BeanState } from "./types";
+import { BeanScope, BeanState } from "./types";
 
-const states = new Map<Function, BeanState>()
+export const states = new Map<Function, BeanState>()
 
 export function getState(Cons: Function): BeanState {
   if(!Cons) {
@@ -14,7 +14,9 @@ export function getState(Cons: Function): BeanState {
     controllMethods: {},
     autowiredTasks: [],
     configTasks: [],
-    initOverTasks: []
+    initOverTasks: [],
+    scope: BeanScope.SINGLETON,
+    setBeanTask: null
   }
   states.set(Cons, state)
   return state

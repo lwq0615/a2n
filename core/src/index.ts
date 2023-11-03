@@ -6,7 +6,9 @@ export {
   Service,
   Bean,
   PostConstruct,
-  Config
+  Config,
+  Scope,
+  BeanScope
 } from "./ioc";
 export {
   Interceptor,

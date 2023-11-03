@@ -1,8 +1,9 @@
-import { Bean, Config, Request, Response } from "@/index";
+import { Bean, BeanScope, Config, Request, Response, Scope } from "@/index";
 import { PostConstruct } from "@/ioc/PostConstruct";
 
 
 @Bean('tstt')
+@Scope(BeanScope.PROTOTYPE)
 export default class UserServicer{
 
     @Config('datasource.url')

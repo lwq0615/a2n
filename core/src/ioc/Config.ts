@@ -13,7 +13,7 @@ export function setConfig(config2: ConfigType) {
  */
 export const Config = function (name: string) {
   return function (target: any, fieldName: string) {
-    const task = () => {
+    const task = function() {
       const objPath: string[] = name.split(".")
       let value: any = null
       let config2 = config
@@ -25,7 +25,7 @@ export const Config = function (name: string) {
           throw new Error("Config: " + name + " 获取失败")
         }
       })
-      getBean(target.constructor)[fieldName] = value
+      this[fieldName] = value
     }
     getState(target.constructor).configTasks.push(task)
   } as PropertyDecorator

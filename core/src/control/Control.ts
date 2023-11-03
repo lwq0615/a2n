@@ -8,21 +8,23 @@ import { getState } from '@/ioc/beanState'
 export const Control = function (source: string | any) {
   if (typeof source === 'string') {
     return function (Cons: any) {
-      setBean(Cons)
-      Object.keys(getState(Cons).controllMethods).forEach(methodName => {
-        getState(Cons).controllMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
+      const state = getState(Cons)
+      state.setBeanTask = () => setBean(Cons)
+      Object.keys(state.controllMethods).forEach(methodName => {
+        state.controllMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
       })
-      regRoutes(Object.values(getState(Cons).controllMethods), source)
+      regRoutes(Object.values(state.controllMethods), source)
     } as undefined
   } else {
     if(!(source instanceof Function)) {
       throw new Error('@Controll只接收string类型或者undefined参数')
     }
-    setBean(source)
-    Object.keys(getState(source).controllMethods).forEach(methodName => {
-      getState(source).controllMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)
+    const state = getState(source)
+    state.setBeanTask = () => setBean(source)
+    Object.keys(state.controllMethods).forEach(methodName => {
+      state.controllMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)
     })
-    regRoutes(Object.values(getState(source).controllMethods), '')
+    regRoutes(Object.values(state.controllMethods), '')
   }
 }
 

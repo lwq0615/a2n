@@ -7,7 +7,7 @@ import { getState } from './beanState'
  */
 export const Autowired = function (Cons: any, required: boolean = true) {
   return function (target: any, fieldName: string) {
-    const task = () => {
+    const task = function() {
       if (typeof Cons !== 'string' && !(Cons instanceof Function)) {
         throw new Error('@Autowired只接收string类型或者构造器类型参数')
       }
@@ -21,7 +21,7 @@ export const Autowired = function (Cons: any, required: boolean = true) {
         if (!bean) {
           return
         }
-        getBean(target.constructor)[fieldName] = bean
+        this[fieldName] = bean
       }
     }
     getState(target.constructor).autowiredTasks.push(task)
