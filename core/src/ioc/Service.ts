@@ -1,4 +1,5 @@
 import { setBean } from '@/ioc/beans'
+import { getState } from './beanState'
 
 
 
@@ -8,13 +9,15 @@ import { setBean } from '@/ioc/beans'
 const Service = function (source: string | any) {
   if (typeof source === 'string') {
     return function (Cons: any) {
-      setBean(source, Cons)
+      const state = getState(Cons)
+      state.setBeanTask = () => setBean(source, Cons)
     } as undefined
   } else {
     if(!(source instanceof Function)) {
       throw new Error('@Service只接收string类型或者undefined参数')
     }
-    setBean(source)
+    const state = getState(source)
+    state.setBeanTask = () => setBean(source)
   }
 }
 
