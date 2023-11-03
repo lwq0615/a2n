@@ -8,7 +8,7 @@ export type BeanInstance = {
 }
 
 // bean类型
-export type BeanType = {
+export type BeanClass = {
   new(): BeanInstance
 }
 

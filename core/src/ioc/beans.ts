@@ -1,12 +1,12 @@
 import { getState, states } from "./beanState"
-import { BeanScope, BeanState, BeanType, BeanInstance } from "./types"
+import { BeanScope, BeanClass, BeanInstance } from "./types"
 
 // bean容器, 单例池
-const beanMap: Map<BeanType, BeanInstance> = new Map()
+const beanMap: Map<BeanClass, BeanInstance> = new Map()
 const nameBeanMap: { [name: string]: BeanInstance } = {}
 
 
-export function setBean(source: any | string, Cons?: BeanType) {
+export function setBean(source: any | string, Cons?: BeanClass) {
   // 多例模式，不在单例池创建bean
   if (getState(Cons || source).scope === BeanScope.PROTOTYPE) {
     return
@@ -22,7 +22,7 @@ export function setBean(source: any | string, Cons?: BeanType) {
   }
 }
 
-export function getBean(Cons: BeanType | string): any {
+export function getBean(Cons: BeanClass | string): any {
   if (typeof Cons === 'string') {
     return nameBeanMap[Cons]
   } else {
@@ -42,7 +42,7 @@ export function getBean(Cons: BeanType | string): any {
 /**
  * 通过类型获取该类型和继承自该类型的bean
  */
-export function getBeans(Cons: BeanType): any[] {
+export function getBeans(Cons: BeanClass): any[] {
   return [...beanMap.values()].filter(bean => bean instanceof Cons)
 }
 
@@ -61,7 +61,7 @@ export function initBeanFinish() {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入
-  [...beanMap.keys()].forEach((Cons: BeanType) => {
+  [...beanMap.keys()].forEach((Cons: BeanClass) => {
     initBean(getBean(Cons))
   })
 }
