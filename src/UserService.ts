@@ -1,5 +1,4 @@
-import { Autowired, Bean, BeanScope, Config, Request, Response, Scope } from "@/index";
-import { PostConstruct } from "@/ioc/PostConstruct";
+import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope } from "@/index";
 
 @Bean('user')
 @Scope(BeanScope.PROTOTYPE)
