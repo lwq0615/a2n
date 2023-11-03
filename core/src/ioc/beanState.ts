@@ -1,16 +1,23 @@
-import { BeanScope, BeanState } from "./types";
+import { BeanCache, BeanClass, BeanScope, BeanState } from "./types";
 
-export const states = new Map<Function, BeanState>()
+export const states = new Map<BeanClass, BeanState>()
 
-export function getState(Cons: Function): BeanState {
-  if(!Cons) {
+
+/**
+ * 获取状态中心
+ * @param Cons bean类型
+ * @returns 状态中心
+ */
+export function getState(Cons: BeanClass): BeanState {
+  if (!Cons) {
     return null
   }
   let state: BeanState = states.get(Cons)
-  if(state) {
+  if (state) {
     return state
   }
   state = {
+    beanClass: Cons,
     controllMethods: {},
     autowiredTasks: [],
     configTasks: [],

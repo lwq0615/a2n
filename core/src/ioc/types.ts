@@ -3,13 +3,13 @@ import { Route } from "@/control/types"
 
 // bean实例
 export type BeanInstance = {
-  constructor: Function,
+  constructor: BeanClass,
   [fieldName: string]: any
 }
 
 // bean类型
-export type BeanClass = {
-  new(): BeanInstance
+export interface BeanClass {
+  new(): BeanInstance | any
 }
 
 export interface Config {
@@ -27,6 +27,7 @@ export enum BeanScope{
 
 // bean状态中心
 export interface BeanState {
+  beanClass: BeanClass,
   setBeanTask: Function,
   // 控制器处理器
   controllMethods: {

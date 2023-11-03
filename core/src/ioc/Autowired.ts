@@ -9,7 +9,7 @@ import { BeanCache, BeanClass } from './types'
 export const Autowired = function (Cons: string | BeanClass | Promise<any>, required: boolean = true) {
   return function (target: any, fieldName: string) {
     const task = function (cache?: BeanCache) {
-      const inject = (Cons: BeanClass | string) => {
+      const inject = (Cons: BeanClass | string, resolve?: Function) => {
         // 取出容器中的对象，开始进行属性注入
         const bean = getBean(Cons, cache)
         if (!bean && required) {
@@ -18,12 +18,21 @@ export const Autowired = function (Cons: string | BeanClass | Promise<any>, requ
         if (!bean) {
           return
         }
-        this[fieldName] = bean
+        if(bean instanceof Promise) {
+          bean.then(res => {
+            this[fieldName] = res
+            resolve?.()
+          })
+        }else {
+          this[fieldName] = bean
+        }
       }
       // 循环依赖处理
       if (Cons instanceof Promise) {
-        return Cons.then(res => {
-          inject(res.default)
+        return new Promise((resolve) => {
+          Cons.then(res => {
+            inject(res.default, resolve)
+          })
         })
       } else if (typeof Cons === 'string' || (Cons instanceof Function)) {
         inject(Cons)

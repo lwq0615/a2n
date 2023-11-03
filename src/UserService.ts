@@ -3,23 +3,22 @@ import { PostConstruct } from "@/ioc/PostConstruct";
 
 @Bean('user')
 @Scope(BeanScope.PROTOTYPE)
-export default class UserServicer{
+export default class UserServicer {
 
-    @Autowired(import("./RoleService"))
-    role: any = null
+  @Autowired(import("./RoleService"))
+  role: any = null
 
-    @Config('datasource.url')
-    url: string = null
+  @Config('datasource.url')
+  url: string = null
 
-    
-    doFilter(req: Request, res: Response): boolean {
-        res.send("fail")
-        return false
-    }
+  @PostConstruct
+  init() {
+    console.log(this.role)
+  }
 
-    getUser() {
-        return "liweiqiang"
-    }
+  getUser() {
+    return "liweiqiang"
+  }
 
 
 }

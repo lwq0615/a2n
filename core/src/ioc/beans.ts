@@ -1,5 +1,5 @@
 import { getState, states } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance, BeanCache } from "./types"
+import { BeanScope, BeanClass, BeanInstance, BeanCache, BeanState } from "./types"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -32,51 +32,78 @@ export function setBean(source: any | string, Cons?: BeanClass) {
   }
 }
 
-export function getBean(Cons: BeanClass | string, cache?: BeanCache): BeanInstance {
+export async function getBean(Cons: BeanClass | string, cache?: BeanCache): Promise<BeanInstance> {
   if (typeof Cons === 'string') {
-    return getBean(nameBeanMap[Cons], cache)
+    return await getBean(nameBeanMap[Cons], cache)
   } else {
-    if (getState(Cons).scope === BeanScope.SINGLETON) {
+    const state = getState(Cons)
+    if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
       return beanMap.get(Cons)
     } else {
       // 多例模式，每次获取bean的时候创建新的bean
-      if (!cache) {
+      // 多例模式的第一个bean，创建缓存池，该bean和依赖的多例bean创建时会存入缓存池，防止循环依赖
+      const isStart = !cache
+      if (isStart) {
         cache = {
           classMap: new Map<BeanClass, BeanInstance>()
         }
       }
       // 如果缓存池已经存在该类型的bean，从缓存池获取
       let bean: BeanInstance = cache.classMap.get(Cons)
-      if(bean) {
+      if (bean) {
         return bean
-      }else {
+      } else {
         // 创建新的bean，并存入缓存池
         bean = new Cons
         cache.classMap.set(Cons, bean)
-        initBean(bean, cache)
+        await injectBean(bean, cache)
+        if (isStart) {
+          doInitOverTasks([...cache.classMap.values()])
+        }
         return bean
       }
     }
   }
 }
 
-// bean初始化
-const initBean = async (bean: BeanInstance, cache?: BeanCache) => {
-  await getState(bean.constructor).autowiredTasks.forEach(async(task: Function) => await task.call(bean, cache))
+/**
+ * bean依赖注入，配置文件属性注入
+ * @param bean 初始化的bean
+ * @param cache 缓存池，cache不为空，表示注入的是多例的bean
+ */
+const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
+  // 依赖注入@Autowired
+  for (const task of getState(bean.constructor).autowiredTasks) {
+    await task.call(bean, cache)
+  }
+  // 配置文件注入@Config
   getState(bean.constructor).configTasks?.forEach((task: Function) => task.call(bean))
-  getState(bean.constructor).initOverTasks?.forEach((methodName: string) => {
-    bean[methodName]()
-  })
 }
 
-// 通知bean容器，所有的bean都已经注册完成
-export function initBeanFinish() {
+/**
+ * 通知bean容器，所有的bean都已经注册完成
+ */
+export async function initBeanFinish() {
+  // 单例池生成bean
   for (const state of states.values()) {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入
-  [...beanMap.keys()].forEach((Cons: BeanClass) => {
-    initBean(getBean(Cons))
-  })
+  for (const Cons of beanMap.keys()) {
+    await injectBean(await getBean(Cons))
+  }
+  // 所有bean依赖注入全部完成，执行@PostConstruct
+  doInitOverTasks([...beanMap.values()])
 }
+
+/**
+ * 执行完后才能依赖注入bean的@PostConstruct
+ */
+function doInitOverTasks(beans: BeanInstance[]) {
+  for (const bean of beans) {
+    getState(bean.constructor).initOverTasks.forEach(methodName => {
+      bean[methodName]()
+    })
+  }
+} 

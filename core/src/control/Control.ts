@@ -11,7 +11,7 @@ export const Control = function (source: string | any) {
       const state = getState(Cons)
       state.setBeanTask = () => setBean(Cons)
       Object.keys(state.controllMethods).forEach(methodName => {
-        state.controllMethods[methodName].handler = (...params: any) => getBean(Cons)?.[methodName](...params)
+        state.controllMethods[methodName].handler = async (...params: any) => (await getBean(Cons))?.[methodName](...params)
       })
       regRoutes(Object.values(state.controllMethods), source)
     } as undefined
@@ -22,7 +22,7 @@ export const Control = function (source: string | any) {
     const state = getState(source)
     state.setBeanTask = () => setBean(source)
     Object.keys(state.controllMethods).forEach(methodName => {
-      state.controllMethods[methodName].handler = (...params: any) => getBean(source)?.[methodName](...params)
+      state.controllMethods[methodName].handler = async (...params: any) => (await getBean(source))?.[methodName](...params)
     })
     regRoutes(Object.values(state.controllMethods), '')
   }

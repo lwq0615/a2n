@@ -10,11 +10,12 @@ export default class Test{
 
   @PostConstruct
   initOver() {
-    console.log(this.service);
+    // console.log(this.service);
   }
 
   @Get("/get")
   get(@Query('name') query: any){
+    // console.log(this.service);
     return this.service.getUser()
   }
 
