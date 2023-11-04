@@ -8,7 +8,7 @@ export {
   Config,
   Scope,
   BeanScope
-} from "./ioc";
+} from "@/ioc";
 
 export {
   Interceptor,
