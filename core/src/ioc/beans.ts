@@ -1,5 +1,5 @@
 import { getState, states } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance, BeanCache, BeanState } from "./types"
+import { BeanScope, BeanClass, BeanInstance, BeanCache } from "./types"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
