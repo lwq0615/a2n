@@ -6,5 +6,5 @@ import { getState } from "./beanState"
 export const PostConstruct: MethodDecorator = function(target: any, key: string, descriptor: object) {
   const Cons = target.constructor
   // 将当前method注册为handler
-  getState(Cons).initOverTasks.push(key)
+  getState(Cons).initOverTasks.push(target[key])
 }

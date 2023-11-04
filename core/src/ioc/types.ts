@@ -38,7 +38,7 @@ export interface BeanState {
   // 配置文件属性注入任务列表
   configTasks: Function[],
   // 依赖注入完成后执行任务
-  initOverTasks: string[],
+  initOverTasks: Function[],
   // bean创建方式
   scope: BeanScope
 }

@@ -7,7 +7,7 @@ import { Interceptor, AroundInterceptor } from "./types";
 export async function doFilter(callback: Function, req: Request, res: Response) {
   try {
     // 拦截器
-    for (const interceptor of getBeans(Interceptor)) {
+    for (const interceptor of await getBeans(Interceptor)) {
       if(typeof interceptor.doFilter !== 'function') {
         throw new Error('Interceptor 必须实现方法doFilter')
       }
@@ -16,7 +16,7 @@ export async function doFilter(callback: Function, req: Request, res: Response) 
       }
     }
     let result = null
-    const aroundInterceptor = getBeans(AroundInterceptor)?.[0]
+    const aroundInterceptor = (await getBeans(AroundInterceptor))?.[0]
     // 环绕拦截器
     if (aroundInterceptor) {
       result = await aroundInterceptor.doFilter(callback, req, res)

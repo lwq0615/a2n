@@ -1,6 +1,7 @@
 import { regRoutes } from '@/express'
 import { getBean, setBean } from '@/ioc'
 import { getState } from '@/ioc/beanState'
+import { getFunParameterNames } from '@/utils/function'
 
 /**
  * 在加载到Controll时将路由信息进行注册
@@ -12,6 +13,7 @@ export const Control = function (source: string | any) {
       state.setBeanTask = () => setBean(Cons)
       Object.keys(state.controllMethods).forEach(methodName => {
         state.controllMethods[methodName].handler = async (...params: any) => (await getBean(Cons))?.[methodName](...params)
+        state.controllMethods[methodName].paramNames = getFunParameterNames(Cons.prototype[methodName])
       })
       regRoutes(Object.values(state.controllMethods), source)
     } as undefined
@@ -23,6 +25,7 @@ export const Control = function (source: string | any) {
     state.setBeanTask = () => setBean(source)
     Object.keys(state.controllMethods).forEach(methodName => {
       state.controllMethods[methodName].handler = async (...params: any) => (await getBean(source))?.[methodName](...params)
+      state.controllMethods[methodName].paramNames = getFunParameterNames(source.prototype[methodName])
     })
     regRoutes(Object.values(state.controllMethods), '')
   }

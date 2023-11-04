@@ -11,7 +11,7 @@ function regParam(target: any, methodName: string, paramIndex: number, type: Par
     getState(Cons).controllMethods = {}
   }
   if (!getState(Cons).controllMethods[methodName]) {
-    getState(Cons).controllMethods[methodName] = {} as Route
+    getState(Cons).controllMethods[methodName] = new Route()
   }
   if (!Array.isArray(getState(Cons).controllMethods[methodName].params)) {
     getState(Cons).controllMethods[methodName].params = []

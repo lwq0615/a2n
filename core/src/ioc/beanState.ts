@@ -1,4 +1,4 @@
-import { BeanCache, BeanClass, BeanScope, BeanState } from "./types";
+import { BeanClass, BeanScope, BeanState } from "./types";
 
 export const states = new Map<BeanClass, BeanState>()
 

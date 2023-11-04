@@ -14,9 +14,9 @@ export default class UserControl{
   }
 
   @Get("/get")
-  get(@Query('name') query: any){
-    // console.log(this.service);
-    return this.service.getUser()
+  get(a: any, @Query query: any){
+    // console.log(a);
+    return query
   }
 
 }

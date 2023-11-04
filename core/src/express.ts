@@ -29,8 +29,8 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
     const size = paths.size
     let realPath = '/' + pathArr.join("/")
     paths.add(realPath)
-    if(paths.size === size){
-      throw new Error("重复的接口路径'"+realPath+"'")
+    if (paths.size === size) {
+      throw new Error("重复的接口路径'" + realPath + "'")
     }
     // 注册路由
     app[route.type](realPath, async (req: Request, res: Response) => {
@@ -44,13 +44,17 @@ export const regRoutes = function (list: Route[], baseUrl: string) {
       }
       const params: any[] = []
       // 参数注入
-      if (Array.isArray(route.params)) {
-        for (const paramIndex in route.params) {
-          if (route.params[paramIndex].name) {
-            params[paramIndex] = paramMap[route.params[paramIndex].type][route.params[paramIndex].name];
+      for (const i in route.paramNames) {
+        // 通过注解注入的参数
+        if (route.params[i]) {
+          if (route.params[i].name) {
+            params[i] = paramMap[route.params[i].type][route.params[i].name];
           } else {
-            params[paramIndex] = paramMap[route.params[paramIndex].type];
+            params[i] = paramMap[route.params[i].type];
           }
+        } else {
+          // 参数没有注解，通过参数名称从query获取
+          params[i] = urlParams[route.paramNames[i]]
         }
       }
       res.contentType("application/json")

@@ -13,11 +13,11 @@ export default class UserServicer {
 
   @PostConstruct
   init() {
-    console.log(this.role)
+    // console.log(this.role)
   }
 
   getUser() {
-    console.log(getBean(Test))
+    // console.log(getBean(Test))
     return "liweiqiang"
   }
 

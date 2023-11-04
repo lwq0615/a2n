@@ -9,8 +9,11 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
 /**
  * 通过类型获取该类型和继承自该类型的bean
  */
-export function getBeans(Cons: BeanClass): BeanInstance[] {
-  return [...beanMap.values()].filter(bean => bean instanceof Cons)
+export function getBeans(Cons: BeanClass): Promise<BeanInstance[]> {
+  const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item=> {
+    return getBean(Item)
+  })
+  return Promise.all(beans)
 }
 
 export function setBean(source: any | string, Cons?: BeanClass) {
@@ -102,8 +105,8 @@ export async function initBeanFinish() {
  */
 function doInitOverTasks(beans: BeanInstance[]) {
   for (const bean of beans) {
-    getState(bean.constructor).initOverTasks.forEach(methodName => {
-      bean[methodName]()
+    getState(bean.constructor).initOverTasks.forEach(task => {
+      task.call(bean)
     })
   }
 } 

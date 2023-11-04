@@ -14,11 +14,12 @@ export enum Method{
 /**
  * 路由信息
  */
-export interface Route {
-  path: string
-  type: Method
-  handler: Function,
-  params: ParamInfo[]
+export class Route {
+  path: string = null
+  type: Method = Method.ALL
+  handler: Function = null
+  params: ParamInfo[] = []
+  paramNames: string[] = []
 }
 
 
