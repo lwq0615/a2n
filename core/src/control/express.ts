@@ -1,11 +1,11 @@
 import * as express from "express";
 import { Request, Response } from "express";
 import { Route, ParamType, Method } from "@/control/types"
-import { doFilter } from "./aop";
+import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
-import { Config } from "./ioc/types";
-import { setConfig } from "./ioc/Config";
-import { initBeanFinish } from "./ioc";
+import { Config } from "../ioc/types";
+import { setConfig } from "../ioc/Config";
+import { initBeanFinish } from "../ioc";
 
 const bodyParser = require('body-parser')
 const app: Express = express();

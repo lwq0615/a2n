@@ -1,4 +1,3 @@
-export { app, start } from "@/express";
 export {
   getBean,
   getBeans,
@@ -10,11 +9,13 @@ export {
   Scope,
   BeanScope
 } from "./ioc";
+
 export {
   Interceptor,
   AroundInterceptor,
   ErrHandler
 } from '@/aop'
+
 export {
   Control,
   Query,
@@ -25,6 +26,9 @@ export {
   Get,
   Post,
   Delete,
-  Put
+  Put,
+  app, 
+  start
 } from '@/control'
+
 export { Request, Response } from 'express';

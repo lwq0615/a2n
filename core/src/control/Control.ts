@@ -1,4 +1,4 @@
-import { regRoutes } from '@/express'
+import { regRoutes } from '@/control/express'
 import { getBean, setBean } from '@/ioc'
 import { getState } from '@/ioc/beanState'
 import { BeanClass, BeanInstance } from '@/ioc/types'
