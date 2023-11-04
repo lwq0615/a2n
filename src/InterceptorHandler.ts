@@ -1,4 +1,4 @@
-import { Request, Interceptor, Bean, AroundInterceptor } from "@/index";
+import { Request, Interceptor, Bean, AroundInterceptor, Scope, BeanScope } from "@/index";
 
 
 @Bean

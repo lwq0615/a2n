@@ -1,5 +1,8 @@
+import { setInterceptors } from "@/aop/interceptor"
 import { getState, states } from "./beanState"
 import { BeanScope, BeanClass, BeanInstance, BeanCache } from "./types"
+import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
+import { setErrorHandlers } from "@/aop/exception"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -9,9 +12,9 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
 /**
  * 通过类型获取该类型和继承自该类型的bean
  */
-export function getBeans(Cons: BeanClass): Promise<BeanInstance[]> {
+export function getBeans<T = BeanInstance>(Cons: BeanClass): Promise<T[]> {
   const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item=> {
-    return getBean(Item)
+    return getBean<T>(Item)
   })
   return Promise.all(beans)
 }
@@ -35,14 +38,14 @@ export function setBean(source: any | string, Cons?: BeanClass) {
   }
 }
 
-export async function getBean(Cons: BeanClass | string, cache?: BeanCache): Promise<BeanInstance> {
+export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?: BeanCache): Promise<T> {
   if (typeof Cons === 'string') {
     return await getBean(nameBeanMap[Cons], cache)
   } else {
     const state = getState(Cons)
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
-      return beanMap.get(Cons)
+      return beanMap.get(Cons) as T
     } else {
       // 多例模式，每次获取bean的时候创建新的bean
       // 多例模式的第一个bean，创建缓存池，该bean和依赖的多例bean创建时会存入缓存池，防止循环依赖
@@ -55,7 +58,7 @@ export async function getBean(Cons: BeanClass | string, cache?: BeanCache): Prom
       // 如果缓存池已经存在该类型的bean，从缓存池获取
       let bean: BeanInstance = cache.classMap.get(Cons)
       if (bean) {
-        return bean
+        return bean as T
       } else {
         // 创建新的bean，并存入缓存池
         bean = new Cons
@@ -64,7 +67,7 @@ export async function getBean(Cons: BeanClass | string, cache?: BeanCache): Prom
         if (isStart) {
           doInitOverTasks([...cache.classMap.values()])
         }
-        return bean
+        return bean as T
       }
     }
   }
@@ -98,6 +101,12 @@ export async function initBeanFinish() {
   }
   // 所有bean依赖注入全部完成，执行@PostConstruct
   doInitOverTasks([...beanMap.values()])
+  Promise.all([getBeans(Interceptor), getBeans(AroundInterceptor)]).then(res => {
+    setInterceptors(res[0] as unknown as Interceptor[], res[1]?.[0] as unknown as AroundInterceptor)
+  })
+  getBeans<ErrHandler>(ErrHandler).then(res => {
+    setErrorHandlers(res)
+  })
 }
 
 /**
