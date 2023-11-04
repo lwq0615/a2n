@@ -3,6 +3,7 @@ import { getState, states } from "./beanState"
 import { BeanScope, BeanClass, BeanInstance, BeanCache } from "./types"
 import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
 import { setErrorHandlers } from "@/aop/exception"
+import { getProxy, startProxy } from "@/aop/proxy"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -13,7 +14,7 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
  * 通过类型获取该类型和继承自该类型的bean
  */
 export function getBeans<T = BeanInstance>(Cons: BeanClass): Promise<T[]> {
-  const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item=> {
+  const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item => {
     return getBean<T>(Item)
   })
   return Promise.all(beans)
@@ -29,12 +30,12 @@ export function setBean(source: any | string, Cons?: BeanClass) {
     if (getState(Cons).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(Cons, new Cons())
+    beanMap.set(Cons, getProxy(new Cons()))
   } else {
     if (getState(source).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(source, new source())
+    beanMap.set(source, getProxy(new source()))
   }
 }
 
@@ -61,7 +62,7 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
         return bean as T
       } else {
         // 创建新的bean，并存入缓存池
-        bean = new Cons
+        bean = getProxy(new Cons)
         cache.classMap.set(Cons, bean)
         await injectBean(bean, cache)
         if (isStart) {
@@ -101,11 +102,18 @@ export async function initBeanFinish() {
   }
   // 所有bean依赖注入全部完成，执行@PostConstruct
   doInitOverTasks([...beanMap.values()])
-  Promise.all([getBeans(Interceptor), getBeans(AroundInterceptor)]).then(res => {
-    setInterceptors(res[0] as unknown as Interceptor[], res[1]?.[0] as unknown as AroundInterceptor)
+  // 设置扫描生效的拦截器
+  const task1 = Promise.all([getBeans<Interceptor>(Interceptor), getBeans<AroundInterceptor>(AroundInterceptor)]).then(res => {
+    setInterceptors(res[0], res[1]?.[0])
   })
-  getBeans<ErrHandler>(ErrHandler).then(res => {
+  // 设置扫描生效的异常处理器
+  const task2 = getBeans<ErrHandler>(ErrHandler).then(res => {
     setErrorHandlers(res)
+  })
+  // 开启切面
+  // 在初始化完成后才开启切面，防止初始化时bean的方法调用触发切面
+  Promise.all([task1, task2]).then(() => {
+    startProxy()
   })
 }
 

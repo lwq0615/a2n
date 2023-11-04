@@ -15,3 +15,7 @@ export function getFunParameterNames(fn: Function): string[] {
     ? []
     : result;
 }
+
+export function isFunction(obj: any) {
+  return Object.prototype.toString.call(obj) === '[object Function]'
+}

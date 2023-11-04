@@ -13,7 +13,8 @@ export {
 export {
   Interceptor,
   AroundInterceptor,
-  ErrHandler
+  ErrHandler,
+  Aspect
 } from '@/aop'
 
 export {

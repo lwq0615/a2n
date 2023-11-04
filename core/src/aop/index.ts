@@ -1,3 +1,4 @@
+export { Aspect } from './Aspect'
 export { doFilter } from './interceptor'
 export { doErrHandler } from './exception'
 export {

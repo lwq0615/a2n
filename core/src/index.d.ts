@@ -11,6 +11,11 @@ declare namespace a2n {
   var Interceptor: typeof A2n.Interceptor
 
   /**
+   * 切面控制器
+   */
+  var Aspect: typeof A2n.Aspect
+
+  /**
    * 环绕拦截器
    */
   var AroundInterceptor: typeof A2n.AroundInterceptor
@@ -54,6 +59,16 @@ declare namespace a2n {
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */
   var Bean: typeof Service
+
+  /**
+   * 设置bean的创建方式
+   */
+  var Scope: typeof A2n.Scope
+
+  /**
+   * bean的创建方式枚举，单例：SINGLETON，多例：PROTOTYPE
+   */
+  var BeanScope: typeof A2n.BeanScope
 
   /**
    * 将a2n.config.js配置文件中的值注入属性

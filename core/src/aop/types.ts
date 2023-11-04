@@ -11,7 +11,6 @@ export class Interceptor {
    * @return true：不拦截，false：拦截请求
    */
   doFilter(req: Request, res: Response): boolean {
-    res.send('request filter success')
     return true
   }
 }

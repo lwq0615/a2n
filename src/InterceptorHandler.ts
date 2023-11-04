@@ -1,12 +1,14 @@
-import { Request, Interceptor, Bean, AroundInterceptor, Scope, BeanScope } from "@/index";
+import { Request, Interceptor, Bean, AroundInterceptor, Scope, BeanScope, Aspect } from "@/index";
 
 
 @Bean
-export default class InterceptorHandler extends AroundInterceptor {
+export default class InterceptorHandler extends Interceptor {
 
-  doFilter(callback: Function, req: Request) {
-    // console.log(req.query)
-    return callback()
+  @Aspect(/^[U]/)
+  asp() {
+    // console.log("asp");
+    
   }
+  
 
 }
