@@ -1,6 +1,7 @@
-import { BeanInstance } from "@/ioc/types";
+import { BeanClass, BeanInstance } from "@/ioc/types";
 import { beforeAspects, afterAspects, aroundAspects } from "./Aspect";
 import { isFunction } from "@/utils/function";
+import { getState } from "@/ioc/beanState";
 
 let isStart = false
 
@@ -8,7 +9,15 @@ export function startProxy() {
   isStart = true
 }
 
+// 是否需要代理
+export function isNeedProxy(Cons: BeanClass) {
+  return !getState(Cons).isAspect
+}
+
 export function getProxy(bean: BeanInstance): BeanInstance {
+  if(!isNeedProxy(bean.constructor)) {
+    return bean
+  }
   return new Proxy(bean, {
     get(target, key: string) {
       if (isStart && isFunction(target[key])) {
