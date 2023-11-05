@@ -11,6 +11,7 @@ export function startProxy() {
 
 // 是否需要代理
 export function isNeedProxy(Cons: BeanClass) {
+  // 切面类不允许代理，防止切面代理切面导致的死循环
   return !getState(Cons).isAspect
 }
 
