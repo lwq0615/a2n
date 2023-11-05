@@ -2,18 +2,18 @@ import { start } from "@/index"
 const path = require('path')
 const config = require("../a2n.config")
 
-console.log('scan components in folder ' + path.resolve(process.cwd(), config.componentScan || 'src'));
+console.info('scan components in folder ' + path.resolve(process.cwd(), config.componentScan || 'src'));
 const requireComponent = require.context('../' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
 requireComponent.keys().forEach(filepath => {
-  console.log("scan file: " + path.resolve(process.env.componentScan, filepath))
+  console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
   requireComponent(filepath)
 })
 
 start({
   config,
   callback: () => {
-    console.log("======================success======================")
-    console.log("          server was start in port: " + config.port || 8080)
-    console.log("===================================================")
+    console.info("======================success======================")
+    console.info("          server was start in port: " + config.port || 8080)
+    console.info("===================================================")
   }
 })

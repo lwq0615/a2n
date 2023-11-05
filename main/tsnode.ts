@@ -17,7 +17,7 @@ async function compScan(dirPath: string) {
     if (stat.isDirectory()) {
       await compScan(filePath)
     } else {
-      console.log(`scan file '${filePath}'`);
+      console.info(`scan file '${filePath}'`);
       await import(filePath)
     }
   }
@@ -30,14 +30,14 @@ async function compScan(dirPath: string) {
  */
 async function start() {
   let compDirPath = config.componentScan || 'src'
-  console.log('scan components in folder ' + path.resolve(process.cwd(), compDirPath));
+  console.info('scan components in folder ' + path.resolve(process.cwd(), compDirPath));
   await compScan(path.resolve(process.cwd(), compDirPath))
   listen({
     config,
     callback: () => {
-      console.log("======================success======================")
-      console.log("          server was start in port: " + config.port || 8080)
-      console.log("===================================================")
+      console.info("======================success======================")
+      console.info("          server was start in port: " + config.port || 8080)
+      console.info("===================================================")
     }
   })
 }
