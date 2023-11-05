@@ -1,4 +1,4 @@
-export { Aspect } from './Aspect'
+export { Before, Aspect, After, Around } from './Aspect'
 export { doFilter } from './interceptor'
 export { doErrHandler } from './exception'
 export {

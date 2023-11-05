@@ -14,7 +14,10 @@ export {
   Interceptor,
   AroundInterceptor,
   ErrHandler,
-  Aspect
+  Aspect,
+  After,
+  Around,
+  Before
 } from '@/aop'
 
 export {

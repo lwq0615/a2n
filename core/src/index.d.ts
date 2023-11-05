@@ -11,9 +11,19 @@ declare namespace a2n {
   var Interceptor: typeof A2n.Interceptor
 
   /**
-   * 切面控制器
+   * 前置切面控制器
    */
-  var Aspect: typeof A2n.Aspect
+  var Before: typeof A2n.Before
+
+  /**
+   * 后置切面控制器
+   */
+  var After: typeof A2n.After
+
+  /**
+   * 环绕切面控制器，如果匹配了多个环绕控制器，只生效第一个
+   */
+  var Around: typeof A2n.Around
 
   /**
    * 环绕拦截器

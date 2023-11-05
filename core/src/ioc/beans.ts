@@ -1,9 +1,11 @@
 import { setInterceptors } from "@/aop/interceptor"
 import { getState, states } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance, BeanCache } from "./types"
+import { BeanScope, BeanClass, BeanInstance, BeanCache, BeanState } from "./types"
 import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
 import { setErrorHandlers } from "@/aop/exception"
 import { getProxy, startProxy } from "@/aop/proxy"
+import { isFunction } from "@/utils/function"
+import { setAspectBeans } from "@/aop/Aspect"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -13,11 +15,18 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
 /**
  * 通过类型获取该类型和继承自该类型的bean
  */
-export function getBeans<T = BeanInstance>(Cons: BeanClass): Promise<T[]> {
-  const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item => {
-    return getBean<T>(Item)
-  })
-  return Promise.all(beans)
+export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => Boolean)): Promise<T[]> {
+  if (isFunction(Cons)) {
+    const beans = [...states.values()].filter(state => (Cons as Function)(state)).map(state => {
+      return getBean<T>(state.beanClass)
+    })
+    return Promise.all(beans)
+  } else {
+    const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item => {
+      return getBean<T>(Item)
+    })
+    return Promise.all(beans)
+  }
 }
 
 export function setBean(source: any | string, Cons?: BeanClass) {
@@ -110,9 +119,13 @@ export async function initBeanFinish() {
   const task2 = getBeans<ErrHandler>(ErrHandler).then(res => {
     setErrorHandlers(res)
   })
+  // 设置扫描生效的切面bean
+  const task3 = getBeans((state) => state.isAspect).then(res => {
+    setAspectBeans(res)
+  })
   // 开启切面
   // 在初始化完成后才开启切面，防止初始化时bean的方法调用触发切面
-  Promise.all([task1, task2]).then(() => {
+  Promise.all([task1, task2, task3]).then(() => {
     startProxy()
   })
 }

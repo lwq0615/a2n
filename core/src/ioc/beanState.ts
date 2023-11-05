@@ -23,7 +23,11 @@ export function getState(Cons: BeanClass): BeanState {
     configTasks: [],
     initOverTasks: [],
     scope: BeanScope.SINGLETON,
-    setBeanTask: null
+    setBeanTask: null,
+    beforeAspects: [],
+    afterAspects: [],
+    aroundAspects: [],
+    isAspect: false
   }
   states.set(Cons, state)
   return state
