@@ -31,6 +31,7 @@ export function getProxy(bean: BeanInstance): BeanInstance {
               beforeAspects.get(reg)()
             }
           }
+          // 环绕
           const aroundReg = [...aroundAspects.keys()].find(reg => reg.test(name))
           const aroundHandle = aroundAspects.get(aroundReg)
           let result: any = void 0
