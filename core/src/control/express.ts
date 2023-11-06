@@ -25,9 +25,10 @@ const paths: { [path: string]: Method } = {}
  */
 export const regRoutes = function (Cons: BeanClass) {
   const state = getState(Cons)
-  const list = Object.values(state.controlMethods)
+  const keyList = Object.keys(state.controlMethods)
   const baseUrl = state.controlMapping
-  list.forEach(route => {
+  keyList.forEach(methodName => {
+    const route = state.controlMethods[methodName]
     // 规范化路由路径
     const pathArr: string[] = (baseUrl + "/" + route.path).split("/").filter((item: string) => item)
     let realPath = '/' + pathArr.join("/")
@@ -63,7 +64,7 @@ export const regRoutes = function (Cons: BeanClass) {
       res.contentType("application/json")
       // 拦截器
       const callback = () => route.handler(...params)
-      doFilter(callback, req, res)
+      doFilter(callback, req, res, Cons, methodName)
     })
   })
 }

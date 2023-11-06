@@ -1,3 +1,4 @@
+import { BeanClass } from "@/ioc/types";
 import { Request, Response } from "express";
 
 
@@ -8,9 +9,11 @@ export class Interceptor {
   /**
    * @param req 请求对象
    * @param res 响应对象
+   * @param Cons 请求进入的控制器Class
+   * @param methodName 请求进入的控制器方法名称
    * @return true：不拦截，false：拦截请求
    */
-  doFilter(req: Request, res: Response): boolean {
+  doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
     return true
   }
 }
@@ -24,9 +27,11 @@ export class AroundInterceptor {
    * @param callback 要执行的控制器方法
    * @param req 请求对象
    * @param res 响应对象
+   * @param Cons 请求进入的控制器Class
+   * @param methodName 请求进入的控制器方法名称
    * @return 拦截器返回的值会作为请求响应值
    */
-  doFilter(callback: Function, req: Request, res: Response): any {
+  doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): any {
     return callback()
   }
 }

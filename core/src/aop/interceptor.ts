@@ -1,3 +1,4 @@
+import { BeanClass } from "@/ioc/types";
 import { Request, Response } from "express";
 import { doErrHandler } from './exception';
 import { Interceptor, AroundInterceptor } from "./types";
@@ -10,21 +11,21 @@ export function setInterceptors(interceptor: Interceptor[], around: AroundInterc
   aroundInterceptor = around
 }
 
-export async function doFilter(callback: Function, req: Request, res: Response) {
+export async function doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string) {
   try {
     // 拦截器
     for (const interceptor of interceptors) {
       if(typeof interceptor.doFilter !== 'function') {
         throw new Error('Interceptor 必须实现方法doFilter')
       }
-      if (!interceptor.doFilter(req, res)) {
+      if (!interceptor.doFilter(req, res, Cons, methodName)) {
         return
       }
     }
     let result = null
     // 环绕拦截器
     if (aroundInterceptor) {
-      result = await aroundInterceptor.doFilter(callback, req, res)
+      result = await aroundInterceptor.doFilter(callback, req, res, Cons, methodName)
     } else {
       result = await callback()
     }
