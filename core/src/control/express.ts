@@ -3,9 +3,10 @@ import { Request, Response } from "express";
 import { Route, ParamType, Method } from "@/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
-import { Config } from "../ioc/types";
+import { BeanClass, Config } from "../ioc/types";
 import { setConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
+import { getState } from "@/ioc/beanState";
 
 const bodyParser = require('body-parser')
 const app: Express = express();
@@ -18,14 +19,17 @@ app.use(bodyParser.json());
 
 
 
-const paths: {[path: string]: Method} = {}
+const paths: { [path: string]: Method } = {}
 /**
  * 将路由注册到express
  */
-export const regRoutes = function (list: Route[], baseUrl: string) {
+export const regRoutes = function (Cons: BeanClass) {
+  const state = getState(Cons)
+  const list = Object.values(state.controlMethods)
+  const baseUrl = state.controlMapping
   list.forEach(route => {
     // 规范化路由路径
-    const pathArr: string[] = (baseUrl + route.path).split("/").filter((item: string) => item)
+    const pathArr: string[] = (baseUrl + "/" + route.path).split("/").filter((item: string) => item)
     let realPath = '/' + pathArr.join("/")
     if ((realPath in paths) && route.type === paths[realPath]) {
       throw new Error("重复的接口: '" + realPath + "'")

@@ -7,17 +7,17 @@ import { getState } from '@/ioc/beanState'
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
-  if(!getState(Cons).controllMethods) {
-    getState(Cons).controllMethods = {}
+  if(!getState(Cons).controlMethods) {
+    getState(Cons).controlMethods = {}
   }
-  if (!getState(Cons).controllMethods[methodName]) {
-    getState(Cons).controllMethods[methodName] = new Route()
+  if (!getState(Cons).controlMethods[methodName]) {
+    getState(Cons).controlMethods[methodName] = new Route()
   }
-  if (!Array.isArray(getState(Cons).controllMethods[methodName].params)) {
-    getState(Cons).controllMethods[methodName].params = []
+  if (!Array.isArray(getState(Cons).controlMethods[methodName].params)) {
+    getState(Cons).controlMethods[methodName].params = []
   }
   // 注入参数信息
-  getState(Cons).controllMethods[methodName].params[paramIndex] = type
+  getState(Cons).controlMethods[methodName].params[paramIndex] = type
 }
 
 

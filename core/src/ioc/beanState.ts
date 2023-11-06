@@ -16,19 +16,7 @@ export function getState(Cons: BeanClass): BeanState {
   if (state) {
     return state
   }
-  state = {
-    beanClass: Cons,
-    controllMethods: {},
-    autowiredTasks: [],
-    configTasks: [],
-    initOverTasks: [],
-    scope: BeanScope.SINGLETON,
-    setBeanTask: null,
-    beforeAspects: [],
-    afterAspects: [],
-    aroundAspects: [],
-    isAspect: false
-  }
+  state = new BeanState(Cons)
   states.set(Cons, state)
   return state
 }

@@ -24,24 +24,26 @@ export const Control = function (source: string | any) {
   if (typeof source === 'string') {
     return function (Cons: any) {
       const state = getState(Cons)
+      state.controlMapping = source
       state.setBeanTask = () => setBean(Cons)
-      Object.keys(state.controllMethods).forEach(methodName => {
-        state.controllMethods[methodName].handler = async (...params: any) => (await getControlBean(Cons))?.[methodName](...params)
-        state.controllMethods[methodName].paramNames = getFunParameterNames(Cons.prototype[methodName])
+      Object.keys(state.controlMethods).forEach(methodName => {
+        state.controlMethods[methodName].handler = async (...params: any) => (await getControlBean(Cons))?.[methodName](...params)
+        state.controlMethods[methodName].paramNames = getFunParameterNames(Cons.prototype[methodName])
       })
-      regRoutes(Object.values(state.controllMethods), source)
+      regRoutes(Cons)
     } as undefined
   } else {
     if(!(source instanceof Function)) {
       throw new Error('@Controll只接收string类型或者undefined参数')
     }
     const state = getState(source)
+    state.controlMapping = ''
     state.setBeanTask = () => setBean(source)
-    Object.keys(state.controllMethods).forEach(methodName => {
-      state.controllMethods[methodName].handler = async (...params: any) => (await getControlBean(source))?.[methodName](...params)
-      state.controllMethods[methodName].paramNames = getFunParameterNames(source.prototype[methodName])
+    Object.keys(state.controlMethods).forEach(methodName => {
+      state.controlMethods[methodName].handler = async (...params: any) => (await getControlBean(source))?.[methodName](...params)
+      state.controlMethods[methodName].paramNames = getFunParameterNames(source.prototype[methodName])
     })
-    regRoutes(Object.values(state.controllMethods), '')
+    regRoutes(source)
   }
 }
 

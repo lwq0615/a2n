@@ -5,11 +5,11 @@ import { getState } from '@/ioc/beanState'
 function getMapping(path: string, type: Method): MethodDecorator {
   return function (target: any, key: string, descriptor: object) {
     const Cons = target.constructor
-    if(!getState(Cons).controllMethods[key]){
-      getState(Cons).controllMethods[key] = new Route()
+    if(!getState(Cons).controlMethods[key]){
+      getState(Cons).controlMethods[key] = new Route()
     }
     // 将当前method注册为handler
-    Object.assign(getState(Cons).controllMethods[key], {
+    Object.assign(getState(Cons).controlMethods[key], {
       path: path,
       type: type
     })

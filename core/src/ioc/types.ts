@@ -31,29 +31,35 @@ export interface AspectHandle {
 }
 
 // bean状态中心
-export interface BeanState {
-  beanClass: BeanClass,
-  setBeanTask: Function,
+export class BeanState {
+
+  constructor(Cons: BeanClass) {
+    this.beanClass = Cons
+  }
+
+  beanClass: BeanClass
+  setBeanTask: Function
   // 控制器处理器
-  controllMethods: {
+  controlMethods: {
     [methodName: string]: Route
-  },
+  } = {}
+  controlMapping: string = ''
   // 依赖注入任务列表
-  autowiredTasks: Function[],
+  autowiredTasks: Function[] = []
   // 配置文件属性注入任务列表
-  configTasks: Function[],
+  configTasks: Function[] = []
   // 依赖注入完成后执行任务
-  initOverTasks: Function[],
+  initOverTasks: Function[] = []
   // bean创建方式
-  scope: BeanScope,
+  scope: BeanScope = BeanScope.SINGLETON
   // bean是否是切面类
-  isAspect: Boolean,
+  isAspect: Boolean = false
   // 前置切面
-  beforeAspects: AspectHandle[],
+  beforeAspects: AspectHandle[] = []
   // 后置切面
-  afterAspects: AspectHandle[],
+  afterAspects: AspectHandle[] = []
   // 环绕切面
-  aroundAspects: AspectHandle[]
+  aroundAspects: AspectHandle[] = []
 }
 
 // bean多例缓存池对象
