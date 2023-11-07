@@ -1,6 +1,6 @@
 {
   "name": "a2n",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "基于express的轻量级服务器",
   "main": "core/dist/a2n.core.js",
   "type": "commonjs",
