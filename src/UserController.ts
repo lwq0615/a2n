@@ -8,11 +8,6 @@ export default class UserControl{
   @Autowired(UserService)
   service: UserService = null
 
-  @PostConstruct
-  initOver() {
-    // console.log(this.service);
-  }
-
   @Get("/get")
   get(a: any, @Query query: any){
     // console.log(query);
@@ -20,9 +15,9 @@ export default class UserControl{
   }
 
   @Post("/get")
-  get1(a: any, @Query query: any){
+  get1(@Query query: any){
     // console.log(a);
-    return query
+    return this.service.getUser(query)
   }
 
 }

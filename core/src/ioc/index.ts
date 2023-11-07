@@ -2,7 +2,7 @@ import Autowired from './Autowired'
 import Service from './Service'
 import Config from './Config'
 import { PostConstruct } from './PostConstruct'
-import { BeanScope } from './types'
+import { BeanScope, BeanClass, BeanInstance } from './types'
 export { Scope } from './Scope'
 export {
   setBean,
@@ -17,5 +17,7 @@ export {
   Service as Bean,
   Config,
   PostConstruct,
-  BeanScope
+  BeanScope,
+  BeanClass,
+  BeanInstance
 }

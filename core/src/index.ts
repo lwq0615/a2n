@@ -7,7 +7,9 @@ export {
   PostConstruct,
   Config,
   Scope,
-  BeanScope
+  BeanScope,
+  BeanClass,
+  BeanInstance
 } from "@/ioc";
 
 export {

@@ -1,11 +1,10 @@
-import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope, getBean } from "@/index";
-import Test from "./Test";
+import { Autowired, Bean, Config, PostConstruct } from "@/index";
+import RoleService from "./RoleService";
 
-@Bean('user')
-@Scope(BeanScope.PROTOTYPE)
+@Bean
 export default class UserServicer {
 
-  @Autowired(import("./RoleService"))
+  @Autowired(RoleService)
   role: any = null
 
   @Config('datasource.url')
@@ -13,12 +12,12 @@ export default class UserServicer {
 
   @PostConstruct
   init() {
-    // console.log(this.role)
+    // 依赖注入完成后，将会执行@PostConstruct的内容
+    console.log(this.role)
   }
 
-  getUser() {
-    // console.log(getBean(Test))
-    return "liweiqiang"
+  getUser(query: any) {
+    return query.name
   }
 
 

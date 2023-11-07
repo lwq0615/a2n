@@ -151,6 +151,16 @@ declare namespace a2n {
    */
   var getBeans: typeof A2n.getBeans
 
+  /**
+   * bean的构造器类型（Class对象）
+   */
+  var BeanClass: typeof A2n.BeanClass
+
+  /**
+   * bean对象实例
+   */
+  var BeanInstance: typeof A2n.BeanInstance
+
 }
 
 export = a2n
