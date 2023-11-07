@@ -7,23 +7,9 @@ declare namespace a2n {
 
   /**
    * 拦截器
+   * 继承Interceptor并注入到bean可开启拦截器
    */
   var Interceptor: typeof A2n.Interceptor
-
-  /**
-   * 前置切面控制器
-   */
-  var Before: typeof A2n.Before
-
-  /**
-   * 后置切面控制器
-   */
-  var After: typeof A2n.After
-
-  /**
-   * 环绕切面控制器，如果匹配了多个环绕控制器，只生效第一个
-   */
-  var Around: typeof A2n.Around
 
   /**
    * 环绕拦截器
@@ -36,17 +22,41 @@ declare namespace a2n {
   var ErrHandler: typeof A2n.ErrHandler
 
   /**
+   * 标记类为切面类
+   * 类上添加@Aspect，类下的@Before，@After，@Around都会被注册为切面控制器
+   */
+  var Aspect: typeof A2n.Aspect
+
+  /**
+   * 前置切面控制器
+   * 控制器提供参数 Cons: 代理的类, name: 代理类执行的方法名
+   */
+  var Before: typeof A2n.Before
+
+  /**
+   * 后置切面控制器
+   * 控制器提供参数 Cons: 代理的类, name: 代理类执行的方法名
+   */
+  var After: typeof A2n.After
+
+  /**
+   * 环绕切面控制器，如果匹配了多个环绕控制器，只生效第一个
+   * 控制器提供参数 callback: 可调用的代理类原执行方法, Cons: 代理的类, name: 代理类执行的方法名
+   */
+  var Around: typeof A2n.Around
+
+  /**
    * express对象，不推荐操作此对象
    */
   var app: Express
 
   /**
-   * 请求对象
+   * 请求对象类型
    */
   interface Request extends express.Request { }
 
   /**
-   * 响应对象
+   * 响应对象类型
    */
   interface Response extends express.Response { }
 
@@ -66,7 +76,7 @@ declare namespace a2n {
   var Service: typeof A2n.Service
 
   /**
-   * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
+   * 标记一个类bean对象，该对象将会注册一个实例到bean容器中
    */
   var Bean: typeof Service
 
@@ -87,13 +97,14 @@ declare namespace a2n {
 
   /**
    * 为属性进行依赖注入
-   * @param Cons 依赖注入的对象构造器类型
+   * @param Cons: BeanClass | string (依赖注入的对象构造器类型 | bean名称)
    * @param required 在容器中没有查询到该类型对象时是否抛出异常
    */
   var Autowired: typeof A2n.Autowired
 
   /**
-   * 将类上的方法注册为接口，参数是接口地址
+   * 将类上的方法注册为接口
+   * @param path 接口地址
    */
   var RequestMapping: typeof A2n.RequestMapping
   var Get: typeof A2n.Get
@@ -102,7 +113,7 @@ declare namespace a2n {
   var Delete: typeof A2n.Delete
 
   /**
-   * bean依赖注入完成后执行
+   * 当前bean依赖注入完成后执行
    */
   var PostConstruct: typeof A2n.PostConstruct
 

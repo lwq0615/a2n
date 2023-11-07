@@ -1,6 +1,6 @@
 import * as express from "express";
 import { Request, Response } from "express";
-import { Route, ParamType, Method } from "@/control/types"
+import { ParamType, Method } from "@/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
 import { BeanClass, Config } from "../ioc/types";
@@ -78,8 +78,8 @@ export interface StartParam {
   callback?: () => void
 }
 
-export function start(startParam: StartParam) {
+export async function start(startParam: StartParam) {
   setConfig(startParam.config)
-  initBeanFinish()
+  await initBeanFinish()
   app.listen(startParam.config.port || 8080, startParam.callback)
 }

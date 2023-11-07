@@ -17,7 +17,7 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
  */
 export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => Boolean)): Promise<T[]> {
   if (isFunction(Cons)) {
-    const beans = [...states.values()].filter(state => (Cons as Function)(state)).map(state => {
+    const beans = [...states.values()].filter(Cons as any).map(state => {
       return getBean<T>(state.beanClass)
     })
     return Promise.all(beans)
@@ -125,7 +125,7 @@ export async function initBeanFinish() {
   })
   // 开启切面
   // 在初始化完成后才开启切面，防止初始化时bean的方法调用触发切面
-  Promise.all([task1, task2, task3]).then(() => {
+  return Promise.all([task1, task2, task3]).then(() => {
     startProxy()
   })
 }

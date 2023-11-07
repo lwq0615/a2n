@@ -28,7 +28,7 @@ export function getProxy(bean: BeanInstance): BeanInstance {
           const name = target.constructor.name + '.' + key
           for (const reg of beforeAspects.keys()) {
             if (reg.test(name)) {
-              beforeAspects.get(reg)()
+              beforeAspects.get(reg)(target.constructor, key)
             }
           }
           // 环绕
@@ -36,14 +36,14 @@ export function getProxy(bean: BeanInstance): BeanInstance {
           const aroundHandle = aroundAspects.get(aroundReg)
           let result: any = void 0
           if(aroundHandle) {
-            result = aroundHandle(() => target[key](...params))
+            result = aroundHandle(() => target[key](...params), target.constructor, key)
           }else {
             result = target[key](...params)
           }
           // 后置
           for (const reg of afterAspects.keys()) {
             if (reg.test(name)) {
-              afterAspects.get(reg)()
+              afterAspects.get(reg)(target.constructor, key)
             }
           }
           return result

@@ -10,9 +10,12 @@ export function setAspectBeans(beans: BeanInstance[]) {
   })
 }
 
-export const beforeAspects: Map<RegExp, Function> = new Map()
-export const afterAspects: Map<RegExp, Function> = new Map()
-export const aroundAspects: Map<RegExp, Function> = new Map()
+type AspectHandle = (Cons: BeanClass, name: string) => void
+type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
+
+export const beforeAspects: Map<RegExp, AspectHandle> = new Map()
+export const afterAspects: Map<RegExp, AspectHandle> = new Map()
+export const aroundAspects: Map<RegExp, AroundAspectHandle> = new Map()
 
 /**
  * 注册该类下的切面方法
