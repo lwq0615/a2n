@@ -21,7 +21,7 @@ npm install a2n-cli -g
 
 * 初始化项目基础代码环境
 ```bash
-a2n-cli init <project-name>
+a2n-cli create <project-name>
 ```
 
 ## 🔨 配置文件
