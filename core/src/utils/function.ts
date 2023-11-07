@@ -2,6 +2,10 @@ const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 const DEFAULT_PARAMS = /=[^,]+/mg;
 const FAT_ARROWS = /=>.*$/mg;
 
+
+/**
+ * 获取方法参数名称列表
+ */
 export function getFunParameterNames(fn: Function): string[] {
   const code = fn.toString()
     .replace(COMMENTS, '')
@@ -16,10 +20,16 @@ export function getFunParameterNames(fn: Function): string[] {
     : result;
 }
 
+/**
+ * 判断是否是一个函数
+ */
 export function isFunction(obj: any) {
   return Object.prototype.toString.call(obj) === '[object Function]' && !isClass(obj)
 }
 
+/**
+ * 判断是否是一个类Class
+ */
 function isClass(obj: any) {
   if (typeof obj != "function") return false;
   var str = obj.toString();
