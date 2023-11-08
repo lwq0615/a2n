@@ -8,11 +8,11 @@
   "author": "liweiqiang",
   "license": "ISC",
   "scripts": {
-    "dev": "webpack --watch --config webpack.config.js",
-    "test": "cross-env NODE_ENV=test nodemon -e * --ignore **/dist --exec npm run start",
+    "dev": "webpack --watch --config main/config/webpack-hot.config.js",
+    "test": "nodemon -e * --ignore **/dist --exec npm run start",
     "start": "npm run build:core && npm run build:serve && node dist/a2n.serve.js",
     "build:core": "webpack --config core/webpack.config.js",
-    "build:serve": "webpack --config webpack.config.js"
+    "build:serve": "webpack --config main/config/webpack.config.js"
   },
   "files": [
     "core"
