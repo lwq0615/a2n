@@ -25,15 +25,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
-    alias: process.env.NODE_ENV === 'test' ? {
-      '@/index': path.resolve(process.cwd(), 'core/dist/a2n.core.js')
-    } : {
+    alias: {
       '@': path.resolve(process.cwd(), 'core/src')
     }
   },
   output: {
     filename: 'a2n.serve.js',
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(process.cwd(), 'main/dist'),
     library: 'a2n',
     libraryTarget: 'umd'
   },
