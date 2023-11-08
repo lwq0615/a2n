@@ -18,10 +18,13 @@ class DtsBuildPlugin {
     const pluginName = DtsBuildPlugin.name;
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       const filename = compiler.options.output.filename.split(".").slice(0, -1).join(".") + '.d.ts'
-      fs.readFile('core/src/index.d.ts', (err, data) => {
+      fs.readFile('core/src/index.d.ts', async (err, data) => {
         if (err) {
           console.error(err)
           return
+        }
+        if (!fs.existsSync("core/dist")) {
+          fs.mkdirSync('core/dist')
         }
         // data 是二进制类型，需要转换成字符串
         const content = data.toString().replace("'./", "'../src/").replace('"./', '"../src/')

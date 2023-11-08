@@ -154,12 +154,12 @@ declare namespace a2n {
   /**
    * bean的构造器类型（Class对象）
    */
-  var BeanClass: typeof A2n.BeanClass
+  var BeanClass: A2n.BeanClass
 
   /**
    * bean对象实例
    */
-  var BeanInstance: typeof A2n.BeanInstance
+  var BeanInstance: A2n.BeanInstance
 
 }
 
