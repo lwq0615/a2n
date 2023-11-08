@@ -17,3 +17,7 @@ start({
     console.info("===================================================")
   }
 })
+
+if (module.hot) {
+  module.hot.accept();
+}

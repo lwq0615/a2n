@@ -1,5 +1,5 @@
 import { BeanClass, BeanInstance } from "@/ioc/types";
-import { beforeAspects, afterAspects, aroundAspects } from "./Aspect";
+import { getAspects } from "./Aspect";
 import { isFunction } from "@/utils/function";
 import { getState } from "@/ioc/beanState";
 
@@ -24,16 +24,17 @@ export function getProxy(bean: BeanInstance): BeanInstance {
       if (isStart && isFunction(target[key])) {
         // 切面编程
         return function (...params: any) {
+          const aspects = getAspects()
           // 前置
           const name = target.constructor.name + '.' + key
-          for (const reg of beforeAspects.keys()) {
+          for (const reg of aspects.beforeAspects.keys()) {
             if (reg.test(name)) {
-              beforeAspects.get(reg)(target.constructor, key)
+              aspects.beforeAspects.get(reg)(target.constructor, key)
             }
           }
           // 环绕
-          const aroundReg = [...aroundAspects.keys()].find(reg => reg.test(name))
-          const aroundHandle = aroundAspects.get(aroundReg)
+          const aroundReg = [...aspects.aroundAspects.keys()].find(reg => reg.test(name))
+          const aroundHandle = aspects.aroundAspects.get(aroundReg)
           let result: any = void 0
           if(aroundHandle) {
             result = aroundHandle(() => target[key](...params), target.constructor, key)
@@ -41,9 +42,9 @@ export function getProxy(bean: BeanInstance): BeanInstance {
             result = target[key](...params)
           }
           // 后置
-          for (const reg of afterAspects.keys()) {
+          for (const reg of aspects.afterAspects.keys()) {
             if (reg.test(name)) {
-              afterAspects.get(reg)(target.constructor, key)
+              aspects.afterAspects.get(reg)(target.constructor, key)
             }
           }
           return result

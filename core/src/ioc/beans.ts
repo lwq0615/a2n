@@ -14,7 +14,7 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
 
 /**
  * 通过类型获取该类型和继承自该类型的bean
- */
+ */ 
 export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => Boolean)): Promise<T[]> {
   if (isFunction(Cons)) {
     const beans = [...states.values()].filter(Cons as any).map(state => {

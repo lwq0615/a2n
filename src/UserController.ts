@@ -11,13 +11,14 @@ export default class UserControl{
   @Get("/get")
   get(a: any, @Query query: any){
     // console.log(query);
-    return query
+    return "query"
   }
 
   @Post("/get")
   get1(@Query query: any){
-    // console.log(a);
-    return this.service.getUser(query)
+    // console.log(query);
+    console.log("first")
+    return "query"
   }
 
 }

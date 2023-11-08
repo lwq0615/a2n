@@ -3,6 +3,17 @@ import { setBean } from "@/ioc"
 import { BeanClass, BeanInstance } from "@/ioc/types"
 
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
+const beforeAspects: Map<RegExp, AspectHandle> = new Map()
+const afterAspects: Map<RegExp, AspectHandle> = new Map()
+const aroundAspects: Map<RegExp, AroundAspectHandle> = new Map()
+
+export function getAspects() {
+  return {
+    beforeAspects,
+    afterAspects,
+    aroundAspects
+  }
+}
 
 export function setAspectBeans(beans: BeanInstance[]) {
   beans?.forEach(bean => {
@@ -12,10 +23,6 @@ export function setAspectBeans(beans: BeanInstance[]) {
 
 type AspectHandle = (Cons: BeanClass, name: string) => void
 type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
-
-export const beforeAspects: Map<RegExp, AspectHandle> = new Map()
-export const afterAspects: Map<RegExp, AspectHandle> = new Map()
-export const aroundAspects: Map<RegExp, AroundAspectHandle> = new Map()
 
 /**
  * 注册该类下的切面方法

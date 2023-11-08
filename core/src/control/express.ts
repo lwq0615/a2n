@@ -86,6 +86,6 @@ export async function start(startParam: StartParam) {
   server = app.listen(startParam.config.port || 8080, startParam.callback)
 }
 
-export function close() {
-  server?.close()
+export function close(callback?: (err?: Error) => void) {
+  server?.close(callback)
 }
