@@ -34,7 +34,8 @@ export {
   Delete,
   Put,
   app, 
-  start
+  start,
+  close
 } from '@/control'
 
 export { Request, Response } from 'express';

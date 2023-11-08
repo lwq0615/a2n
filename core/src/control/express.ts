@@ -7,9 +7,11 @@ import { BeanClass, Config } from "../ioc/types";
 import { setConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
 import { getState } from "@/ioc/beanState";
+import * as http from "http";
 
 const bodyParser = require('body-parser')
 const app: Express = express();
+let server: http.Server = null
 
 /**
  * 解析post请求参数
@@ -81,5 +83,9 @@ export interface StartParam {
 export async function start(startParam: StartParam) {
   setConfig(startParam.config)
   await initBeanFinish()
-  app.listen(startParam.config.port || 8080, startParam.callback)
+  server = app.listen(startParam.config.port || 8080, startParam.callback)
+}
+
+export function close() {
+  server?.close()
 }

@@ -1,5 +1,5 @@
 export { Control } from "@/control/Control";
-export { app, start } from './express'
+export { app, start, close } from './express'
 export {
   Query,
   Body,

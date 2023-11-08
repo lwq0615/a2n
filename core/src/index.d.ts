@@ -66,6 +66,11 @@ declare namespace a2n {
   var start: typeof A2n.start
 
   /**
+   * 启动服务器
+   */
+  var close: typeof A2n.close
+
+  /**
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
    */
   var Control: typeof A2n.Control
