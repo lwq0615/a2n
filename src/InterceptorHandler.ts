@@ -1,5 +1,4 @@
-import { Request, Interceptor, Bean, AroundInterceptor, Scope, Aspect, Before, After, Around } from "@/index";
-import { BeanClass } from "@/ioc/types";
+import { Request, Interceptor, Bean, BeanClass, Scope, Aspect, Before, After, Around } from "@/index";
 
 
 // @Aspect

@@ -1,6 +1,6 @@
 {
   "name": "a2n",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "基于express的轻量级服务器",
   "main": "core/dist/a2n.core.js",
   "type": "commonjs",
@@ -15,7 +15,9 @@
     "build:serve": "webpack --config main/config/webpack.config.js"
   },
   "files": [
-    "core/dist"
+    "core/dist",
+    "core/src/types",
+    "core/src/index.d.ts"
   ],
   "keywords": [
     "express",

@@ -1,7 +1,7 @@
-import { BeanClass } from "@/ioc/types";
+import { BeanClass } from "@/types";
 import { Request, Response } from "express";
 import { doErrHandler } from './exception';
-import { Interceptor, AroundInterceptor } from "./types";
+import { Interceptor, AroundInterceptor } from "@/types";
 
 let interceptors: Interceptor[] = []
 let aroundInterceptor: AroundInterceptor = null

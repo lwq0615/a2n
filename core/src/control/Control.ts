@@ -1,7 +1,7 @@
 import { regRoutes } from '@/control/express'
 import { getBean, setBean } from '@/ioc'
 import { getState } from '@/ioc/beanState'
-import { BeanClass, BeanInstance } from '@/ioc/types'
+import { BeanClass, BeanInstance } from '@/types'
 import { getFunParameterNames } from '@/utils/function'
 
 const controlMap: Map<BeanClass, BeanInstance> = new Map()

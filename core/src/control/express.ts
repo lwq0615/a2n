@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { ParamType, Method } from "@/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
-import { BeanClass, Config } from "../ioc/types";
+import { BeanClass, StartParam } from "@/types";
 import { setConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
 import { getState } from "@/ioc/beanState";
@@ -75,15 +75,11 @@ export {
   app
 }
 
-export interface StartParam {
-  config: Config,
-  callback?: () => void
-}
-
 export async function start(startParam: StartParam) {
   setConfig(startParam.config)
   await initBeanFinish()
   server = app.listen(startParam.config.port || 8080, startParam.callback)
+  
 }
 
 export function close(callback?: (err?: Error) => void) {

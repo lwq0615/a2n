@@ -1,4 +1,4 @@
-import { BeanClass } from "@/ioc/types";
+import { BeanClass } from ".";
 import { Request, Response } from "express";
 
 
@@ -51,3 +51,8 @@ export class ErrHandler {
     return value
   }
 }
+
+/**
+ * 切面处理器
+ */
+export type AspectHandler = (reg: RegExp) => MethodDecorator

@@ -1,29 +1,5 @@
 import { Route } from "@/control/types"
-
-
-// bean实例
-export type BeanInstance = {
-  constructor: BeanClass,
-  [fieldName: string]: any
-}
-
-// bean类型
-export interface BeanClass {
-  new(): BeanInstance | any
-}
-
-export interface Config {
-  port?: number,
-  componentScan?: string,
-  [name: string]: any
-}
-
-export enum BeanScope{
-  // 单例
-  SINGLETON = 0,
-  // 多例
-  PROTOTYPE = 1
-}
+import { BeanClass, BeanInstance, BeanScope } from "@/types"
 
 export interface AspectHandle {
   reg: RegExp,

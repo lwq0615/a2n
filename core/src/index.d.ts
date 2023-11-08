@@ -1,15 +1,6 @@
 import { Express } from 'express-serve-static-core';
 import * as express from "express";
-
-interface Config {
-  port?: number,
-  componentScan?: string,
-  [name: string]: any
-}
-interface StartParam {
-  config: Config,
-  callback?: () => void
-}
+import * as types from './types'
 
 declare namespace a2n {
 
@@ -17,45 +8,17 @@ declare namespace a2n {
    * 拦截器
    * 继承Interceptor并注入到bean可开启拦截器
    */
-  class Interceptor {
-    /**
-     * @param req 请求对象
-     * @param res 响应对象
-     * @param Cons 请求进入的控制器Class
-     * @param methodName 请求进入的控制器方法名称
-     * @return true：不拦截，false：拦截请求
-     */
-    doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean
-  }
+  var Interceptor: typeof types.Interceptor
 
   /**
    * 环绕拦截器
    */
-  class AroundInterceptor {
-    /**
-     * @param callback 要执行的控制器方法
-     * @param req 请求对象
-     * @param res 响应对象
-     * @param Cons 请求进入的控制器Class
-     * @param methodName 请求进入的控制器方法名称
-     * @return 拦截器返回的值会作为请求响应值
-     */
-    doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): any
-  }
+  var AroundInterceptor: typeof types.AroundInterceptor
 
   /**
    * 异常处理器
    */
-  class ErrHandler {
-    /**
-     * @param err 错误对象
-     * @param req 请求对象
-     * @param res 响应对象
-     * @param value 上一个异常处理器传递的响应返回值
-     * @return 请求的响应返回值
-     */
-    handler(err: Error, req: Request, res: Response, value?: any): any
-  }
+  var ErrHandler: typeof types.ErrHandler
 
   /**
    * 标记类为切面类
@@ -67,19 +30,19 @@ declare namespace a2n {
    * 前置切面控制器
    * 控制器提供参数 Cons: 代理的类, name: 代理类执行的方法名
    */
-  var Before: (reg: RegExp) => MethodDecorator
+  var Before: types.AspectHandler
 
   /**
    * 后置切面控制器
    * 控制器提供参数 Cons: 代理的类, name: 代理类执行的方法名
    */
-  var After: typeof Before
+  var After: types.AspectHandler
 
   /**
    * 环绕切面控制器，如果匹配了多个环绕控制器，只生效第一个
    * 控制器提供参数 callback: 可调用的代理类原执行方法, Cons: 代理的类, name: 代理类执行的方法名
    */
-  var Around: typeof Before
+  var Around: types.AspectHandler
 
   /**
    * express对象，不推荐操作此对象
@@ -89,77 +52,72 @@ declare namespace a2n {
   /**
    * 请求对象类型
    */
-  interface Request extends express.Request { }
+  type Request = express.Request
 
   /**
    * 响应对象类型
    */
-  interface Response extends express.Response { }
+  type Response = express.Response
 
   /**
    * 启动服务器
    */
-  var start: (startParam: StartParam) => void
+  var start: types.start
 
   /**
    * 启动服务器
    */
-  var close: (callback?: (err?: Error) => void) => void
+  var close: types.close
 
   /**
    * @param path 接口路径
    * 标记一个类为控制器，控制器下的请求方法会被注册到express
    */
-  var Control: (path: string | BeanClass) => any
+  var Control: types.Control
 
   /**
    * @param source bean名称
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */
-  var Service: (source: string | BeanClass) => any
+  var Service: types.Service
 
   /**
    * 标记一个类bean对象，该对象将会注册一个实例到bean容器中
    */
-  var Bean: typeof Service
+  var Bean: types.Service
 
   /**
    * 设置bean的创建方式
    */
-  var Scope: (scope: BeanScope) => ClassDecorator
+  var Scope: types.Scope
 
   /**
    * bean的创建方式枚举，单例：SINGLETON，多例：PROTOTYPE
    */
-  enum BeanScope{
-    // 单例
-    SINGLETON = 0,
-    // 多例
-    PROTOTYPE = 1
-  }
+  var BeanScope: typeof types.BeanScope
 
   /**
    * 将a2n.config.js配置文件中的值注入属性
    * @param name 配置文件属性名称
    */
-  var Config: (name: string) => PropertyDecorator
+  var Config: types.Config
 
   /**
    * 为属性进行依赖注入
    * @param Cons: BeanClass | string (依赖注入的对象构造器类型 | bean名称)
    * @param required 在容器中没有查询到该类型对象时是否抛出异常
    */
-  var Autowired: (Cons: string | BeanClass | Promise<any>, required: boolean) => PropertyDecorator
+  var Autowired: types.Autowired
 
   /**
    * 将类上的方法注册为接口
    * @param path 接口地址
    */
-  var RequestMapping: (path: string) => MethodDecorator
-  var Get: typeof RequestMapping
-  var Post: typeof RequestMapping
-  var Put: typeof RequestMapping
-  var Delete: typeof RequestMapping
+  var RequestMapping: types.RequestMapping
+  var Get: types.RequestMapping
+  var Post: types.RequestMapping
+  var Put: types.RequestMapping
+  var Delete: types.RequestMapping
 
   /**
    * 当前bean依赖注入完成后执行
@@ -170,13 +128,13 @@ declare namespace a2n {
    * 将url上携带的所有参数注入到接口参数
    * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
    */
-  var Query: (target: any, methodName?: string, paramIndex?: number) => any
+  var Query: types.Query
 
   /**
    * 将post请求携带的报文参数注入到接口参数
    * 装饰器可以携带一个参数，含义是报文上的某个参数名称，会将该参数的值注入到接口参数
    */
-  var Body: (target: any, methodName?: string, paramIndex?: number) => any
+  var Body: types.Body
 
   /**
    * 将requset对象注入到接口参数
@@ -192,28 +150,23 @@ declare namespace a2n {
    * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）或者bean名称
    */
-  function getBean<T = BeanInstance>(Cons: BeanClass | string): Promise<T>
+  var getBean: types.getBean
 
   /**
    * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）
    */
-  function getBeans<T = BeanInstance>(Cons: BeanClass | string): Promise<T[]>
+  var getBeans: types.getBeans
 
   /**
    * bean的构造器类型（Class对象）
    */
-  interface BeanClass {
-    new(): BeanInstance | any
-  }
+  type BeanClass = types.BeanClass
 
   /**
    * bean对象实例
    */
-  type BeanInstance = {
-    constructor: BeanClass,
-    [fieldName: string]: any
-  }
+  type BeanInstance = types.BeanInstance
 
 }
 

@@ -1,10 +1,9 @@
-import { getBean } from '@/ioc/beans'
-import { Config as ConfigType } from './types'
+import { RunConfig } from '@/types'
 import { getState } from './beanState'
 
-let config: ConfigType = null
+let config: RunConfig = null
 
-export function setConfig(config2: ConfigType) {
+export function setConfig(config2: RunConfig) {
   config = config2
 }
 

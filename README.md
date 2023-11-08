@@ -38,7 +38,7 @@ cd <project-name>
 npm install
 ```
 
-- 启动项目
+- 启动服务
 
 ```bash
 npm run dev
@@ -69,7 +69,7 @@ module.exports = {
 
 - 启动入口 main
 
-> main 目录下的文件为项目启动和打包的入口文件，由于打包和本地开发的运行环境不同，因此使用不同的入口文件。项目的本地运行环境通过 ts-node 实现，入口文件为 main/tsnode.ts，打包构建最终程序时使用的是 webpack，入口文件为 main/start.ts。
+> main 目录下的文件为项目启动和打包相关的文件，start.ts 为入口文件，config 中为本地开发和打包时的 webpack 配置文件，由于本地开发环境需要实现代码热更新，因此将 webpack 配置文件进行拆分。
 
 - ts语言配置
 

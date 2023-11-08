@@ -1,11 +1,12 @@
 import { setInterceptors } from "@/aop/interceptor"
 import { getState, states } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance, BeanCache, BeanState } from "./types"
+import { BeanScope, BeanClass, BeanInstance } from "@/types"
 import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
 import { setErrorHandlers } from "@/aop/exception"
 import { getProxy, startProxy } from "@/aop/proxy"
 import { isFunction } from "@/utils/function"
 import { setAspectBeans } from "@/aop/Aspect"
+import { BeanCache, BeanState } from "./types"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()

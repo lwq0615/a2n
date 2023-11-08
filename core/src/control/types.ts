@@ -41,14 +41,3 @@ export enum ParamType{
   REQUEST = 'request',
   RESPONSE = 'response'
 }
-
-
-/**
- * 启动参数
- */
-export interface StartParam {
-  config: {
-    port?: number
-  },
-  callback?: () => void
-}
