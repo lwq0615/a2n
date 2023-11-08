@@ -15,7 +15,7 @@
     "build:serve": "webpack --config main/config/webpack.config.js"
   },
   "files": [
-    "core"
+    "core/dist"
   ],
   "keywords": [
     "express",
