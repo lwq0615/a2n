@@ -7,9 +7,9 @@
 [![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url]
 
 [npm-image]: http://img.shields.io/npm/v/antd.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/antd
+[npm-url]: https://www.npmjs.com/package/a2n
 [download-image]: https://img.shields.io/npm/dm/antd.svg?style=flat-square
-[download-url]: https://npmjs.org/package/antd
+[download-url]: https://www.npmjs.com/package/a2n
   
 </div>
 
