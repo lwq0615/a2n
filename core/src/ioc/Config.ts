@@ -4,7 +4,21 @@ import { getState } from './beanState'
 let config: RunConfig = null
 
 export function setConfig(config2: RunConfig) {
+  if(!config2.baseUrl) {
+    config2.baseUrl = ''
+  }
+  if(!config2.port) {
+    config2.port = 8080
+  }
+  if(!config2.componentScan) {
+    config2.componentScan = 'src'
+  }
   config = config2
+  return config
+}
+
+export function getConfig() {
+  return config
 }
 
 /**

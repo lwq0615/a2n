@@ -4,7 +4,7 @@ import { ParamType, Method } from "@/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
 import { BeanClass, StartParam } from "@/types";
-import { setConfig } from "../ioc/Config";
+import { setConfig, getConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
 import { getState } from "@/ioc/beanState";
 import * as http from "http";
@@ -28,11 +28,12 @@ const paths: { [path: string]: Method } = {}
 export const regRoutes = function (Cons: BeanClass) {
   const state = getState(Cons)
   const keyList = Object.keys(state.controlMethods)
+  const globalBaseUrl = getConfig().baseUrl
   const baseUrl = state.controlMapping
   keyList.forEach(methodName => {
     const route = state.controlMethods[methodName]
     // 规范化路由路径
-    const pathArr: string[] = (baseUrl + "/" + route.path).split("/").filter((item: string) => item)
+    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + route.path).split("/").filter((item: string) => item)
     let realPath = '/' + pathArr.join("/")
     if ((realPath in paths) && route.type === paths[realPath]) {
       throw new Error("重复的接口: '" + realPath + "'")
@@ -76,10 +77,10 @@ export {
 }
 
 export async function start(startParam: StartParam) {
-  setConfig(startParam.config)
+  const config = setConfig(startParam.config)
   await initBeanFinish()
-  server = app.listen(startParam.config.port || 8080, startParam.callback)
-  
+  server = app.listen(config.port, startParam.callback)
+
 }
 
 export function close(callback?: (err?: Error) => void) {

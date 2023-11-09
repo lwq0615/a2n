@@ -7,6 +7,7 @@ import { getProxy, startProxy } from "@/aop/proxy"
 import { isFunction } from "@/utils/function"
 import { setAspectBeans } from "@/aop/Aspect"
 import { BeanCache, BeanState } from "./types"
+import { regRoutes } from "@/control/express"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -112,6 +113,10 @@ export async function initBeanFinish() {
   }
   // 所有bean依赖注入全部完成，执行@PostConstruct
   doInitOverTasks([...beanMap.values()])
+  // 控制器注册接口路由
+  await getBeans((state) => state.isControl).then(res => {
+    res.forEach(bean => regRoutes(bean.constructor))
+  })
   // 设置扫描生效的拦截器
   const task1 = Promise.all([getBeans<Interceptor>(Interceptor), getBeans<AroundInterceptor>(AroundInterceptor)]).then(res => {
     setInterceptors(res[0], res[1]?.[0])

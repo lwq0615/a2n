@@ -15,6 +15,7 @@ export class BeanState {
 
   beanClass: BeanClass
   setBeanTask: Function
+  isControl: Boolean = false
   // 控制器处理器
   controlMethods: {
     [methodName: string]: Route

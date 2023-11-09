@@ -3,6 +3,7 @@ import { BeanClass } from "."
 
 export interface RunConfig {
   port?: number,
+  baseUrl?: string,
   componentScan?: string,
   [name: string]: any
 }
