@@ -4,11 +4,14 @@
   
 一套基于Spring设计理念开发的NodeJs服务端框架。
 
-[NPM][download-url]
+[NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
-[download-url]: https://www.npmjs.com/package/a2n
+[npm-url]: https://www.npmjs.com/package/a2n
+[github-url]: https://github.com/lwq0615/a2n
   
 </div>
+
+> 作为一名软件开发搬砖仔，今年年初毕业后找了一份前端开发的工作，技术栈主要是 Vue，虽然工作内容只有前端，但是自己也是懂一些后端。平时我比较倾向于用 Java Spring 来写接口，在深入学习 Spring 的设计理念之后，就想着自己也写一个实用的框架出来，但是 Java 出色的框架已经很多了，我也不是专业的 Java 工程师，所以选择了使用 Node 来开发一个服务端框架，对 Node 感兴趣的小伙伴可以前往 Github 或者 NPM 下载体验。
 
 ## ✨ 特性
 
@@ -115,5 +118,3 @@ export default class UserControl{
 
 }
 ```
-
-[项目地址](https://github.com/lwq0615/a2n)&nbsp;&nbsp;&nbsp;&nbsp;
