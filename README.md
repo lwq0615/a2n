@@ -56,6 +56,8 @@ npm run build
 
 ```js
 module.exports = {
+  // 全局接口前缀
+  baseUrl: '/api',
   // 组件扫描路径，该路径下的js,ts文件将会被容器扫描，默认src
   componentScan: 'src',
   // 服务启动端口号

@@ -1,5 +1,5 @@
 import { setInterceptors } from "@/aop/interceptor"
-import { getState, states } from "./beanState"
+import { getState, getStates } from "./beanState"
 import { BeanScope, BeanClass, BeanInstance } from "@/types"
 import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
 import { setErrorHandlers } from "@/aop/exception"
@@ -19,12 +19,12 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
  */ 
 export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => Boolean)): Promise<T[]> {
   if (isFunction(Cons)) {
-    const beans = [...states.values()].filter(Cons as any).map(state => {
+    const beans = [...getStates().values()].filter(Cons as any).map(state => {
       return getBean<T>(state.beanClass)
     })
     return Promise.all(beans)
   } else {
-    const beans = [...states.keys()].filter(Item => new Item() instanceof Cons).map(Item => {
+    const beans = [...getStates().keys()].filter(Item => new Item() instanceof Cons).map(Item => {
       return getBean<T>(Item)
     })
     return Promise.all(beans)
@@ -104,7 +104,7 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
  */
 export async function initBeanFinish() {
   // 单例池生成bean
-  for (const state of states.values()) {
+  for (const state of getStates().values()) {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入
@@ -114,9 +114,11 @@ export async function initBeanFinish() {
   // 所有bean依赖注入全部完成，执行@PostConstruct
   doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
-  await getBeans((state) => state.isControl).then(res => {
-    res.forEach(bean => regRoutes(bean.constructor))
-  })
+  for (const state of getStates().values()) {
+    if(state.isControl) {
+      regRoutes(state.beanClass)
+    }
+  }
   // 设置扫描生效的拦截器
   const task1 = Promise.all([getBeans<Interceptor>(Interceptor), getBeans<AroundInterceptor>(AroundInterceptor)]).then(res => {
     setInterceptors(res[0], res[1]?.[0])

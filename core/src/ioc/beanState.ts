@@ -1,7 +1,7 @@
 import { BeanClass } from "@/types";
 import { BeanState } from "./types";
 
-export const states = new Map<BeanClass, BeanState>()
+const states = new Map<BeanClass, BeanState>()
 
 
 /**
@@ -20,4 +20,8 @@ export function getState(Cons: BeanClass): BeanState {
   state = new BeanState(Cons)
   states.set(Cons, state)
   return state
+}
+
+export function getStates() {
+  return states
 }
