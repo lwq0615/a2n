@@ -2,6 +2,14 @@
 
 <div align="center">
 一套基于Spring设计理念开发的NodeJs服务端框架。
+
+[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url]
+
+[npm-image]: http://img.shields.io/npm/v/antd.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/antd
+[download-image]: https://img.shields.io/npm/dm/antd.svg?style=flat-square
+[download-url]: https://npmjs.org/package/antd
+  
 </div>
 
 ## ✨ 特性
