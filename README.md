@@ -92,7 +92,7 @@ module.exports = {
 import { Control, Get, Query, Post, Body, Put, Req, Res, Request, Response } from 'a2n';
 
 /**
- * 使用@Control标记一个Clas
+ * 使用@Control标记一个Class
  * Class下的@Get，@Post，@Delete，@Put方法都会被注册为接口，方法return的值作为接口返回值
  */
 @Control("/user")
