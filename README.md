@@ -95,7 +95,7 @@ import { Control, Get, Query, Post, Body, Put, Req, Res, Request, Response } fro
 
 /**
  * 使用@Control标记一个Class
- * Class下的@Get，@Post，@Delete，@Put方法都会被注册为接口，方法return的值作为接口返回值
+ * Class下的@Get，@Post，@Delete，@Put，@RequestMapping方法都会被注册为接口，方法return的值作为接口返回值
  */
 @Control("/user")
 export default class UserControl{
@@ -116,6 +116,76 @@ export default class UserControl{
   get1(@Req request: Request, @Res response: Response){
     // 使用@Req注入请求对象，@Res注入响应对象
     // 请求和响应对象使用参考express的Request、Response使用方法 https://nodejs.cn/express/4x/api/req/
+  }
+
+}
+```
+
+### 依赖注入
+
+```ts
+import { Autowired, Bean, Config, PostConstruct, BeanScope, Scope, getBean, getBeans } from "a2n";
+import RoleService from "./RoleService";
+import OtherBean from "./OtherBean";
+
+// @Service将该类交给bean容器管理，与@Bean具有相同的功能，只是命名不同
+@Service
+// @Scope定义了bean的创建方式，BeanScope.PROTOTYPE：多例，每次获取创建新的bean
+// BeanScope.SINGLETON（默认），在单例池生成bean，每次从单例池获取
+@Scope(BeanScope.PROTOTYPE)
+export default class UserServicer {
+
+  // 获取一个RoleService类型的bean注入到role属性
+  @Autowired(RoleService)
+  role: any = null
+
+  // 从a2n.config.js配置文件中查询datasource.url注入到url属性中
+  @Config('datasource.url')
+  url: string = null
+
+  @PostConstruct
+  init() {
+    // bean创建并完成依赖注入后，将会执行@PostConstruct的内容
+    console.log(this.role)
+    console.log(this.url)
+  }
+
+  async getUser() {
+    // 可以通过getBean手动获取bean
+    const other = await getBean<OtherBean>(OtherBean)
+    // getBeans会获取所有属于或者继承自OtherBean的bean
+    const others = await getBeans<OtherBean>(OtherBean)
+  }
+
+}
+```
+
+### 拦截器
+
+```ts
+import { Bean, Interceptor, Request, Response, BeanClass } from "a2n";
+
+/**
+ * 继承Interceptor类并注入到容器中，该类会被注册为拦截器
+ * return false拦截请求
+ */
+@Bean
+export default class AuthInterceptor extends Interceptor {
+
+  /**
+   * 拦截器校验方法
+   * @param req 请求对象
+   * @param res 响应对象
+   * @param Cons 请求进入的Control类
+   * @param methodName 请求进入Control的方法名
+   * @returns false：拦截，true：不拦截
+   */
+  doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
+    if(req.baseUrl === "/user") {
+      return true
+    }else {
+      return false
+    }
   }
 
 }
