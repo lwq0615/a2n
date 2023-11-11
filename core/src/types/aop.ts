@@ -18,23 +18,6 @@ export class Interceptor {
   }
 }
 
-/**
- * 环绕拦截器
- * 环绕拦截器最多只能注册一个
- */
-export class AroundInterceptor {
-  /**
-   * @param callback 要执行的控制器方法
-   * @param req 请求对象
-   * @param res 响应对象
-   * @param Cons 请求进入的控制器Class
-   * @param methodName 请求进入的控制器方法名称
-   * @return 拦截器返回的值会作为请求响应值
-   */
-  doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): any {
-    return callback()
-  }
-}
 
 /**
  * 异常处理器

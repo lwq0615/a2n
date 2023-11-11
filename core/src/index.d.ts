@@ -11,11 +11,6 @@ declare namespace a2n {
   var Interceptor: typeof types.Interceptor
 
   /**
-   * 环绕拦截器
-   */
-  var AroundInterceptor: typeof types.AroundInterceptor
-
-  /**
    * 异常处理器
    */
   var ErrHandler: typeof types.ErrHandler

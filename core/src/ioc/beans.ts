@@ -1,7 +1,7 @@
 import { setInterceptors } from "@/aop/interceptor"
 import { getState, getStates } from "./beanState"
 import { BeanScope, BeanClass, BeanInstance } from "@/types"
-import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
+import { ErrHandler, Interceptor } from "@/aop"
 import { setErrorHandlers } from "@/aop/exception"
 import { getProxy, startProxy } from "@/aop/proxy"
 import { isFunction } from "@/utils/function"
@@ -120,8 +120,8 @@ export async function initBeanFinish() {
     }
   }
   // 设置扫描生效的拦截器
-  const task1 = Promise.all([getBeans<Interceptor>(Interceptor), getBeans<AroundInterceptor>(AroundInterceptor)]).then(res => {
-    setInterceptors(res[0], res[1]?.[0])
+  const task1 = getBeans<Interceptor>(Interceptor).then(res => {
+    setInterceptors(res)
   })
   // 设置扫描生效的异常处理器
   const task2 = getBeans<ErrHandler>(ErrHandler).then(res => {
