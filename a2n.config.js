@@ -1,6 +1,6 @@
 module.exports = {
   // 全局接口前缀
-  baseUrl: '/api',
+  baseUrl: '',
   // 组件扫描路径
   componentScan: 'src',
   // 服务启动端口号
