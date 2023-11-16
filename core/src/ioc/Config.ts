@@ -1,19 +1,20 @@
 import { RunConfig } from '@/types'
 import { getState } from './beanState'
+const _ = require('lodash');
 
 let config: RunConfig = null
 
-export function setConfig(config2: RunConfig) {
-  if(!config2.baseUrl) {
-    config2.baseUrl = ''
+export function setConfig(runConfig: RunConfig) {
+  if(!runConfig.baseUrl) {
+    runConfig.baseUrl = ''
   }
-  if(!config2.port) {
-    config2.port = 8080
+  if(!runConfig.port) {
+    runConfig.port = 8080
   }
-  if(!config2.componentScan) {
-    config2.componentScan = 'src'
+  if(!runConfig.componentScan) {
+    runConfig.componentScan = 'src'
   }
-  config = config2
+  config = runConfig
   return config
 }
 
@@ -27,18 +28,7 @@ export function getConfig() {
 export const Config = function (name: string) {
   return function (target: any, fieldName: string) {
     const task = function() {
-      const objPath: string[] = name.split(".")
-      let value: any = null
-      let config2 = config
-      objPath.forEach(key => {
-        try {
-          value = config2[key]
-          config2 = value
-        } catch (err) {
-          throw new Error("Config: " + name + " 获取失败")
-        }
-      })
-      this[fieldName] = value
+      this[fieldName] = _.get(config, name)
     }
     getState(target.constructor).configTasks.push(task)
   } as PropertyDecorator
