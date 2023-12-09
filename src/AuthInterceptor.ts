@@ -1,5 +1,4 @@
-import { Bean, Interceptor, Request, Response } from "@/index";
-import { BeanClass } from "core/dist/a2n.core";
+import { Bean, Interceptor, Request, Response, BeanClass } from "@/index";
 
 /**
  * 继承Interceptor类并注入到容器中，该类会被注册为拦截器

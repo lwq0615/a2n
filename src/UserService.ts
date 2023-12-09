@@ -13,7 +13,7 @@ export default class UserServicer {
   @PostConstruct
   init() {
     // 依赖注入完成后，将会执行@PostConstruct的内容
-    // console.log(this.role)
+    // console.log(this.url)
   }
 
   getUser(query: any) {

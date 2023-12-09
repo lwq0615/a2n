@@ -14,6 +14,7 @@ export {
 
 export {
   Interceptor,
+  AroundInterceptor,
   ErrHandler,
   Aspect,
   After,
