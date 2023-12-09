@@ -16,11 +16,7 @@ export default class AuthInterceptor extends Interceptor {
    * @returns false：拦截，true：不拦截
    */
   doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
-    if(req.baseUrl === "/user") {
-      return true
-    }else {
-      return false
-    }
+    return true
   }
 
 }
