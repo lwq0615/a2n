@@ -37,6 +37,8 @@ export class BeanState {
   afterAspects: AspectHandle[] = []
   // 环绕切面
   aroundAspects: AspectHandle[] = []
+  // 是否已经完成依赖注入
+  injectOver: Boolean = false
 }
 
 // bean多例缓存池对象

@@ -1,4 +1,4 @@
-import { Autowired, Bean, BeanScope, Scope } from "@/index";
+import { Autowired, Bean, BeanScope, Scope, PostConstruct } from "@/index";
 
 @Bean('role')
 @Scope(BeanScope.PROTOTYPE)
@@ -6,5 +6,11 @@ export default class RoleService {
 
   @Autowired(import("./UserService"))
   user: any = null
+
+  @PostConstruct
+  init() {
+    // 依赖注入完成后，将会执行@PostConstruct的内容
+    // console.log(this.user)
+  }
 
 }

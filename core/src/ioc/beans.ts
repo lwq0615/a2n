@@ -57,7 +57,10 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
     const state = getState(Cons)
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
-      return beanMap.get(Cons) as T
+      const bean: BeanInstance = beanMap.get(Cons)
+      // 此时的单例bean有可能是未进行依赖注入的，先进行依赖注入
+      await injectBean(bean, cache)
+      return bean as T
     } else {
       // 多例模式，每次获取bean的时候创建新的bean
       // 多例模式的第一个bean，创建缓存池，该bean和依赖的多例bean创建时会存入缓存池，防止循环依赖
@@ -91,12 +94,18 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
  * @param cache 缓存池，cache不为空，表示注入的是多例的bean
  */
 const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
+  const state = getState(bean.constructor)
+  // 如果是单例bean切已经注入完成，则跳过
+  if(state.injectOver && state.scope === BeanScope.SINGLETON) {
+    return
+  }
   // 依赖注入@Autowired
-  for (const task of getState(bean.constructor).autowiredTasks) {
+  for (const task of state.autowiredTasks) {
     await task.call(bean, cache)
   }
   // 配置文件注入@Config
-  getState(bean.constructor).configTasks?.forEach((task: Function) => task.call(bean))
+  state.configTasks?.forEach((task: Function) => task.call(bean))
+  state.injectOver = true
 }
 
 /**
