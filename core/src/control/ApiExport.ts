@@ -2,7 +2,6 @@ import { getState, setBean } from "@/ioc"
 import { getConfig } from "@/ioc/Config"
 import { getControlBean } from "./Control"
 import { Method, Route } from "./types"
-const path = require('path')
 
 
 export const ApiExport: ClassDecorator = (Cons: any) => {
