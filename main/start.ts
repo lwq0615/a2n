@@ -1,16 +1,16 @@
 import { start, setConfig } from "@/index"
 const fs = require('fs')
 const path = require('path')
-const config = require("../a2n.config")
+let config = require("../a2n.config")
 
-setConfig(config)
+config = setConfig(config)
 
-const scanPath = path.resolve(process.cwd(), config.componentScan || 'src')
+const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
   throw new Error("folder " + scanPath + "not exist!")
 }
 console.info('scan components in folder ' + scanPath);
-const requireComponent = require.context("../" + (process.env.componentScan || 'src'), true, /[\.ts?|\.js?]$/)
+const requireComponent = require.context("../" + (process.env.componentScan), true, /[\.ts?|\.js?]$/)
 requireComponent.keys().forEach(filepath => {
   console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
   requireComponent(filepath)
