@@ -32,6 +32,16 @@ export type Scope = (scope: BeanScope) => ClassDecorator
 
 export type Config = (name: string) => PropertyDecorator
 
+export interface RunConfig {
+  port?: number,
+  baseUrl?: string,
+  componentScan?: string,
+  apiExport?: {
+    baseUrl?: string
+  }
+  [name: string]: any
+}
+
 export type Autowired = (Cons: string | BeanClass | Promise<any>, required?: boolean) => PropertyDecorator
 
 export type getBean = <T = BeanInstance>(Cons: BeanClass | string) => Promise<T>

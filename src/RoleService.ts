@@ -1,6 +1,8 @@
+import { ApiExport } from "@/control/ApiExport";
 import { Autowired, Bean, BeanScope, Scope, PostConstruct } from "@/index";
 
 @Bean('role')
+@ApiExport
 @Scope(BeanScope.PROTOTYPE)
 export default class RoleService {
 

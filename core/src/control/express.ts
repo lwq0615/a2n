@@ -4,7 +4,7 @@ import { ParamType, Method } from "@/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
 import { BeanClass, StartParam } from "@/types";
-import { setConfig, getConfig } from "../ioc/Config";
+import { getConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
 import { getState } from "@/ioc/beanState";
 import * as http from "http";
@@ -77,7 +77,7 @@ export {
 }
 
 export async function start(startParam: StartParam) {
-  const config = setConfig(startParam.config)
+  const config = getConfig()
   await initBeanFinish()
   server = app.listen(config.port, startParam.callback)
 

@@ -1,15 +1,8 @@
-import { BeanClass } from "."
+import { BeanClass, RunConfig } from "."
 
 
-export interface RunConfig {
-  port?: number,
-  baseUrl?: string,
-  componentScan?: string,
-  [name: string]: any
-}
 
 export interface StartParam {
-  config: RunConfig,
   callback?: () => void
 }
 

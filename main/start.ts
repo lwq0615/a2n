@@ -1,7 +1,9 @@
-import { start } from "@/index"
+import { start, setConfig } from "@/index"
 const fs = require('fs')
 const path = require('path')
 const config = require("../a2n.config")
+
+setConfig(config)
 
 const scanPath = path.resolve(process.cwd(), config.componentScan || 'src')
 if (!fs.existsSync(scanPath)) {
@@ -15,7 +17,6 @@ requireComponent.keys().forEach(filepath => {
 })
 
 start({
-  config,
   callback: () => {
     console.info("======================success======================")
     console.info("          server was start in port: " + config.port || 8080)

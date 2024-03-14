@@ -4,21 +4,23 @@ const _ = require('lodash');
 
 let config: RunConfig = null
 
-export function setConfig(runConfig: RunConfig) {
-  if(!runConfig.baseUrl) {
-    runConfig.baseUrl = ''
+export function setConfig(runConfig: RunConfig): RunConfig {
+  const defaultConfig = {
+    // 全局接口前缀
+    baseUrl: '',
+    // 组件扫描路径
+    componentScan: 'src',
+    // 服务启动端口号
+    port: 8080,
+    apiExport: {
+      baseUrl: '/api'
+    }
   }
-  if(!runConfig.port) {
-    runConfig.port = 8080
-  }
-  if(!runConfig.componentScan) {
-    runConfig.componentScan = 'src'
-  }
-  config = runConfig
+  config = Object.assign(defaultConfig, runConfig)
   return config
 }
 
-export function getConfig() {
+export function getConfig(): RunConfig {
   return config
 }
 
@@ -27,7 +29,7 @@ export function getConfig() {
  */
 export const Config = function (name: string) {
   return function (target: any, fieldName: string) {
-    const task = function() {
+    const task = function () {
       this[fieldName] = _.get(config, name)
     }
     getState(target.constructor).configTasks.push(task)

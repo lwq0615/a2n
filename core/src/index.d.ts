@@ -103,6 +103,16 @@ declare namespace a2n {
   var Config: types.Config
 
   /**
+   * 获取当前程序配置
+   */
+  var getConfig: () => types.RunConfig
+
+  /**
+   * 获取当前程序配置
+   */
+  var setConfig: (config: types.RunConfig) => types.RunConfig
+
+  /**
    * 为属性进行依赖注入
    * @param Cons: BeanClass | string (依赖注入的对象构造器类型 | bean名称)
    * @param required 在容器中没有查询到该类型对象时是否抛出异常

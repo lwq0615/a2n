@@ -7,5 +7,8 @@ module.exports = {
   port: 8088,
   datasource: {
     url: '123lll'
+  },
+  apiExport: {
+    baseUrl: 'api'
   }
 }

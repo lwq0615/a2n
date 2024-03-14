@@ -30,7 +30,9 @@ type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) =>
 export const Aspect: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
   state.isAspect = true
-  state.setBeanTask = () => setBean(Cons)
+  if(!state.setBeanTask) {
+    state.setBeanTask = () => setBean(Cons)
+  }
   const getHandle = (handle: Function) => {
     return function(...params: any) {
       return handle.bind(aspectBeanMap.get(Cons))(...params)
