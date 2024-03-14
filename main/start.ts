@@ -13,7 +13,7 @@ console.info('scan components in folder ' + scanPath);
 const requireComponent = require.context("../" + (process.env.componentScan), true, /[\.ts?|\.js?]$/)
 requireComponent.keys().forEach(filepath => {
   console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
-  requireComponent(filepath)
+  requireComponent(filepath).default.filepath = filepath.substring(1)
 })
 
 start({

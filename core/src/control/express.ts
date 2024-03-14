@@ -32,8 +32,12 @@ export const regRoutes = function (Cons: BeanClass) {
   const baseUrl = state.controlMapping
   keyList.forEach(methodName => {
     const route = state.controlMethods[methodName]
+    let routePath = route.path
+    if(typeof route.path === 'function') {
+      routePath = route.path()
+    }
     // 规范化路由路径
-    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + route.path).split("/").filter((item: string) => item)
+    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + routePath).split("/").filter((item: string) => item)
     let realPath = '/' + pathArr.join("/")
     if ((realPath in paths) && route.type === paths[realPath]) {
       throw new Error("重复的接口: '" + realPath + "'")
