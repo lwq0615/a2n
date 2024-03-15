@@ -6,7 +6,7 @@ import { Method, Route } from "./types"
 
 export const ApiExport: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
-  state.isControl = true
+  state.isApiExport = true
   state.controlMapping = getConfig().apiExport.baseUrl
   if (!state.setBeanTask) {
     state.setBeanTask = () => setBean(Cons)
@@ -23,3 +23,5 @@ export const ApiExport: ClassDecorator = (Cons: any) => {
     state.controlMethods[methodName].type = Method.ALL
   })
 }
+
+export default ApiExport

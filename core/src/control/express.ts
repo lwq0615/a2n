@@ -45,27 +45,31 @@ export const regRoutes = function (Cons: BeanClass) {
     paths[realPath] = route.type
     // 注册路由
     app[route.type](realPath, async (req: Request, res: Response) => {
-      const urlParams = req.query
-      const bodyParams = req.body
-      const paramMap = {
-        [ParamType.QUERY]: urlParams,
-        [ParamType.BODY]: bodyParams,
-        [ParamType.REQUEST]: req,
-        [ParamType.RESPONSE]: res
-      }
-      const params: any[] = []
-      // 参数注入
-      for (const i in route.paramNames) {
-        // 通过注解注入的参数
-        if (route.params[i]) {
-          if (route.params[i].name) {
-            params[i] = paramMap[route.params[i].type][route.params[i].name];
+      let params: any[] = []
+      if(state.isApiExport) {
+        params = req.body || []
+      }else {
+        const urlParams = req.query
+        const bodyParams = req.body
+        const paramMap = {
+          [ParamType.QUERY]: urlParams,
+          [ParamType.BODY]: bodyParams,
+          [ParamType.REQUEST]: req,
+          [ParamType.RESPONSE]: res
+        }
+        // 参数注入
+        for (const i in route.paramNames) {
+          // 通过注解注入的参数
+          if (route.params[i]) {
+            if (route.params[i].name) {
+              params[i] = paramMap[route.params[i].type][route.params[i].name];
+            } else {
+              params[i] = paramMap[route.params[i].type];
+            }
           } else {
-            params[i] = paramMap[route.params[i].type];
+            // 参数没有注解，通过参数名称从query获取
+            params[i] = urlParams[route.paramNames[i]]
           }
-        } else {
-          // 参数没有注解，通过参数名称从query获取
-          params[i] = urlParams[route.paramNames[i]]
         }
       }
       res.contentType("application/json")

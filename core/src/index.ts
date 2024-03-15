@@ -36,6 +36,7 @@ export {
   Delete,
   Put,
   app, 
+  ApiExport,
   start,
   close
 } from '@/control'
