@@ -1,7 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack')
-const config = require("../../a2n.config")
+const config = require(process.cwd() + '/a2n.config.js')
 
 module.exports = {
   mode: 'production',
@@ -19,7 +19,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@/index': path.resolve(process.cwd(), 'core/dist/a2n.core.js')
+      '@': path.resolve(process.cwd(), 'core')
     }
   },
   output: {
@@ -32,6 +32,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env': {
+        cwd: JSON.stringify(process.cwd()),
         componentScan: JSON.stringify(config.componentScan)
       }
     })

@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const config = require("../../a2n.config")
+const config = require(process.cwd() + '/a2n.config.js')
 
 module.exports = {
   mode: 'development',
@@ -26,12 +26,12 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@': path.resolve(process.cwd(), 'core/src')
+      '@': path.resolve(process.cwd(), 'core')
     }
   },
   output: {
     filename: 'a2n.serve.js',
-    path: path.resolve(process.cwd(), 'main/dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     library: 'a2n',
     libraryTarget: 'umd'
   },
@@ -39,6 +39,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env': {
+        cwd: JSON.stringify(process.cwd()),
         componentScan: JSON.stringify(config.componentScan)
       }
     }), 
