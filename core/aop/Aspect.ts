@@ -1,6 +1,6 @@
-import { getState } from "@/ioc/beanState"
-import { setBean } from "@/ioc"
-import { BeanClass, BeanInstance } from "@/types"
+import { getState } from "@core/ioc/beanState"
+import { setBean } from "@core/ioc"
+import { BeanClass, BeanInstance } from "@core/types"
 
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
 const beforeAspects: Map<RegExp, AspectHandle> = new Map()

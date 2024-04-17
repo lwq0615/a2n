@@ -1,5 +1,5 @@
-import { Method, Route } from '@/control/types'
-import { getState } from '@/ioc/beanState'
+import { Method, Route } from '@core/control/types'
+import { getState } from '@core/ioc/beanState'
 
 
 function getMapping(path: string, type: Method): MethodDecorator {

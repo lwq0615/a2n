@@ -2,7 +2,7 @@ import Autowired from './Autowired'
 import Service from './Service'
 import Config, { getConfig } from './Config'
 import { PostConstruct } from './PostConstruct'
-import { BeanScope, BeanClass, BeanInstance } from '@/types'
+import { BeanScope, BeanClass, BeanInstance } from '@core/types'
 export { getState } from './beanState'
 export { Scope } from './Scope'
 export {

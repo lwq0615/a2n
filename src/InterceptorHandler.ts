@@ -1,4 +1,4 @@
-import { Request, Interceptor, Bean, BeanClass, Scope, Aspect, Before, After, Around } from "@/index";
+import { Request, Interceptor, Bean, BeanClass, Scope, Aspect, Before, After, Around } from "@core/index";
 
 
 // @Aspect

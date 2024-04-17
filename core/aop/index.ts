@@ -5,4 +5,4 @@ export {
   Interceptor,
   AroundInterceptor,
   ErrHandler
-} from '@/types'
+} from '@core/types'

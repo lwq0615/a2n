@@ -1,5 +1,5 @@
-import { ParamInfo, ParamType, Route } from '@/control/types'
-import { getState } from '@/ioc/beanState'
+import { ParamInfo, ParamType, Route } from '@core/control/types'
+import { getState } from '@core/ioc/beanState'
 
 
 /**

@@ -1,4 +1,4 @@
-import { Autowired, Bean, Config, getBean, PostConstruct } from "@/index";
+import { Autowired, Bean, Config, getBean, PostConstruct } from "@core/index";
 import RoleService from "./RoleService";
 
 @Bean

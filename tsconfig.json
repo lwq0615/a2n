@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["core/*"]
+      "@core/*": ["core/*"]
     },
     "outDir": "dist",
     "noImplicitAny": true, // 不允许隐式any类型

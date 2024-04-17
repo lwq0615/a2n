@@ -1,4 +1,4 @@
-import { Autowired, Bean, BeanScope, Scope, PostConstruct, ApiExport } from "@/index";
+import { Autowired, Bean, BeanScope, Scope, PostConstruct, ApiExport } from "@core/index";
 
 @Bean('role')
 @ApiExport

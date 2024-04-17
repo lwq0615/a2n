@@ -11,7 +11,7 @@ export {
   BeanScope,
   BeanClass,
   BeanInstance
-} from "@/ioc";
+} from "@core/ioc";
 
 export {
   Interceptor,
@@ -21,7 +21,7 @@ export {
   After,
   Around,
   Before
-} from '@/aop'
+} from '@core/aop'
 
 export {
   Control,
@@ -38,6 +38,6 @@ export {
   ApiExport,
   start,
   close
-} from '@/control'
+} from '@core/control'
 
 export { Request, Response } from 'express';

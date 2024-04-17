@@ -1,4 +1,4 @@
-import { Bean } from "@/index";
+import { Bean } from "@core/index";
 
 @Bean
 export default class Test {

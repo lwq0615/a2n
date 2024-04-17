@@ -1,7 +1,9 @@
-import { start } from "@/index"
+import { start } from "@core/index"
+import { RunConfig } from "@core/types"
+import { filepathSymbol } from "@core/control"
 const fs = require('fs')
 const path = require('path')
-let config = require(process.env.cwd + "/a2n.config")
+const config = process.env.a2nConfig as unknown as RunConfig
 
 const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
@@ -11,7 +13,10 @@ console.info('scan components in folder ' + scanPath);
 const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
 requireComponent.keys().forEach(filepath => {
   console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
-  requireComponent(filepath).default.filepath = filepath.substring(1)
+  const defaultExport = requireComponent(filepath).default
+  if(defaultExport) {
+    defaultExport[filepathSymbol] = filepath.substring(1)
+  }
 })
 
 start({

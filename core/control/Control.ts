@@ -1,7 +1,7 @@
-import { getBean, setBean } from '@/ioc'
-import { getState } from '@/ioc/beanState'
-import { BeanClass, BeanInstance } from '@/types'
-import { getFunParameterNames } from '@/utils/function'
+import { getBean, setBean } from '@core/ioc'
+import { getState } from '@core/ioc/beanState'
+import { BeanClass, BeanInstance } from '@core/types'
+import { getFunParameterNames } from '@core/utils/function'
 
 const controlMap: Map<BeanClass, BeanInstance> = new Map()
 

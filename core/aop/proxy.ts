@@ -1,7 +1,7 @@
-import { BeanClass, BeanInstance } from "@/types";
+import { BeanClass, BeanInstance } from "@core/types";
 import { getAspects } from "./Aspect";
-import { isFunction } from "@/utils/function";
-import { getState } from "@/ioc/beanState";
+import { isFunction } from "@core/utils/function";
+import { getState } from "@core/ioc/beanState";
 
 let isStart = false
 

@@ -62,11 +62,6 @@ declare namespace a2n {
   /**
    * 启动服务器
    */
-  var start: types.start
-
-  /**
-   * 启动服务器
-   */
   var close: types.close
 
   /**

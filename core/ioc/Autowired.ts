@@ -1,6 +1,6 @@
-import { getBean } from '@/ioc/beans'
+import { getBean } from '@core/ioc/beans'
 import { getState } from './beanState'
-import { BeanClass } from '@/types'
+import { BeanClass } from '@core/types'
 import { BeanCache } from './types'
 
 

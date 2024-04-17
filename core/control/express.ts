@@ -1,12 +1,12 @@
 import * as express from "express";
 import { Request, Response } from "express";
-import { ParamType, Method } from "@/control/types"
+import { ParamType, Method } from "@core/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
-import { BeanClass, StartParam } from "@/types";
+import { BeanClass, StartParam } from "@core/types";
 import { getConfig } from "../ioc/Config";
 import { initBeanFinish } from "../ioc";
-import { getState } from "@/ioc/beanState";
+import { getState } from "@core/ioc/beanState";
 import * as http from "http";
 
 const bodyParser = require('body-parser')

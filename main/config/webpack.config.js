@@ -7,7 +7,7 @@ const config = getA2nConfig(require(process.cwd() + '/a2n.config.js'))
 module.exports = {
   mode: 'production',
   target: 'node',
-  entry: ['./main/start.ts'],
+  entry: [path.resolve(__dirname, "../start.ts")],
   module: {
     rules: [
       {
@@ -20,12 +20,12 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@': path.resolve(process.cwd(), 'core')
+      '@core': path.resolve(__dirname, "../../core")
     }
   },
   output: {
     filename: 'a2n.serve.js',
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(__dirname, "../../dist"),
     library: 'a2n',
     libraryTarget: 'umd'
   },

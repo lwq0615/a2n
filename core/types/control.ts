@@ -6,8 +6,6 @@ export interface StartParam {
   callback?: () => void
 }
 
-export type start = (startParam: StartParam) => void
-
 export type close = (callback?: (err?: Error) => void) => void
 
 export type Control = (path: string | BeanClass) => any

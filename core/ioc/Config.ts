@@ -1,4 +1,4 @@
-import { RunConfig } from '@/types'
+import { RunConfig } from '@core/types'
 import { getState } from './beanState'
 const _ = require('lodash');
 

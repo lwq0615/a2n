@@ -1,8 +1,9 @@
-import { getState, setBean } from "@/ioc"
-import { getConfig } from "@/ioc/Config"
+import { getState, setBean } from "@core/ioc"
+import { getConfig } from "@core/ioc/Config"
 import { getControlBean } from "./Control"
 import { Method, Route } from "./types"
 
+export const filepathSymbol = Symbol("filepath")
 
 export const ApiExport: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
@@ -19,7 +20,7 @@ export const ApiExport: ClassDecorator = (Cons: any) => {
       state.controlMethods[methodName] = new Route()
     }
     state.controlMethods[methodName].handler = async (...params: any) => (await getControlBean(Cons))?.[methodName](...params)
-    state.controlMethods[methodName].path = () => Cons.filepath + "/" + methodName
+    state.controlMethods[methodName].path = () => Cons[filepathSymbol] + "/" + methodName
     state.controlMethods[methodName].type = Method.ALL
   })
 }

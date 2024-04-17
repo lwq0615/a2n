@@ -1,4 +1,4 @@
-import { setBean } from '@/ioc/beans'
+import { setBean } from '@core/ioc/beans'
 import { getState } from './beanState'
 
 

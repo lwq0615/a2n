@@ -1,13 +1,13 @@
-import { setInterceptors } from "@/aop/interceptor"
+import { setInterceptors } from "@core/aop/interceptor"
 import { getState, getStates } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance } from "@/types"
-import { AroundInterceptor, ErrHandler, Interceptor } from "@/aop"
-import { setErrorHandlers } from "@/aop/exception"
-import { getProxy, startProxy } from "@/aop/proxy"
-import { isFunction } from "@/utils/function"
-import { setAspectBeans } from "@/aop/Aspect"
+import { BeanScope, BeanClass, BeanInstance } from "@core/types"
+import { AroundInterceptor, ErrHandler, Interceptor } from "@core/aop"
+import { setErrorHandlers } from "@core/aop/exception"
+import { getProxy, startProxy } from "@core/aop/proxy"
+import { isFunction } from "@core/utils/function"
+import { setAspectBeans } from "@core/aop/Aspect"
 import { BeanCache, BeanState } from "./types"
-import { regRoutes } from "@/control/express"
+import { regRoutes } from "@core/control/express"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()

@@ -1,5 +1,5 @@
-import { Route } from "@/control/types"
-import { BeanClass, BeanInstance, BeanScope } from "@/types"
+import { Route } from "@core/control/types"
+import { BeanClass, BeanInstance, BeanScope } from "@core/types"
 
 export interface AspectHandle {
   reg: RegExp,

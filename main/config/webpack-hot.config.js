@@ -6,10 +6,11 @@ const nodeExternals = require('webpack-node-externals');
 const { getA2nConfig } = require('../a2nConfig');
 const config = getA2nConfig(require(process.cwd() + '/a2n.config.js'))
 
+
 module.exports = {
   mode: 'development',
   target: 'node',
-  entry: ['./main/start.ts', 'webpack/hot/poll?1000'],
+  entry: [path.resolve(__dirname, "../start.ts"), 'webpack/hot/poll?1000'],
   externals: [
     nodeExternals({
       allowlist: ['webpack/hot/poll?1000'],
@@ -27,12 +28,12 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@': path.resolve(process.cwd(), 'core')
+      '@core': path.resolve(__dirname, "../../core")
     }
   },
   output: {
     filename: 'a2n.serve.js',
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(__dirname, "../../dist"),
     library: 'a2n',
     libraryTarget: 'umd'
   },

@@ -1,19 +1,20 @@
 import ApiExport from './ApiExport'
-export { Control } from "@/control/Control";
+export { Control } from "@core/control/Control";
 export { app, start, close } from './express'
 export {
   Query,
   Body,
   Req,
   Res
-} from '@/control/ParamType';
+} from '@core/control/ParamType';
 export {
   RequestMapping,
   Get,
   Post,
   Delete,
   Put
-} from '@/control/RequestMethod';
+} from '@core/control/RequestMethod';
+export { filepathSymbol } from '@core/control/ApiExport'
 
 export {
   ApiExport

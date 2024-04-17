@@ -1,6 +1,6 @@
 {
-  "name": "a2n",
-  "version": "2.0.1",
+  "name": "a2n-test",
+  "version": "2.0.7",
   "description": "基于express的轻量级服务器",
   "main": "core/index.ts",
   "type": "commonjs",
