@@ -3,7 +3,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const config = require(process.cwd() + '/a2n.config.js')
+const { getA2nConfig } = require('../a2nConfig');
+const config = getA2nConfig(require(process.cwd() + '/a2n.config.js'))
 
 module.exports = {
   mode: 'development',
@@ -40,7 +41,8 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         cwd: JSON.stringify(process.cwd()),
-        componentScan: JSON.stringify(config.componentScan)
+        componentScan: JSON.stringify(config.componentScan),
+        a2nConfig: JSON.stringify(config)
       }
     }), 
     new HotModuleReplacementPlugin(),

@@ -6,7 +6,6 @@ export {
   Bean,
   PostConstruct,
   Config,
-  setConfig,
   getConfig,
   Scope,
   BeanScope,
