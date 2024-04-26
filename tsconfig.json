@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@core/*": ["core/*"],
-      "a2n": ["core/*"]
+      "a2n": ["core/index"]
     },
     "outDir": "dist",
     "noImplicitAny": true, // 不允许隐式any类型
