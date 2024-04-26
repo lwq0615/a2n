@@ -2,17 +2,22 @@
   "name": "a2n-test",
   "version": "2.0.7",
   "description": "基于express的轻量级服务器",
-  "main": "core/index.ts",
+  "main": "core/dist/a2n.core.js",
   "type": "commonjs",
-  "types": "core/index.d.ts",
+  "types": "core/dist/a2n.core.d.ts",
   "author": "liweiqiang",
   "license": "ISC",
   "bin": {
     "a2n-build": "bin/build.js",
     "a2n-dev": "bin/dev.js"
   },
+  "scripts": {
+    "dev": "webpack --config webpack.config.js",
+    "build": "webpack --config core/build/webpack.config.js"
+  },
   "files": [
-    "core",
+    "core/dist",
+    "core/types",
     "main",
     "bin"
   ],
@@ -25,6 +30,10 @@
     "ioc",
     "aop"
   ],
+  "peerDependencies": {
+    "webpack": ">=5.75.0",
+    "webpack-cli": ">=5.0.1"
+  },
   "dependencies": {
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
@@ -39,8 +48,6 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.5",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
     "webpack-node-externals": "^3.0.0"
   }
 }

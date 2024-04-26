@@ -34,6 +34,7 @@ export {
   Post,
   Delete,
   Put,
+  filepathSymbol,
   app, 
   ApiExport,
   start,

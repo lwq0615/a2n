@@ -1,9 +1,7 @@
-import { start } from "@core/index"
-import { RunConfig } from "@core/types"
-import { filepathSymbol } from "@core/control"
+import { start, filepathSymbol } from "a2n"
 const fs = require('fs')
 const path = require('path')
-const config = process.env.a2nConfig as unknown as RunConfig
+const config = process.env.a2nConfig as any
 
 const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {

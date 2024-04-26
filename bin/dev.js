@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const webpack = require("webpack")
-const webpackConfigHot = require("../main/config/webpack-hot.config")
+const webpackConfigHot = require("../main/config/webpack-dev.config")
 
 webpack(webpackConfigHot).watch({
   aggregateTimeout: 300

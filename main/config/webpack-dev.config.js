@@ -28,7 +28,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@core': path.resolve(__dirname, "../../core")
+      '@core': path.resolve(__dirname, "../../core"),
+      "a2n": path.resolve(__dirname, "../../core")
     }
   },
   output: {
