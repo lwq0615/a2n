@@ -26,11 +26,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
-    alias: {
-      '@core': path.resolve(__dirname, "../../core"),
-      "a2n": path.resolve(__dirname, "../../core")
-    }
+    extensions: ['.ts', '.js', '.json']
   },
   output: {
     filename: 'a2n.serve.js',
