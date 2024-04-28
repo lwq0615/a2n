@@ -1,22 +1,12 @@
 import { RunConfig } from '@core/types'
+import { getAssignConfig } from '@/main/config/a2nDefaultConfig'
 
 
 let config = {}
 
-export function setConfig(runConfig: RunConfig) {
+export function setConfig(runConfig: RunConfig): RunConfig {
   // 默认配置
-  const defaultConfig = {
-    // 全局接口前缀
-    baseUrl: '',
-    // 组件扫描路径
-    componentScan: 'src',
-    // 服务启动端口号
-    port: 8080,
-    apiExport: {
-      baseUrl: '/api'
-    }
-  }
-  config = Object.assign(defaultConfig, runConfig)
+  config = getAssignConfig(runConfig)
   return config
 }
 

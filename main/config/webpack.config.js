@@ -1,14 +1,28 @@
 const path = require('path');
+const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DefinePlugin } = require('webpack')
-const config = require(path.resolve(process.cwd(), './a2n.config.js'))
+const { DefinePlugin } = require('webpack');
+const { getAssignConfig } = require('./a2nDefaultConfig');
 
-module.exports = {
-  mode: 'production',
+let config = {}
+try {
+  config = getAssignConfig(require(path.resolve(process.cwd(), './a2n.config.js')))
+} catch (err) {
+  console.error('tip: config file "' + path.resolve(process.cwd(), './a2n.config.js') + '" not exist!')
+  console.error('tip: use defalut config\n')
+  config = getAssignConfig()
+}
+
+const baseConfig = {
+  mode: 'development',
   target: 'node',
-  entry: [path.resolve(__dirname, "../start.ts")],
   module: {
     rules: [
+      {
+        test: /[\.ts?|\.js?]$/,
+        use: 'ts-loader',
+        include: path.resolve(__dirname, "../start.ts"),
+      },
       {
         test: /[\.ts?|\.js?]$/,
         use: 'ts-loader',
@@ -33,3 +47,11 @@ module.exports = {
     })
   ]
 };
+
+function getWebConfig(config) {
+  return merge(baseConfig, config)
+}
+
+module.exports = {
+  getWebConfig
+}

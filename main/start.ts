@@ -1,21 +1,22 @@
-import { start, filepathSymbol, setConfig } from "a2n"
-const fs = require('fs')
-const path = require('path')
-const config = setConfig(process.env.a2nConfig as any) as any
+import { start, filepathSymbol, setConfig } from "a2n";
+const fs = require('fs');
+const path = require('path');
+const config = setConfig(process.env.a2nConfig as any);
 
-const scanPath = path.resolve(process.cwd(), config.componentScan)
+const scanPath = path.resolve(process.cwd(), config.componentScan);
 if (!fs.existsSync(scanPath)) {
-  throw new Error("folder " + scanPath + " not exist!")
+  console.log("warning: folder " + scanPath + " not exist!\n")
+} else {
+  console.info('scan components in folder ' + scanPath);
+  const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
+  requireComponent.keys().forEach(filepath => {
+    console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
+    const defaultExport = requireComponent(filepath).default
+    if (defaultExport) {
+      defaultExport[filepathSymbol] = filepath.substring(1)
+    }
+  })
 }
-console.info('scan components in folder ' + scanPath);
-const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
-requireComponent.keys().forEach(filepath => {
-  console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
-  const defaultExport = requireComponent(filepath).default
-  if(defaultExport) {
-    defaultExport[filepathSymbol] = filepath.substring(1)
-  }
-})
 
 start({
   callback: () => {

@@ -2,7 +2,7 @@
 
 try {
   const webpack = require("webpack")
-  const webpackConfig = require("../main/config/webpack.config")
+  const webpackConfig = require("../main/config/webpack-build.config")
 
   webpack(webpackConfig, (err, stats) => {
     if (err || stats.errors) {

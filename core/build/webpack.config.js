@@ -19,7 +19,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
     alias: {
-      '@core': path.resolve(process.cwd(), './core')
+      '@core': path.resolve(process.cwd(), './core'),
+      '@': path.resolve(__dirname, "./"),
     }
   },
   output: {

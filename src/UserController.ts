@@ -10,7 +10,7 @@ export default class UserControl{
 
   @Get("/get")
   get(a: any, @Query query: any){
-    return "query12"
+    return "query11"
   }
 
   @Post("/get")
