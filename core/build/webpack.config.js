@@ -20,7 +20,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
     alias: {
       '@core': path.resolve(process.cwd(), './core'),
-      '@': path.resolve(__dirname, "./"),
+      '@': path.resolve(process.cwd(), "./"),
     }
   },
   output: {
