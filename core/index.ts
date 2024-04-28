@@ -6,7 +6,6 @@ export {
   Bean,
   PostConstruct,
   Config,
-  getConfig,
   Scope,
   BeanScope,
   BeanClass,
@@ -40,5 +39,7 @@ export {
   start,
   close
 } from '@core/control'
+
+export { setConfig, getConfig } from '@core/config'
 
 export { Request, Response } from 'express';

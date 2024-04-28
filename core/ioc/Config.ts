@@ -1,10 +1,6 @@
-import { RunConfig } from '@core/types'
 import { getState } from './beanState'
+import { getConfig } from "@core/config"
 const _ = require('lodash');
-
-export function getConfig(): RunConfig {
-  return process.env.a2nConfig as unknown as RunConfig
-}
 
 /**
  * 加载配置文件内容到属性中

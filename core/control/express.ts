@@ -4,7 +4,7 @@ import { ParamType, Method } from "@core/control/types"
 import { doFilter } from "../aop";
 import { Express } from 'express-serve-static-core';
 import { BeanClass, StartParam } from "@core/types";
-import { getConfig } from "../ioc/Config";
+import { getConfig } from "@core/config"
 import { initBeanFinish } from "../ioc";
 import { getState } from "@core/ioc/beanState";
 import * as http from "http";

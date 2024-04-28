@@ -1,6 +1,7 @@
 import Autowired from './Autowired'
 import Service from './Service'
-import Config, { getConfig } from './Config'
+import Config from './Config'
+import { getConfig } from "@core/config"
 import { PostConstruct } from './PostConstruct'
 import { BeanScope, BeanClass, BeanInstance } from '@core/types'
 export { getState } from './beanState'

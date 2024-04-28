@@ -1,5 +1,5 @@
+import { getConfig } from "@core/config"
 import { getState, setBean } from "@core/ioc"
-import { getConfig } from "@core/ioc/Config"
 import { getControlBean } from "./Control"
 import { Method, Route } from "./types"
 

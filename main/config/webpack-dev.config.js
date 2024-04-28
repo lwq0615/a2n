@@ -3,8 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const { getA2nConfig } = require('../a2nConfig');
-const config = getA2nConfig(require(process.cwd() + '/a2n.config.js'))
+const config = require(path.resolve(process.cwd(), './a2n.config.js'))
 
 
 module.exports = {

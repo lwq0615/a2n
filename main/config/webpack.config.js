@@ -1,8 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack')
-const { getA2nConfig } = require('../a2nConfig');
-const config = getA2nConfig(require(process.cwd() + '/a2n.config.js'))
+const config = require(path.resolve(process.cwd(), './a2n.config.js'))
 
 module.exports = {
   mode: 'production',

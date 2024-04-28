@@ -1,11 +1,11 @@
-import { start, filepathSymbol } from "a2n"
+import { start, filepathSymbol, setConfig } from "a2n"
 const fs = require('fs')
 const path = require('path')
-const config = process.env.a2nConfig as any
+const config = setConfig(process.env.a2nConfig as any) as any
 
 const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
-  throw new Error("folder " + scanPath + "not exist!")
+  throw new Error("folder " + scanPath + " not exist!")
 }
 console.info('scan components in folder ' + scanPath);
 const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
