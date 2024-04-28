@@ -2,7 +2,7 @@
 
 <div align="center">
   
-一套基于Spring设计理念开发的NodeJs服务端框架（V2.0.2）
+一套基于Spring设计理念开发的NodeJs服务端框架（V2.0.3）
 
 [NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
