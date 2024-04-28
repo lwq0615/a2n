@@ -16,9 +16,6 @@ module.exports = {
       }
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.js', '.json']
-  },
   output: {
     filename: 'a2n.serve.js',
     path: path.resolve(__dirname, "../../dist"),
