@@ -23,31 +23,28 @@
 
 ## 📦 搭建
 
-- 安装脚手架
+- 初始化 npm 环境
 
 ```bash
-npm install a2n-cli -g
-```
-
-- 初始化项目基础代码环境
-
-```bash
-a2n-cli create <project-name>
-```
-
-- 进入项目目录
-
-```bash
-cd <project-name>
+npm init
 ```
 
 - 安装依赖
 
 ```bash
-npm install
+npm install a2n
 ```
 
-- 启动服务
+- package.json 添加启动命令
+
+```json
+"scripts": {
+  "dev": "a2n dev",
+  "build": "a2n build"
+},
+```
+
+- 运行服务
 
 ```bash
 npm run dev
@@ -63,6 +60,8 @@ npm run build
 
 - 配置文件 a2n.config.js
 
+> a2n.config.js 为项目配置文件，配置项如下，a2n有一份默认的配置文件，如果需要修改覆盖它，只需要在项目根目录创建名为 a2n.config.js 的文件
+
 ```js
 module.exports = {
   // 全局接口前缀
@@ -71,6 +70,11 @@ module.exports = {
   componentScan: 'src',
   // 服务启动端口号
   port: 8088,
+  // ApiExport 装饰器配置
+  apiExport: {
+    // 默认生成接口前缀
+    baseUrl: "/api"
+  },
   // 一些自定义的配置项
   datasource: {
     url: '123lll'
@@ -78,13 +82,9 @@ module.exports = {
 }
 ```
 
-- 启动入口 main
-
-> main 目录下的文件为项目启动和打包相关的文件，start.ts 为入口文件，config 中为本地开发和打包时的 webpack 配置文件，由于本地开发环境需要实现代码热更新，因此将 webpack 配置文件进行拆分。
-
 - ts语言配置
 
-> 通过根目录下的 tsconfig.json 配置ts语言能力。
+> 在项目启动时，程序会在根目录默认生成一份ts配置文件，通过修改根目录下的 tsconfig.json 配置ts语言能力。
 
 ## 🌈 如何使用
 
