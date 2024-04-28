@@ -4,7 +4,7 @@ const { DtsBuildPlugin } = require('./DtsBuildPlugin.js');
 
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   target: 'node',
   entry: './core/index.ts',
   module: {
