@@ -49,7 +49,7 @@ const baseConfig = {
 };
 
 function getWebConfig(webpackConfig) {
-  return merge(baseConfig, webpackConfig, config.webpack || {})
+  return merge(baseConfig, webpackConfig, config.webpack)
 }
 
 module.exports = {
