@@ -2,7 +2,7 @@
 
 <div align="center">
   
-一套基于Spring设计理念开发的NodeJs服务端框架（V2）
+一套基于Spring设计理念开发的NodeJs服务端框架（V2.0.0）
 
 [NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
@@ -20,6 +20,12 @@
 - ⚙️ 在体验 Spring 设计模式的同时，又可以使用 npm 强大的插件功能。
 - 🛡 使用 TypeScript 开发，提供完整的类型定义文件。
 - 📦 如果你曾经是一个Java程序员并且有一定的Js基础，那么可以以极低的学习成本使用a2n进行开发。
+
+## ✨ 版本新特性
+
+- 🌍 弃用了项目脚手架（a2n-cli），采用更简洁的命令行工具。
+- 🌈 默认的配置文件，不需要编写任何配置，也可以运行项目。
+- ⚙️ 将自定义配置文件内容合并到项目配置中。
 
 ## 📦 搭建
 
@@ -78,6 +84,10 @@ module.exports = {
   // 一些自定义的配置项
   datasource: {
     url: '123lll'
+  },
+  // webpack配置，会与默认webpack配置进行合并
+  webpack: {
+    ...
   }
 }
 ```
