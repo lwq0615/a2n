@@ -1,4 +1,7 @@
-<h1 align="center">a2n</h1>
+<h1 align="center">
+  <span>a2n</span>
+  <span style="font-size: 14px;padding-left: 5px; color: #999;">V2</span>
+</h1>
 
 <div align="center">
   
