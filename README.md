@@ -88,6 +88,8 @@ module.exports = {
 
 ## 🌈 如何使用
 
+> 在根目录下创建 src 文件夹（a2n.config.js 中配置的 componentScan 属性，此处以 src 为例），在 src 文件夹下创建 .ts 或 .js 文件，并 export default 导出默认 Class，该 Class 将会被容器扫描注册
+
 ### 编写接口
 
 ```ts
