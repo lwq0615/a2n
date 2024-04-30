@@ -105,7 +105,7 @@ module.exports = {
 
 - package.json
 
-```json
+```js
 "scripts": {
   // 不指定 -e 或 --env，默认读取根目录下 .env 文件
   "dev": "a2n dev",
