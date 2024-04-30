@@ -26,6 +26,7 @@
 - 🌍 弃用了项目脚手架（a2n-cli），采用更简洁的命令行工具。
 - 🌈 默认的配置文件，不需要编写任何配置，也可以运行项目。
 - ⚙️ 将自定义配置文件内容通过合并到项目配置中。
+- 📦 自定义的环境变量配置。
 
 ## 📦 搭建
 
@@ -47,7 +48,7 @@ npm install a2n
 "scripts": {
   "dev": "a2n dev",
   "build": "a2n build"
-},
+}
 ```
 
 - 运行服务
@@ -97,6 +98,35 @@ module.exports = {
 - ts语言配置
 
 > 在项目启动时，程序会在根目录默认生成一份ts配置文件，通过修改根目录下的 tsconfig.json 配置ts语言能力。
+
+## 🔨 配置环境变量
+
+> 在 2.0.4 版本中，a2n 集成了 dotenv 插件，可以自定义环境变量，在项目启动时，程序会自动加载根目录下的 .env 文件，该文件内容会注入到 process.env 中，如果需要自定义环境变量，可以通过命令行指定 -e 或者 --env 参数指定自定义的环境变量文件。
+
+- package.json
+
+```json
+"scripts": {
+  // 不指定 -e 或 --env，默认读取根目录下 .env 文件
+  "dev": "a2n dev",
+  // 指定任意的参数名称，例如 --env production，读取根目录下 .env.production 文件
+  "build": "a2n dev --env production"
+},
+```
+
+- .env
+
+```env
+APP_TITLE = a2n服务端框架
+```
+
+- 在程序中获取环境变量值
+
+```ts
+console.log(process.env.APP_TITLE)
+```
+
+> 优先级：通过 -e 或 --env 指定的配置文件如果存在同名参数，则会覆盖默认的 .env 文件
 
 ## 🌈 如何使用
 
