@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-function dev(args) {
+function dev(options, args) {
   try {
     const webpack = require("webpack")
-    const webpackConfigHot = require("../main/config/webpack-dev.config")
+    const { webpackDevConfig } = require("../main/config/webpack-dev.config")
+    const webpackConfig = webpackDevConfig(options, args)
 
-    webpack(webpackConfigHot).watch({
+    webpack(webpackConfig).watch({
       aggregateTimeout: 300
     }, (err, stats) => {
       if (err || stats.errors) {

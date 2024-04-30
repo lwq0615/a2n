@@ -85,10 +85,12 @@ module.exports = {
   datasource: {
     url: '123lll'
   },
-  // webpack配置，会与默认webpack配置进行合并
+  // webpack配置，值可以是以下两种情况
+  // 1.一个object，会通过webpack-merge与默认webpack配置进行合并
+  // 2.也可以是一个函数，入参: [程序提供的默认webpack配置, webpack-merge的merge函数]，返回值：最终的webpack配置
   webpack: {
     ...
-  }
+  } || (baseWebpackConfig, merge) => ({...})
 }
 ```
 

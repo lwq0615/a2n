@@ -1,6 +1,6 @@
 {
   "name": "a2n",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "基于express的轻量级服务器",
   "main": "core/dist/a2n.core.js",
   "type": "commonjs",
@@ -44,8 +44,11 @@
   "dependencies": {
     "@types/webpack-env": "^1.18.3",
     "@types/webpack-node-externals": "^3.0.4",
+    "chalk": "^4.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "commander": "^12.0.0",
+    "dotenv": "^16.4.5",
+    "log-symbols": "^4.0.0",
     "run-script-webpack-plugin": "^0.2.0",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",

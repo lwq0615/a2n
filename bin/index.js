@@ -7,6 +7,9 @@ const dev = require('./dev')
 const build = require('./build')
 const path = require('path')
 const fs = require('fs')
+const chalk = require('chalk')
+const symbols = require('log-symbols')
+
 
 /**
  * 生成ts配置文件
@@ -15,7 +18,7 @@ const fs = require('fs')
 function initTs(onSuccess) {
   const tsconfigPath = path.resolve(process.cwd(), './tsconfig.json')
   if (!fs.existsSync(tsconfigPath)) {
-    console.log("create tsconfig.json file")
+    console.log(symbols.info, chalk.hex('#4e8ed3')("create tsconfig.json file"))
     const tsconfigTemplate = path.resolve(__dirname, '../tsconfig.json')
     fs.readFile(tsconfigTemplate, async (err, data) => {
       if (err) {
@@ -34,7 +37,7 @@ function initTs(onSuccess) {
         onSuccess()
       })
     })
-  }else {
+  } else {
     onSuccess()
   }
 }
@@ -43,15 +46,16 @@ function initTs(onSuccess) {
 program.name('a2n')
   .version(pkg.version)
   .usage('<command> [args]')
+  .option('-e, --env <name>', 'set env name')
 program.command('dev')
   .description('start server')
   .action((options, command) => {
-    initTs(() => dev(command.args))
+    initTs(() => dev(program.opts(), command.args))
   })
 program.command('build')
   .description('build server')
   .action((options, command) => {
-    initTs(() => build(command.args))
+    initTs(() => build(program.opts(), command.args))
   })
 program.parse(process.argv)
 // 当没有输入参数的时候给个提示

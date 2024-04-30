@@ -1,16 +1,19 @@
 import { start, filepathSymbol, setConfig } from "a2n";
+import * as chalk from "chalk";
+import * as symbol from 'log-symbols'
 const fs = require('fs');
 const path = require('path');
 const config = setConfig(process.env.a2nConfig as any);
 
+
 const scanPath = path.resolve(process.cwd(), config.componentScan);
 if (!fs.existsSync(scanPath)) {
-  console.log("warning: folder " + scanPath + " not exist!\n")
+  console.log(symbol.warning, chalk.yellow("warning: componentScan folder " + scanPath + " not exist!\n"))
 } else {
-  console.info('scan components in folder ' + scanPath);
+  console.log('scan components in folder ' + scanPath);
   const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[\.ts?|\.js?]$/)
   requireComponent.keys().forEach(filepath => {
-    console.info("scan file: " + path.resolve(process.env.componentScan, filepath))
+    console.log("scan file: " + path.resolve(process.env.componentScan, filepath))
     const defaultExport = requireComponent(filepath).default
     if (defaultExport) {
       defaultExport[filepathSymbol] = filepath.substring(1)
@@ -20,9 +23,9 @@ if (!fs.existsSync(scanPath)) {
 
 start({
   callback: () => {
-    console.info("======================success======================")
-    console.info("          server was start in port: " + config.port)
-    console.info("===================================================")
+    console.log(chalk.green("======================success======================"))
+    console.log("        ", symbol.success, chalk.green("server was start in port: " + config.port))
+    console.log(chalk.green("==================================================="))
   }
 })
 

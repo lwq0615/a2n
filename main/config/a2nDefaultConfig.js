@@ -1,5 +1,7 @@
 
-
+/**
+ * 默认的a2n配置
+ */
 const defaultConfig = {
   // 全局接口前缀
   baseUrl: "",

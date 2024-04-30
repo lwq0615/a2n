@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-function build(args) {
+function build(options, args) {
   try {
     const webpack = require("webpack")
-    const webpackConfig = require("../main/config/webpack-build.config")
+    const { webpackBuildConfig } = require("../main/config/webpack-dev.config")
+    const webpackConfig = webpackBuildConfig(options, args)
 
     webpack(webpackConfig, (err, stats) => {
       if (err || stats.errors) {
