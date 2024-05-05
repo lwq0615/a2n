@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const { getAssignConfig } = require('./a2nDefaultConfig');
 const dotenv = require('dotenv');
+const pkg = require("../../package.json")
 
 let a2nConfig = {}
 try {
@@ -71,7 +72,8 @@ function getWebConfig(webpackConfig, options, args) {
           ...env,
           cwd: JSON.stringify(process.cwd()),
           componentScan: JSON.stringify(a2nConfig.componentScan),
-          a2nConfig: JSON.stringify(a2nConfig)
+          a2nConfig: JSON.stringify(a2nConfig),
+          npmName: JSON.stringify(pkg.name)
         }
       })
     ]

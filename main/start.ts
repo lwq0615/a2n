@@ -1,4 +1,5 @@
-import { start, filepathSymbol, setConfig } from "a2n";
+
+const { start, filepathSymbol, setConfig } = require(process.env.npmName);
 import * as chalk from "chalk";
 import * as symbol from 'log-symbols'
 const fs = require('fs');
