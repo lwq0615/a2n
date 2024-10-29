@@ -4,7 +4,8 @@ import * as chalk from "chalk";
 import * as symbol from 'log-symbols'
 const fs = require('fs');
 const path = require('path');
-const config = setConfig(process.env.a2nConfig as any);
+const a2nConfig = require(process.env.a2nConfigPath)
+const config = setConfig(a2nConfig);
 
 
 const scanPath = path.resolve(process.cwd(), config.componentScan);

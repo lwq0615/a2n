@@ -5,15 +5,14 @@ const { DefinePlugin } = require('webpack');
 const { getAssignConfig } = require('./a2nDefaultConfig');
 const dotenv = require('dotenv');
 const pkg = require("../../package.json")
+const fs = require('fs')
 
-let a2nConfig = {}
-try {
-  a2nConfig = getAssignConfig(require(path.resolve(process.cwd(), './a2n.config.js')))
-} catch (err) {
-  console.log('tip: config file "' + path.resolve(process.cwd(), './a2n.config.js') + '" not exist!')
-  console.log('tip: use defalut config\n')
-  a2nConfig = getAssignConfig()
+const a2nConfigPath = path.resolve(process.cwd(), './a2n.config.js')
+if(!fs.existsSync(a2nConfigPath)) {
+  console.log('tip: config file "' + a2nConfigPath + '" not exist!')
+  console.log('tip: use default config\n')
 }
+const a2nConfig = getAssignConfig()
 
 /**
  * 获取webpack配置文件
@@ -75,7 +74,7 @@ function getWebConfig(webpackConfig, options, args) {
           ...env,
           cwd: JSON.stringify(process.cwd()),
           componentScan: JSON.stringify(a2nConfig.componentScan),
-          a2nConfig: JSON.stringify(a2nConfig),
+          a2nConfigPath: JSON.stringify(a2nConfigPath),
           npmName: JSON.stringify(pkg.name)
         }
       })
