@@ -14,7 +14,7 @@ export default class AuthInterceptor extends Interceptor {
    * @param methodName 请求进入Control的方法名
    * @returns false：拦截，true：不拦截
    */
-  doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
+  async doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string) {
     return true
   }
 

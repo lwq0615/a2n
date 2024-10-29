@@ -13,7 +13,7 @@ export class Interceptor {
    * @param methodName 请求进入的控制器方法名称
    * @return true：不拦截，false：拦截请求
    */
-  doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
+  async doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): Promise<boolean> {
     return true
   }
 }
@@ -31,8 +31,8 @@ export class AroundInterceptor {
    * @param methodName 请求进入的控制器方法名称
    * @return 拦截器返回的值会作为请求响应值
    */
-  doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): any {
-    return callback()
+  async doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): Promise<any> {
+    return await callback()
   }
 }
 
