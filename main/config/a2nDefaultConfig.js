@@ -1,3 +1,4 @@
+const { merge } = require('lodash')
 
 /**
  * 默认的a2n配置
@@ -19,7 +20,7 @@ const defaultConfig = {
 }
 
 function getAssignConfig(config) {
-  return Object.assign(defaultConfig, config)
+  return merge(structuredClone(defaultConfig), config)
 }
 
 module.exports = {

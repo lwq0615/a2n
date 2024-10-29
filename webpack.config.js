@@ -4,6 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 const { HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const webpack = require("webpack")
+const pkg = require('./package.json')
 
 
 const webpackConfig =  getWebConfig({
@@ -14,11 +15,10 @@ const webpackConfig =  getWebConfig({
     }),
   ],
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
     alias: {
       '@core': path.resolve(__dirname, "./core"),
       '@': path.resolve(__dirname, "./"),
-      'a2n': path.resolve(__dirname, "./core")
+      [pkg.name]: path.resolve(__dirname, "./core")
     }
   },
   plugins: [

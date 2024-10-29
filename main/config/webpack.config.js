@@ -65,6 +65,9 @@ function getWebConfig(webpackConfig, options, args) {
       library: 'a2n',
       libraryTarget: 'umd'
     },
+    resolve: {
+      extensions: ['.ts', '.js', '.json']
+    },
     plugins: [
       new CleanWebpackPlugin(),
       new DefinePlugin({
