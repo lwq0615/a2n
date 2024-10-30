@@ -13,22 +13,23 @@ const path = require('path');
  */
 function webpackDevConfig(options, args) {
   return getWebConfig({
-    entry: [path.resolve(__dirname, "../start.ts"), 'webpack/hot/poll?1000'],
+    entry: [path.resolve(__dirname, '../start.ts'), 'webpack/hot/poll?1000'],
     externals: [
       nodeExternals({
         allowlist: ['webpack/hot/poll?1000'],
-      }),
+      })
     ],
+    devtool: 'source-map',
     plugins: [
       new HotModuleReplacementPlugin(),
       new RunScriptWebpackPlugin({
         // 启动的文件
-        name: 'a2n.serve.js'
+        name: 'a2n.serve.js',
       })
-    ]
+    ],
   }, options, args)
 }
 
 module.exports = {
-  webpackDevConfig
+  webpackDevConfig,
 }

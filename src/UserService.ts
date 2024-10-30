@@ -1,14 +1,14 @@
-import { Autowired, Bean, Config, getBean, PostConstruct } from "@core/index";
-import RoleService from "./RoleService";
+import { Autowired, Bean, Config, getBean, PostConstruct } from '@core/index';
+import RoleService from './RoleService';
 
 @Bean
 export default class UserServicer {
 
   @Autowired(RoleService)
-  role: any = null
+    role: any = null
 
   @Config('datasource.url')
-  url: string = null
+    url: string = null
 
   @PostConstruct
   init() {

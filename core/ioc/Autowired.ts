@@ -15,7 +15,7 @@ export const Autowired = function (Cons: string | BeanClass | Promise<any>, requ
           // 取出容器中的对象，开始进行属性注入
           getBean(Cons, cache).then(bean => {
             if (!bean && required) {
-              throw new Error("属性'" + fieldName + "'注入失败,没有在容器中查找到bean: " + (typeof Cons === 'string' ? Cons : Cons.name))
+              throw new Error('属性\'' + fieldName + '\'注入失败,没有在容器中查找到bean: ' + (typeof Cons === 'string' ? Cons : Cons.name))
             }
             if (!bean) {
               resolve(1)

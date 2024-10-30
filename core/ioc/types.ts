@@ -1,5 +1,5 @@
-import { Route } from "@core/control/types"
-import { BeanClass, BeanInstance, BeanScope } from "@core/types"
+import { Route } from '@core/control/types'
+import { BeanClass, BeanInstance, BeanScope } from '@core/types'
 
 export interface AspectHandle {
   reg: RegExp,
@@ -15,9 +15,9 @@ export class BeanState {
 
   beanClass: BeanClass
   setBeanTask: Function
-  isApiExport: Boolean = false
+  isApiExport: boolean = false
   filePath: string
-  isControl: Boolean = false
+  isControl: boolean = false
   // 控制器处理器
   controlMethods: {
     [methodName: string]: Route
@@ -32,7 +32,7 @@ export class BeanState {
   // bean创建方式
   scope: BeanScope = BeanScope.SINGLETON
   // bean是否是切面类
-  isAspect: Boolean = false
+  isAspect: boolean = false
   // 前置切面
   beforeAspects: AspectHandle[] = []
   // 后置切面
@@ -40,7 +40,7 @@ export class BeanState {
   // 环绕切面
   aroundAspects: AspectHandle[] = []
   // 是否已经完成依赖注入
-  injectOver: Boolean = false
+  injectOver: boolean = false
 }
 
 // bean多例缓存池对象

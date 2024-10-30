@@ -1,7 +1,7 @@
-import { getConfig } from "@core/config"
-import { getState, setBean } from "@core/ioc"
-import { getControlBean } from "./Control"
-import { Method, Route } from "./types"
+import { getConfig } from '@core/config'
+import { getState, setBean } from '@core/ioc'
+import { getControlBean } from './Control'
+import { Method, Route } from './types'
 
 const apiExportList: Function[] = []
 
@@ -28,7 +28,7 @@ export const ApiExport: ClassDecorator = (Cons: any) => {
         const bean = await getControlBean(Cons)
         return await bean?.[methodName](params)
       }
-      state.controlMethods[methodName].path = getState(Cons).filePath + "/" + methodName
+      state.controlMethods[methodName].path = getState(Cons).filePath + '/' + methodName
       state.controlMethods[methodName].type = Method.ALL
     })
   })

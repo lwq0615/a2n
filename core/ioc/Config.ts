@@ -1,5 +1,5 @@
 import { getState } from './beanState'
-import { getConfig } from "@core/config"
+import { getConfig } from '@core/config'
 const _ = require('lodash');
 
 /**

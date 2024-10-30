@@ -18,7 +18,7 @@ const symbols = require('log-symbols')
 function initTs(onSuccess) {
   const tsconfigPath = path.resolve(process.cwd(), './tsconfig.json')
   if (!fs.existsSync(tsconfigPath)) {
-    console.log(symbols.info, chalk.hex('#4e8ed3')("create tsconfig.json file"))
+    console.log(symbols.info, chalk.hex('#4e8ed3')('create tsconfig.json file'))
     const tsconfigTemplate = path.resolve(__dirname, '../tsconfig.json')
     fs.readFile(tsconfigTemplate, async (err, data) => {
       if (err) {
@@ -28,7 +28,7 @@ function initTs(onSuccess) {
       // data 是二进制类型，需要转换成字符串
       const content = data.toString()
       fs.writeFile(tsconfigPath, content, {
-        flag: 'w'
+        flag: 'w',
       }, (err) => {
         if (err) {
           console.error(err)

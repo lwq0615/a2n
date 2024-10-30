@@ -1,13 +1,13 @@
-import * as express from "express";
-import { Request, Response } from "express";
-import { ParamType, Method } from "@core/control/types"
-import { doFilter } from "../aop";
+import * as express from 'express';
+import { Request, Response } from 'express';
+import { ParamType, Method } from '@core/control/types'
+import { doFilter } from '../aop';
 import { Express } from 'express-serve-static-core';
-import { BeanClass, StartParam } from "@core/types";
-import { getConfig } from "@core/config"
-import { initBeanFinish } from "../ioc";
-import { getState } from "@core/ioc/beanState";
-import * as http from "http";
+import { BeanClass, StartParam } from '@core/types';
+import { getConfig } from '@core/config'
+import { initBeanFinish } from '../ioc';
+import { getState } from '@core/ioc/beanState';
+import * as http from 'http';
 
 const bodyParser = require('body-parser')
 const app: Express = express();
@@ -33,10 +33,10 @@ export const regRoutes = function (Cons: BeanClass) {
   keyList.forEach(methodName => {
     const route = state.controlMethods[methodName]
     // 规范化路由路径
-    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + route.path).split("/").filter((item: string) => item)
-    const realPath = '/' + pathArr.join("/")
+    const pathArr: string[] = (globalBaseUrl + '/' + baseUrl + '/' + route.path).split('/').filter((item: string) => item)
+    const realPath = '/' + pathArr.join('/')
     if ((realPath in paths) && route.type === paths[realPath]) {
-      throw new Error("重复的接口: '" + realPath + "'")
+      throw new Error('重复的接口: \'' + realPath + '\'')
     }
     paths[realPath] = route.type
     // 注册路由
@@ -51,7 +51,7 @@ export const regRoutes = function (Cons: BeanClass) {
           [ParamType.QUERY]: urlParams,
           [ParamType.BODY]: bodyParams,
           [ParamType.REQUEST]: req,
-          [ParamType.RESPONSE]: res
+          [ParamType.RESPONSE]: res,
         }
         // 参数注入
         for (const i in route.paramNames) {
@@ -68,7 +68,7 @@ export const regRoutes = function (Cons: BeanClass) {
           }
         }
       }
-      res.contentType("application/json")
+      res.contentType('application/json')
       // 拦截器
       const callback = () => {
         if (state.isApiExport) {

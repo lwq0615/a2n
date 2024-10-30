@@ -1,6 +1,6 @@
-import { getState } from "@core/ioc/beanState"
-import { setBean } from "@core/ioc"
-import { BeanClass, BeanInstance } from "@core/types"
+import { getState } from '@core/ioc/beanState'
+import { setBean } from '@core/ioc'
+import { BeanClass, BeanInstance } from '@core/types'
 
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
 const beforeAspects: Map<RegExp, AspectHandle> = new Map()
@@ -11,7 +11,7 @@ export function getAspects() {
   return {
     beforeAspects,
     afterAspects,
-    aroundAspects
+    aroundAspects,
   }
 }
 
@@ -57,7 +57,7 @@ export function Before(reg: RegExp): MethodDecorator {
     const Cons = target.constructor
     getState(Cons).beforeAspects.push({
       reg,
-      handle: target[key]
+      handle: target[key],
     })
   }
 }
@@ -70,7 +70,7 @@ export function After(reg: RegExp): MethodDecorator {
     const Cons = target.constructor
     getState(Cons).afterAspects.push({
       reg,
-      handle: target[key]
+      handle: target[key],
     })
   }
 }
@@ -83,7 +83,7 @@ export function Around(reg: RegExp): MethodDecorator {
     const Cons = target.constructor
     getState(Cons).aroundAspects.push({
       reg,
-      handle: target[key]
+      handle: target[key],
     })
   }
 }

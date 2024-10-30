@@ -1,4 +1,4 @@
-import { getState } from "./beanState"
+import { getState } from './beanState'
 
 /**
  * Bean依赖注入完成后执行

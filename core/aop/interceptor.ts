@@ -1,7 +1,7 @@
-import { BeanClass } from "@core/types";
-import { Request, Response } from "express";
+import { BeanClass } from '@core/types';
+import { Request, Response } from 'express';
 import { doErrHandler } from './exception';
-import { Interceptor, AroundInterceptor } from "@core/types";
+import { Interceptor, AroundInterceptor } from '@core/types';
 
 let interceptors: Interceptor[] = []
 let aroundInterceptor: AroundInterceptor = null

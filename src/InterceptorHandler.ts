@@ -1,4 +1,4 @@
-import { Request, Interceptor, Bean, BeanClass, Scope, Aspect, Before, After, Around } from "@core/index";
+import { Request, Interceptor, Bean, BeanClass, Scope, Aspect, Before, After, Around } from '@core/index';
 
 
 // @Aspect
@@ -6,13 +6,13 @@ export default class InterceptorHandler {
 
   @After(/^[U]/)
   as1p() {
-    console.log("after");
+    console.log('after');
     
   }
 
   @Before(/^[U]/)
   asp(Cons: BeanClass, name: string) {
-    console.log("before");
+    console.log('before');
     
   }
 

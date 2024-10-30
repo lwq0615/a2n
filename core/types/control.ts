@@ -1,4 +1,4 @@
-import { BeanClass, RunConfig } from "."
+import { BeanClass } from '.'
 
 
 

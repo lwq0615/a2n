@@ -1,7 +1,7 @@
-import { BeanClass, BeanInstance } from "@core/types";
-import { getAspects } from "./Aspect";
-import { isFunction } from "@core/utils/function";
-import { getState } from "@core/ioc/beanState";
+import { BeanClass, BeanInstance } from '@core/types';
+import { getAspects } from './Aspect';
+import { isFunction } from '@core/utils/function';
+import { getState } from '@core/ioc/beanState';
 
 let isStart = false
 
@@ -52,6 +52,6 @@ export function getProxy(bean: BeanInstance): BeanInstance {
       } else {
         return target[key]
       }
-    }
+    },
   })
 }

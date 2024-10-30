@@ -1,12 +1,12 @@
-import { Autowired, Bean, BeanScope, Scope, PostConstruct, ApiExport } from "@core/index";
+import { Autowired, Bean, BeanScope, Scope, PostConstruct, ApiExport } from '@core/index';
 
 @Bean('role')
 @ApiExport
 @Scope(BeanScope.PROTOTYPE)
 export default class RoleService {
 
-  @Autowired(import("./UserService"))
-  user: any = null
+  @Autowired(import('./UserService'))
+    user: any = null
 
   @PostConstruct
   init() {

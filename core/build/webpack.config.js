@@ -10,9 +10,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /[\.ts?|\.js?]$/,
+        test: /[.ts?|.js?]$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       }
     ],
   },
@@ -20,17 +20,17 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
     alias: {
       '@core': path.resolve(process.cwd(), './core'),
-      '@': path.resolve(process.cwd(), "./"),
-    }
+      '@': path.resolve(process.cwd(), './'),
+    },
   },
   output: {
     filename: 'a2n.core.js',
     path: path.resolve(process.cwd(), './core/dist'),
     library: 'a2n',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   plugins: [
     new CleanWebpackPlugin(),
     new DtsBuildPlugin()
-  ]
+  ],
 };

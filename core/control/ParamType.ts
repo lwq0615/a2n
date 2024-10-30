@@ -3,7 +3,7 @@ import { getState } from '@core/ioc/beanState'
 
 
 /**
- * 注册参数 
+ * 注册参数
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
@@ -26,7 +26,7 @@ function regParam(target: any, methodName: string, paramIndex: number, type: Par
  */
 function getParamDecorators(target: any, methodName: string, paramIndex: number, type: ParamType) {
   const paramInfo: ParamInfo = {
-    type: type
+    type: type,
   }
   if (typeof target === 'string') {
     paramInfo.name = target

@@ -11,7 +11,7 @@ function getMapping(path: string, type: Method): MethodDecorator {
     // 将当前method注册为handler
     Object.assign(getState(Cons).controlMethods[key], {
       path: path,
-      type: type
+      type: type,
     })
   }
 }

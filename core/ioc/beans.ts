@@ -1,14 +1,14 @@
-import { setInterceptors } from "@core/aop/interceptor"
-import { getState, getStates } from "./beanState"
-import { BeanScope, BeanClass, BeanInstance } from "@core/types"
-import { AroundInterceptor, ErrHandler, Interceptor } from "@core/aop"
-import { setErrorHandlers } from "@core/aop/exception"
-import { getProxy, startProxy } from "@core/aop/proxy"
-import { isFunction } from "@core/utils/function"
-import { setAspectBeans } from "@core/aop/Aspect"
-import { BeanCache, BeanState } from "./types"
-import { regRoutes } from "@core/control/express"
-import { invokeApiExport } from "@core/control/ApiExport"
+import { setInterceptors } from '@core/aop/interceptor'
+import { getState, getStates } from './beanState'
+import { BeanScope, BeanClass, BeanInstance } from '@core/types'
+import { AroundInterceptor, ErrHandler, Interceptor } from '@core/aop'
+import { setErrorHandlers } from '@core/aop/exception'
+import { getProxy, startProxy } from '@core/aop/proxy'
+import { isFunction } from '@core/utils/function'
+import { setAspectBeans } from '@core/aop/Aspect'
+import { BeanCache, BeanState } from './types'
+import { regRoutes } from '@core/control/express'
+import { invokeApiExport } from '@core/control/ApiExport'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -17,8 +17,8 @@ const nameBeanMap: { [name: string]: BeanClass } = {}
 
 /**
  * 通过类型获取该类型和继承自该类型的bean
- */ 
-export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => Boolean)): Promise<T[]> {
+ */
+export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState) => boolean)): Promise<T[]> {
   if (isFunction(Cons)) {
     const beans = [...getStates().values()].filter(Cons as any).map(state => {
       return getBean<T>(state.beanClass)
@@ -36,7 +36,7 @@ export function setBean(source: any | string, Cons?: BeanClass) {
   // 多例模式，不在单例池创建bean
   if (typeof source === 'string') {
     if (source in nameBeanMap) {
-      throw new Error("重复的bean名称: " + source)
+      throw new Error('重复的bean名称: ' + source)
     }
     nameBeanMap[source] = Cons
     if (getState(Cons).scope === BeanScope.PROTOTYPE) {
@@ -68,7 +68,7 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
       const isStart = !cache
       if (isStart) {
         cache = {
-          classMap: new Map<BeanClass, BeanInstance>()
+          classMap: new Map<BeanClass, BeanInstance>(),
         }
       }
       // 如果缓存池已经存在该类型的bean，从缓存池获取
@@ -159,4 +159,4 @@ function doInitOverTasks(beans: BeanInstance[]) {
       task.call(bean)
     })
   }
-} 
+}

@@ -6,9 +6,9 @@ module.exports = {
   // 服务启动端口号
   port: 8088,
   datasource: {
-    url: '123lll'
+    url: '123lll',
   },
   apiExport: {
-    baseUrl: 'api'
-  }
+    baseUrl: 'api',
+  },
 }

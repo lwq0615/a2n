@@ -1,5 +1,5 @@
 import ApiExport from './ApiExport'
-export { Control } from "@core/control/Control";
+export { Control } from '@core/control/Control';
 export { app, start, close } from './express'
 export {
   Query,

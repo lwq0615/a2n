@@ -17,19 +17,19 @@ class DtsBuildPlugin {
   apply(compiler) {
     const pluginName = DtsBuildPlugin.name;
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
-      const filename = compiler.options.output.filename.split(".").slice(0, -1).join(".") + '.d.ts'
+      const filename = compiler.options.output.filename.split('.').slice(0, -1).join('.') + '.d.ts'
       fs.readFile('core/index.d.ts', async (err, data) => {
         if (err) {
           console.error(err)
           return
         }
-        if (!fs.existsSync("core/dist")) {
+        if (!fs.existsSync('core/dist')) {
           fs.mkdirSync('core/dist')
         }
         // data 是二进制类型，需要转换成字符串
-        const content = data.toString().replace("'./types", "'../types").replace('"./types', '"../types')
+        const content = data.toString().replace('\'./types', '\'../types').replace('"./types', '"../types')
         fs.writeFile('core/dist/' + filename, content, {
-          flag: 'w'
+          flag: 'w',
         }, (err) => {
           if (err) {
             console.error(err)

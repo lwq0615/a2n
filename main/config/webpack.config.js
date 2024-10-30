@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const { getAssignConfig } = require('./a2nDefaultConfig');
 const dotenv = require('dotenv');
-const pkg = require("../../package.json")
+const pkg = require('../../package.json')
 const fs = require('fs')
 
 const a2nConfigPath = path.resolve(process.cwd(), './a2n.config.js')
@@ -32,7 +32,7 @@ function getWebConfig(webpackConfig, options, args) {
     const customEnv = dotenv.config({
       path: path.resolve(process.cwd(), '.env.' + options.env),
       encoding: 'utf8',
-      debug: false
+      debug: false,
     }).parsed;
     Object.assign(env, customEnv)
   }
@@ -47,25 +47,25 @@ function getWebConfig(webpackConfig, options, args) {
     module: {
       rules: [
         {
-          test: /[\.ts?|\.js?]$/,
+          test: /[.ts?|.js?]$/,
           use: 'ts-loader',
-          include: path.resolve(__dirname, "../start.ts"),
+          include: path.resolve(__dirname, '../start.ts'),
         },
         {
-          test: /[\.ts?|\.js?]$/,
+          test: /[.ts?|.js?]$/,
           use: 'ts-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
         }
       ],
     },
     output: {
       filename: 'a2n.serve.js',
-      path: path.resolve(__dirname, "../../dist"),
+      path: path.resolve(__dirname, '../../dist'),
       library: 'a2n',
-      libraryTarget: 'umd'
+      libraryTarget: 'umd',
     },
     resolve: {
-      extensions: ['.ts', '.js', '.json']
+      extensions: ['.ts', '.js', '.json'],
     },
     plugins: [
       new CleanWebpackPlugin(),
@@ -75,10 +75,10 @@ function getWebConfig(webpackConfig, options, args) {
           cwd: JSON.stringify(process.cwd()),
           componentScan: JSON.stringify(a2nConfig.componentScan),
           a2nConfigPath: JSON.stringify(a2nConfigPath),
-          npmName: JSON.stringify(pkg.name)
-        }
+          npmName: JSON.stringify(pkg.name),
+        },
       })
-    ]
+    ],
   };
   // 基于当前环境的webpack配置文件，此时还没有与a2n.config.js的webpack配置合并
   const envWebpackConfig = merge(baseConfig, webpackConfig)
@@ -95,5 +95,5 @@ function getWebConfig(webpackConfig, options, args) {
 }
 
 module.exports = {
-  getWebConfig
+  getWebConfig,
 }

@@ -11,7 +11,7 @@ export {
   BeanClass,
   BeanInstance,
   getState
-} from "@core/ioc";
+} from '@core/ioc';
 
 export {
   Interceptor,
@@ -22,7 +22,7 @@ export {
   Around,
   Before
 } from '@core/aop'
-
+const a = '1'
 export {
   Control,
   Query,
@@ -34,7 +34,7 @@ export {
   Post,
   Delete,
   Put,
-  app, 
+  app,
   ApiExport,
   start,
   close

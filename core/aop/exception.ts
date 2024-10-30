@@ -1,8 +1,8 @@
 /**
  * 全局异常处理
  */
-import { ErrHandler } from "@core/types"
-import { Request, Response } from "express";
+import { ErrHandler } from '@core/types'
+import { Request, Response } from 'express';
 
 let errHandlers: ErrHandler[] = []
 
