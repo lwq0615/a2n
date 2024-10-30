@@ -1,5 +1,5 @@
 
-const { start, filepathSymbol, setConfig } = require(process.env.npmName);
+const { start, setConfig, getState } = require(process.env.npmName);
 import * as chalk from "chalk";
 import * as symbol from 'log-symbols'
 const fs = require('fs');
@@ -17,9 +17,7 @@ if (!fs.existsSync(scanPath)) {
   requireComponent.keys().forEach(filepath => {
     console.log("scan file: " + path.resolve(process.env.componentScan, filepath))
     const defaultExport = requireComponent(filepath).default
-    if (defaultExport) {
-      defaultExport[filepathSymbol] = filepath.substring(1)
-    }
+    getState(defaultExport).filePath = filepath.substring(1)
   })
 }
 

@@ -8,6 +8,7 @@ import { isFunction } from "@core/utils/function"
 import { setAspectBeans } from "@core/aop/Aspect"
 import { BeanCache, BeanState } from "./types"
 import { regRoutes } from "@core/control/express"
+import { invokeApiExport } from "@core/control/ApiExport"
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -112,6 +113,8 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
  * 通知bean容器，所有的bean都已经注册完成
  */
 export async function initBeanFinish() {
+  // 执行@ApiExport的配置函数
+  invokeApiExport()
   // 单例池生成bean
   for (const state of getStates().values()) {
     state.setBeanTask?.()

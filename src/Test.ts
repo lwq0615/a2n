@@ -1,6 +1,8 @@
-import { Bean } from "@core/index";
+import { ApiExport, Bean } from "@core/index";
 
-@Bean
+@ApiExport
 export default class Test {
-
+  get() {
+    return 'test'
+  }
 }

@@ -9,7 +9,8 @@ export {
   Scope,
   BeanScope,
   BeanClass,
-  BeanInstance
+  BeanInstance,
+  getState
 } from "@core/ioc";
 
 export {
@@ -33,7 +34,6 @@ export {
   Post,
   Delete,
   Put,
-  filepathSymbol,
   app, 
   ApiExport,
   start,

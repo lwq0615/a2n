@@ -14,7 +14,6 @@ export {
   Delete,
   Put
 } from '@core/control/RequestMethod';
-export { filepathSymbol } from '@core/control/ApiExport'
 
 export {
   ApiExport

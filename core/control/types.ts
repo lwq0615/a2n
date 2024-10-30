@@ -15,7 +15,7 @@ export enum Method{
  * 路由信息
  */
 export class Route {
-  path: string | Function = null
+  path: string = null
   type: Method = Method.ALL
   handler: Function = null
   params: ParamInfo[] = []

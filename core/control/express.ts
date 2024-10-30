@@ -32,13 +32,9 @@ export const regRoutes = function (Cons: BeanClass) {
   const baseUrl = state.controlMapping
   keyList.forEach(methodName => {
     const route = state.controlMethods[methodName]
-    let routePath = route.path
-    if(typeof route.path === 'function') {
-      routePath = route.path()
-    }
     // 规范化路由路径
-    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + routePath).split("/").filter((item: string) => item)
-    let realPath = '/' + pathArr.join("/")
+    const pathArr: string[] = (globalBaseUrl + "/" + baseUrl + "/" + route.path).split("/").filter((item: string) => item)
+    const realPath = '/' + pathArr.join("/")
     if ((realPath in paths) && route.type === paths[realPath]) {
       throw new Error("重复的接口: '" + realPath + "'")
     }
@@ -74,7 +70,13 @@ export const regRoutes = function (Cons: BeanClass) {
       }
       res.contentType("application/json")
       // 拦截器
-      const callback = () => route.handler(...params)
+      const callback = () => {
+        if (state.isApiExport) {
+          return route.handler(params)
+        } else {
+          return route.handler(...params)
+        }
+      }
       doFilter(callback, req, res, Cons, methodName)
     })
   })
