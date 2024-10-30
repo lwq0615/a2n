@@ -27,7 +27,11 @@ function initTs(onSuccess) {
       }
       // data 是二进制类型，需要转换成字符串
       const content = data.toString()
-      fs.writeFile(tsconfigPath, content, {
+      const tsConfig = JSON.parse(content)
+      tsConfig.compilerOptions.paths = {
+        '@/*': ['./src'],
+      }
+      fs.writeFile(tsconfigPath, JSON.stringify(tsConfig, null, 2), {
         flag: 'w',
       }, (err) => {
         if (err) {
