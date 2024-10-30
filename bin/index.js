@@ -18,7 +18,7 @@ const symbols = require('log-symbols')
 function initTs(onSuccess) {
   const tsconfigPath = path.resolve(process.cwd(), './tsconfig.json')
   if (!fs.existsSync(tsconfigPath)) {
-    console.log(symbols.info, chalk.hex('#4e8ed3')('create tsconfig.json file'))
+    console.info(symbols.info, chalk.hex('#4e8ed3')('create tsconfig.json file'))
     const tsconfigTemplate = path.resolve(__dirname, '../tsconfig.json')
     fs.readFile(tsconfigTemplate, async (err, data) => {
       if (err) {

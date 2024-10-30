@@ -9,8 +9,8 @@ const fs = require('fs')
 
 const a2nConfigPath = path.resolve(process.cwd(), './a2n.config.js')
 if(!fs.existsSync(a2nConfigPath)) {
-  console.log('tip: config file "' + a2nConfigPath + '" not exist!')
-  console.log('tip: use default config\n')
+  console.info('tip: config file "' + a2nConfigPath + '" not exist!')
+  console.info('tip: use default config\n')
 }
 const a2nConfig = getAssignConfig()
 
