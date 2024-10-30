@@ -1,13 +1,13 @@
+import { getConfig } from '@core/config';
+import { Method, ParamType } from '@core/control/types';
+import { getState } from '@core/ioc/beanState';
+import { BeanClass, StartParam } from '@core/types';
 import * as express from 'express';
 import { Request, Response } from 'express';
-import { ParamType, Method } from '@core/control/types'
-import { doFilter } from '../aop';
 import { Express } from 'express-serve-static-core';
-import { BeanClass, StartParam } from '@core/types';
-import { getConfig } from '@core/config'
-import { initBeanFinish } from '../ioc';
-import { getState } from '@core/ioc/beanState';
 import * as http from 'http';
+import { doFilter } from '../aop';
+import { initBeanFinish } from '../ioc';
 
 const bodyParser = require('body-parser')
 const app: Express = express();
@@ -42,9 +42,9 @@ export const regRoutes = function (Cons: BeanClass) {
     // 注册路由
     app[route.type](realPath, async (req: Request, res: Response) => {
       let params: any[] = []
-      if(state.isApiExport) {
+      if (state.isApiExport) {
         params = req.body || []
-      }else {
+      } else {
         const urlParams = req.query
         const bodyParams = req.body
         const paramMap = {
@@ -84,7 +84,7 @@ export const regRoutes = function (Cons: BeanClass) {
 
 export {
   app
-}
+};
 
 export async function start(startParam: StartParam) {
   const config = getConfig()

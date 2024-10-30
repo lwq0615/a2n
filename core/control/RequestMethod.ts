@@ -5,7 +5,7 @@ import { getState } from '@core/ioc/beanState'
 function getMapping(path: string, type: Method): MethodDecorator {
   return function (target: any, key: string, descriptor: object) {
     const Cons = target.constructor
-    if(!getState(Cons).controlMethods[key]){
+    if (!getState(Cons).controlMethods[key]){
       getState(Cons).controlMethods[key] = new Route()
     }
     // 将当前method注册为handler

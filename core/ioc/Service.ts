@@ -13,7 +13,7 @@ const Service = function (source: string | any) {
       state.setBeanTask = () => setBean(source, Cons)
     } as undefined
   } else {
-    if(!(source instanceof Function)) {
+    if (!(source instanceof Function)) {
       throw new Error('@Service只接收string类型或者undefined参数')
     }
     const state = getState(source)

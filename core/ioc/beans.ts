@@ -97,7 +97,7 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
 const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
   const state = getState(bean.constructor)
   // 如果是单例bean切已经注入完成，则跳过
-  if(state.injectOver && state.scope === BeanScope.SINGLETON) {
+  if (state.injectOver && state.scope === BeanScope.SINGLETON) {
     return
   }
   // 依赖注入@Autowired
@@ -127,7 +127,7 @@ export async function initBeanFinish() {
   doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
   for (const state of getStates().values()) {
-    if(state.isControl || state.isApiExport) {
+    if (state.isControl || state.isApiExport) {
       regRoutes(state.beanClass)
     }
   }

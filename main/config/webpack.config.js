@@ -8,7 +8,7 @@ const pkg = require('../../package.json')
 const fs = require('fs')
 
 const a2nConfigPath = path.resolve(process.cwd(), './a2n.config.js')
-if(!fs.existsSync(a2nConfigPath)) {
+if (!fs.existsSync(a2nConfigPath)) {
   console.info('tip: config file "' + a2nConfigPath + '" not exist!')
   console.info('tip: use default config\n')
 }

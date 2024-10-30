@@ -21,6 +21,8 @@ module.exports = {
     // 可以根据需要自定义具体规则，这里先保持默认推荐规则
     'no-console': 'off',
     'quotes': ['error', 'single'],
+    'space-infix-ops': 'error',
+    'keyword-spacing': 'error',
     'comma-dangle': ['error', {
       'arrays': 'always-multiline',
       'objects': 'always-multiline',

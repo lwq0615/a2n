@@ -7,7 +7,7 @@ import { getState } from '@core/ioc/beanState'
  */
 function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
-  if(!getState(Cons).controlMethods) {
+  if (!getState(Cons).controlMethods) {
     getState(Cons).controlMethods = {}
   }
   if (!getState(Cons).controlMethods[methodName]) {

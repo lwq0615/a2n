@@ -24,7 +24,7 @@ export const Control = function (source: string | any) {
     const state = getState(Cons)
     state.isControl = true
     state.controlMapping = baseUrl
-    if(!state.setBeanTask) {
+    if (!state.setBeanTask) {
       state.setBeanTask = () => setBean(Cons)
     }
     Object.keys(state.controlMethods).forEach(methodName => {

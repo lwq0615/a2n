@@ -15,7 +15,7 @@ export async function doFilter(callback: Function, req: Request, res: Response, 
   try {
     // 拦截器
     for (const interceptor of interceptors) {
-      if(typeof interceptor.doFilter !== 'function') {
+      if (typeof interceptor.doFilter !== 'function') {
         throw new Error('Interceptor 必须实现方法doFilter')
       }
       if (!await interceptor.doFilter(req, res, Cons, methodName)) {
@@ -30,7 +30,7 @@ export async function doFilter(callback: Function, req: Request, res: Response, 
       result = await callback()
     }
     res.send(JSON.stringify(result))
-  }catch(err) {
+  } catch (err) {
     doErrHandler(err, req, res)
   }
 }

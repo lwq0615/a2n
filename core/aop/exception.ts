@@ -15,7 +15,7 @@ export async function doErrHandler(err: Error, req: Request, res: Response) {
   let value: any = 'Internal Server Error'
   res.status(500)
   for (const errHandler of await errHandlers) {
-    if(typeof errHandler.handler !== 'function') {
+    if (typeof errHandler.handler !== 'function') {
       throw new Error('ErrHandler 必须实现方法handler')
     }
     value = errHandler.handler(err, req, res, value)

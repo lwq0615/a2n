@@ -30,7 +30,7 @@ type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) =>
 export const Aspect: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
   state.isAspect = true
-  if(!state.setBeanTask) {
+  if (!state.setBeanTask) {
     state.setBeanTask = () => setBean(Cons)
   }
   const getHandle = (handle: Function) => {
