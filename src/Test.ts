@@ -1,4 +1,4 @@
-import { ApiExport, Bean } from '@core/index';
+import { ApiExport } from 'a2n';
 
 @ApiExport
 export default class Test {

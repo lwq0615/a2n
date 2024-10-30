@@ -1,4 +1,4 @@
-import { Autowired, Control, Get, Post, Query } from '@core/index';
+import { Autowired, Control, Get, Post, Query } from 'a2n';
 import UserService from './UserService';
 
 
