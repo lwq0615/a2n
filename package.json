@@ -13,8 +13,8 @@
   "scripts": {
     "dev": "node webpack.config.js",
     "build": "webpack --config core/build/webpack.config.js",
-    "lint": "eslint --ext .ts,.json,.js core main bin",
-    "lint:fix": "eslint --fix --ext .ts,.json,.js core main bin"
+    "lint": "eslint --ext .ts,.json,.js ./",
+    "lint:fix": "eslint --fix --ext .ts,.json,.js ./"
   },
   "files": [
     "core/dist",

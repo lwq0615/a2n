@@ -7,13 +7,13 @@ export default class InterceptorHandler {
   @After(/^[U]/)
   as1p() {
     console.log('after');
-    
+
   }
 
   @Before(/^[U]/)
   asp(Cons: BeanClass, name: string) {
     console.log('before');
-    
+
   }
 
   @Around(/^[U]/)
@@ -23,6 +23,6 @@ export default class InterceptorHandler {
     const res = callback()
     return res.name + 'ann'
   }
-  
+
 
 }

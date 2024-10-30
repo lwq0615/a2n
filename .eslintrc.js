@@ -16,7 +16,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
   ],
-  ignorePatterns: ['**/dist'],
+  ignorePatterns: ['**/dist', '**/node_modules', 'package.json', 'tsconfig.json'],
   rules: {
     // 可以根据需要自定义具体规则，这里先保持默认推荐规则
     'no-console': 'off',

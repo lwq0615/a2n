@@ -12,7 +12,7 @@ const webpackConfig =  getWebConfig({
   externals: [
     nodeExternals({
       allowlist: ['webpack/hot/poll?1000'],
-    })
+    }),
   ],
   devtool: 'source-map',
   resolve: {
@@ -27,7 +27,7 @@ const webpackConfig =  getWebConfig({
     new RunScriptWebpackPlugin({
       // 启动的文件
       name: 'a2n.serve.js',
-    })
+    }),
   ],
 })
 
