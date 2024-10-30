@@ -1,45 +1,19 @@
 export {
-  getBean,
-  getBeans,
-  Autowired,
-  Service,
-  Bean,
-  PostConstruct,
-  Config,
-  Scope,
-  BeanScope,
-  BeanClass,
-  BeanInstance,
-  getState
+  Autowired, Bean, BeanClass,
+  BeanInstance, BeanScope, Config, PostConstruct, Scope, Service, getBean,
+  getBeans, getState
 } from '@core/ioc';
 
 export {
-  Interceptor,
-  AroundInterceptor,
-  ErrHandler,
-  Aspect,
   After,
-  Around,
-  Before
-} from '@core/aop'
-const a = '1'
-export {
-  Control,
-  Query,
-  Body,
-  Req,
-  Res,
-  RequestMapping,
-  Get,
-  Post,
-  Delete,
-  Put,
-  app,
-  ApiExport,
-  start,
-  close
-} from '@core/control'
+  Around, AroundInterceptor, Aspect, Before, ErrHandler, Interceptor
+} from '@core/aop';
 
-export { setConfig, getConfig } from '@core/config'
+export {
+  ApiExport, Body, Control, Delete, Get,
+  Post, Put, Query, Req, RequestMapping, Res, app, close, start
+} from '@core/control';
+
+export { getConfig, setConfig } from '@core/config';
 
 export { Request, Response } from 'express';
