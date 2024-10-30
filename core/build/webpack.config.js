@@ -13,7 +13,7 @@ module.exports = {
         test: /[.ts?|.js?]$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
+      },
     ],
   },
   resolve: {
@@ -31,6 +31,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new DtsBuildPlugin()
+    new DtsBuildPlugin(),
   ],
 };

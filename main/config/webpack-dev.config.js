@@ -17,7 +17,7 @@ function webpackDevConfig(options, args) {
     externals: [
       nodeExternals({
         allowlist: ['webpack/hot/poll?1000'],
-      })
+      }),
     ],
     devtool: 'source-map',
     plugins: [
@@ -25,7 +25,7 @@ function webpackDevConfig(options, args) {
       new RunScriptWebpackPlugin({
         // 启动的文件
         name: 'a2n.serve.js',
-      })
+      }),
     ],
   }, options, args)
 }

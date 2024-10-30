@@ -55,7 +55,7 @@ function getWebConfig(webpackConfig, options, args) {
           test: /[.ts?|.js?]$/,
           use: 'ts-loader',
           exclude: /node_modules/,
-        }
+        },
       ],
     },
     output: {
@@ -77,7 +77,7 @@ function getWebConfig(webpackConfig, options, args) {
           a2nConfigPath: JSON.stringify(a2nConfigPath),
           npmName: JSON.stringify(pkg.name),
         },
-      })
+      }),
     ],
   };
   // 基于当前环境的webpack配置文件，此时还没有与a2n.config.js的webpack配置合并

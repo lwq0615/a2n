@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -14,7 +14,7 @@ module.exports = {
     sourceMap: true,
   },
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint',
   ],
   ignorePatterns: ['**/dist'],
   rules: {
@@ -22,7 +22,7 @@ module.exports = {
     'no-console': 'off',
     'quotes': ['error', 'single'],
     'comma-dangle': ['error', {
-      'arrays': 'never',
+      'arrays': 'always-multiline',
       'objects': 'always-multiline',
       'imports': 'never',
       'exports': 'never',
