@@ -22,6 +22,9 @@ module.exports = {
     'no-console': 'off',
     'quotes': ['error', 'single'],
     'space-infix-ops': 'error',
+    'no-const-assign': 'error',
+    'no-var': 'error',
+    'array-callback-return': 'error',
     'keyword-spacing': 'error',
     'comma-dangle': ['error', {
       'arrays': 'always-multiline',
