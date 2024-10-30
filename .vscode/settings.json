@@ -3,7 +3,8 @@
   "eslint.run": "onSave",
   // 自动修复所有文件
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
   },
   // 格式化工具
   "[javascript]": {
