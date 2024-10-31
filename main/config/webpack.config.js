@@ -1,9 +1,9 @@
-const path = require('path');
-const { merge } = require('webpack-merge');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DefinePlugin } = require('webpack');
-const { getAssignConfig } = require('./a2nDefaultConfig');
-const dotenv = require('dotenv');
+const path = require('path')
+const { merge } = require('webpack-merge')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { DefinePlugin } = require('webpack')
+const { getAssignConfig } = require('./a2nDefaultConfig')
+const dotenv = require('dotenv')
 const pkg = require('../../package.json')
 const fs = require('fs')
 
@@ -25,7 +25,7 @@ function getWebConfig(webpackConfig, options, args) {
     path: path.resolve(process.cwd(), '.env'), // 环境变量配置文件路径
     encoding: 'utf8', // 编码方式，默认utf8
     debug: false, // 是否开启debug，默认false
-  }).parsed;
+  }).parsed
 
   // 自定义环境变量配置文件
   if (options?.env) {
@@ -33,7 +33,7 @@ function getWebConfig(webpackConfig, options, args) {
       path: path.resolve(process.cwd(), '.env.' + options.env),
       encoding: 'utf8',
       debug: false,
-    }).parsed;
+    }).parsed
     Object.assign(env, customEnv)
   }
 
@@ -79,7 +79,7 @@ function getWebConfig(webpackConfig, options, args) {
         },
       }),
     ],
-  };
+  }
   // 基于当前环境的webpack配置文件，此时还没有与a2n.config.js的webpack配置合并
   const envWebpackConfig = merge(baseConfig, webpackConfig)
   if (a2nConfig.webpack) {

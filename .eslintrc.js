@@ -18,7 +18,7 @@ module.exports = {
   ],
   ignorePatterns: ['**/dist', '**/node_modules', 'package.json', 'tsconfig.json'],
   rules: {
-    // 可以根据需要自定义具体规则，这里先保持默认推荐规则
+    'semi': ['error', 'never'],
     'no-console': 'off',
     'quotes': ['error', 'single'],
     'space-infix-ops': 'error',
@@ -44,4 +44,4 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'no-trailing-spaces': 'error',
   },
-};
+}

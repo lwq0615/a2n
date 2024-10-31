@@ -1,5 +1,5 @@
-import { Express } from 'express-serve-static-core';
-import * as express from 'express';
+import { Express } from 'express-serve-static-core'
+import * as express from 'express'
 import * as types from './types'
 
 declare namespace a2n {

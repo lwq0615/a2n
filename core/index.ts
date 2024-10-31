@@ -11,7 +11,7 @@ export {
   getBean,
   getBeans,
   getState
-} from '@core/ioc';
+} from '@core/ioc'
 
 export {
   After,
@@ -21,9 +21,9 @@ export {
   Before,
   ErrHandler,
   Interceptor
-} from '@core/aop';
+} from '@core/aop'
 
-export { getConfig, setConfig } from '@core/config';
+export { getConfig, setConfig } from '@core/config'
 export {
   ApiExport,
   Body,
@@ -39,6 +39,6 @@ export {
   app,
   close,
   start
-} from '@core/control';
+} from '@core/control'
 
-export { Request, Response } from 'express';
+export { Request, Response } from 'express'

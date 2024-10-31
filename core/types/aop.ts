@@ -1,5 +1,5 @@
-import { BeanClass } from '.';
-import { Request, Response } from 'express';
+import { BeanClass } from '.'
+import { Request, Response } from 'express'
 
 
 /**

@@ -1,5 +1,5 @@
-const { getWebConfig } = require('./webpack.config.js');
-const path = require('path');
+const { getWebConfig } = require('./webpack.config.js')
+const path = require('path')
 
 
 /**

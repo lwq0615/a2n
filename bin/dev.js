@@ -12,7 +12,7 @@ function dev(options, args) {
       if (err || stats.errors) {
         console.error(err || stats.errors)
       }
-    });
+    })
   } catch (err) {
     console.error(err)
   }

@@ -1,5 +1,5 @@
-import { Autowired, Bean, Config, PostConstruct } from 'a2n';
-import RoleService from './RoleService';
+import { Autowired, Bean, Config, PostConstruct } from 'a2n'
+import RoleService from './RoleService'
 
 @Bean
 export default class UserServicer {

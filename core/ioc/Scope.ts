@@ -1,5 +1,5 @@
-import { getState } from './beanState';
-import { BeanScope } from '@core/types';
+import { getState } from './beanState'
+import { BeanScope } from '@core/types'
 
 
 

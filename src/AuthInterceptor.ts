@@ -1,4 +1,4 @@
-import { Bean, BeanClass, Interceptor, Request, Response } from 'a2n';
+import { Bean, BeanClass, Interceptor, Request, Response } from 'a2n'
 
 /**
  * 继承Interceptor类并注入到容器中，该类会被注册为拦截器

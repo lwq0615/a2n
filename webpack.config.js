@@ -1,8 +1,8 @@
-const path = require('path');
-const { getWebConfig } = require('./main/config/webpack.config.js');
-const nodeExternals = require('webpack-node-externals');
+const path = require('path')
+const { getWebConfig } = require('./main/config/webpack.config.js')
+const nodeExternals = require('webpack-node-externals')
 const { HotModuleReplacementPlugin } = require('webpack')
-const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
 const webpack = require('webpack')
 const pkg = require('./package.json')
 
@@ -38,7 +38,7 @@ try {
     if (err || stats.errors) {
       console.error(err || stats.errors)
     }
-  });
+  })
 } catch (err) {
   console.error(err)
 }

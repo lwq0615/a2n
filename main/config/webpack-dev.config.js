@@ -1,8 +1,8 @@
-const { getWebConfig } = require('./webpack.config.js');
-const nodeExternals = require('webpack-node-externals');
+const { getWebConfig } = require('./webpack.config.js')
+const nodeExternals = require('webpack-node-externals')
 const { HotModuleReplacementPlugin } = require('webpack')
-const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
-const path = require('path');
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
+const path = require('path')
 
 
 /**

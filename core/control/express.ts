@@ -1,23 +1,23 @@
-import { getConfig } from '@core/config';
-import { Method, ParamType } from '@core/control/types';
-import { getState } from '@core/ioc/beanState';
-import { BeanClass, StartParam } from '@core/types';
-import * as express from 'express';
-import { Request, Response } from 'express';
-import { Express } from 'express-serve-static-core';
-import * as http from 'http';
-import { doFilter } from '../aop';
-import { initBeanFinish } from '../ioc';
+import { getConfig } from '@core/config'
+import { Method, ParamType } from '@core/control/types'
+import { getState } from '@core/ioc/beanState'
+import { BeanClass, StartParam } from '@core/types'
+import * as express from 'express'
+import { Request, Response } from 'express'
+import { Express } from 'express-serve-static-core'
+import * as http from 'http'
+import { doFilter } from '../aop'
+import { initBeanFinish } from '../ioc'
 
 const bodyParser = require('body-parser')
-const app: Express = express();
+const app: Express = express()
 let server: http.Server = null
 
 /**
  * 解析post请求参数
  */
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 
 
@@ -58,9 +58,9 @@ export const regRoutes = function (Cons: BeanClass) {
           // 通过注解注入的参数
           if (route.params[i]) {
             if (route.params[i].name) {
-              params[i] = paramMap[route.params[i].type][route.params[i].name];
+              params[i] = paramMap[route.params[i].type][route.params[i].name]
             } else {
-              params[i] = paramMap[route.params[i].type];
+              params[i] = paramMap[route.params[i].type]
             }
           } else {
             // 参数没有注解，通过参数名称从query获取
@@ -84,7 +84,7 @@ export const regRoutes = function (Cons: BeanClass) {
 
 export {
   app
-};
+}
 
 export async function start(startParam: StartParam) {
   const config = getConfig()

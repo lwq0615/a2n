@@ -1,6 +1,6 @@
 import { getState } from './beanState'
 import { getConfig } from '@core/config'
-const _ = require('lodash');
+const _ = require('lodash')
 
 /**
  * 加载配置文件内容到属性中

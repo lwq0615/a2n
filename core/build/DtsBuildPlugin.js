@@ -11,11 +11,11 @@ class DtsBuildPlugin {
     // 在应用默认选项前，先应用用户指定选项
     // 合并后的选项暴露给插件方法
     // 记得在这里校验所有选项
-    this.options = { ...options };
+    this.options = { ...options }
   }
 
   apply(compiler) {
-    const pluginName = DtsBuildPlugin.name;
+    const pluginName = DtsBuildPlugin.name
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       const filename = compiler.options.output.filename.split('.').slice(0, -1).join('.') + '.d.ts'
       fs.readFile('core/index.d.ts', async (err, data) => {
@@ -37,8 +37,8 @@ class DtsBuildPlugin {
           callback()
         })
       })
-    });
+    })
   }
 }
 
-module.exports = { DtsBuildPlugin };
+module.exports = { DtsBuildPlugin }

@@ -1,5 +1,5 @@
-import { BeanClass } from '@core/types';
-import { BeanState } from './types';
+import { BeanClass } from '@core/types'
+import { BeanState } from './types'
 
 const states = new Map<BeanClass, BeanState>()
 

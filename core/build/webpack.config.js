@@ -1,6 +1,6 @@
-const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DtsBuildPlugin } = require('./DtsBuildPlugin.js');
+const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { DtsBuildPlugin } = require('./DtsBuildPlugin.js')
 
 
 module.exports = {
@@ -33,4 +33,4 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DtsBuildPlugin(),
   ],
-};
+}
