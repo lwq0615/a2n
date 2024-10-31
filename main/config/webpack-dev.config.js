@@ -10,7 +10,7 @@ const path = require('path')
  */
 function webpackDevConfig(options, args) {
   return getWebConfig(getDevWebConfig({
-    entry: [path.resolve(__dirname, '../start.ts'), 'webpack/hot/poll?1000'],
+    entry: path.resolve(__dirname, '../start.ts'),
   }), options, args)
 }
 

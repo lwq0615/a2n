@@ -5,7 +5,7 @@ const pkg = require('./package.json')
 
 
 const webpackConfig =  getWebConfig(getDevWebConfig({
-  entry: ['./main/start.ts', 'webpack/hot/poll?1000'],
+  entry: './main/start.ts',
   resolve: {
     alias: {
       '@core': path.resolve(__dirname, './core'),
