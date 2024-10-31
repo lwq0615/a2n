@@ -1,4 +1,5 @@
 import { setBean } from '@core/ioc/beans'
+import { Service } from '@core/types'
 import { getState } from './beanState'
 
 
@@ -6,7 +7,7 @@ import { getState } from './beanState'
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-const Bean = function (source: string | any) {
+const Bean: Service = (source) => {
   if (typeof source === 'string') {
     return function (Cons: any) {
       const state = getState(Cons)

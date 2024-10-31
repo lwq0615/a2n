@@ -1,3 +1,4 @@
+import { BeanClass } from './ioc'
 
 
 
@@ -7,7 +8,7 @@ export interface StartParam {
 
 export type Close = (callback?: (err?: Error) => void) => void
 
-export type Control = <TFunction extends Function>(path: string | TFunction) => any
+export type Control = (path: string | BeanClass) => any
 
 export type RequestMapping = <T>(path: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<T>) => any
 

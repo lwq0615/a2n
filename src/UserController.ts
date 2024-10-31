@@ -8,7 +8,7 @@ export default class UserControl{
   @Autowired(UserService)
     service: UserService = null
 
-  @Get
+  @Get('/get')
   get(a: any, @Query query: any){
     return 'query121'
   }

@@ -25,7 +25,7 @@ export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState)
     })
     return Promise.all(beans)
   } else {
-    const beans = [...getStates().keys()].filter(Item => new Item() instanceof Cons).map(Item => {
+    const beans = [...getStates().keys()].filter(Item => Reflect.construct(Item, []) instanceof Cons).map(Item => {
       return getBean<T>(Item)
     })
     return Promise.all(beans).then(beans => beans.filter(Boolean))
@@ -42,12 +42,12 @@ export function setBean(source: any | string, Cons?: BeanClass) {
     if (getState(Cons).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(Cons, getProxy(new Cons()))
+    beanMap.set(Cons, getProxy(Reflect.construct(Cons, [])))
   } else {
     if (getState(source).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(source, getProxy(new source()))
+    beanMap.set(source, getProxy(Reflect.construct(source, [])))
   }
 }
 
@@ -80,7 +80,7 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
         return bean as T
       } else {
         // 创建新的bean，并存入缓存池
-        bean = getProxy(new Cons)
+        bean = getProxy(Reflect.construct(Cons, []))
         cache.classMap.set(Cons, bean)
         await injectBean(bean, cache)
         if (isStart) {
