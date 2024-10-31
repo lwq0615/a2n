@@ -51,6 +51,7 @@ program.name('a2n')
   .version(pkg.version)
   .usage('<command> [args]')
   .option('-e, --env <name>', 'set env name')
+  .option('-c, --config <file>', 'set config file')
 program.command('dev')
   .description('start server')
   .action((options, command) => {

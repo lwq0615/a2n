@@ -1,14 +1,14 @@
-import { setInterceptors } from '@core/aop/interceptor'
-import { getState, getStates } from './beanState'
-import { BeanScope, BeanClass, BeanInstance } from '@core/types'
 import { AroundInterceptor, ErrHandler, Interceptor } from '@core/aop'
-import { setErrorHandlers } from '@core/aop/exception'
-import { getProxy, startProxy } from '@core/aop/proxy'
-import { isFunction } from '@core/utils/function'
 import { setAspectBeans } from '@core/aop/Aspect'
-import { BeanCache, BeanState } from './types'
-import { regRoutes } from '@core/control/express'
+import { setErrorHandlers } from '@core/aop/exception'
+import { setInterceptors } from '@core/aop/interceptor'
+import { getProxy, startProxy } from '@core/aop/proxy'
 import { invokeApiExport } from '@core/control/ApiExport'
+import { regRoutes } from '@core/control/express'
+import { BeanClass, BeanInstance, BeanScope } from '@core/types'
+import { isFunction } from '@core/utils/function'
+import { getState, getStates } from './beanState'
+import { BeanCache, BeanState } from './types'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -28,7 +28,7 @@ export function getBeans<T = BeanInstance>(Cons: BeanClass | ((state: BeanState)
     const beans = [...getStates().keys()].filter(Item => new Item() instanceof Cons).map(Item => {
       return getBean<T>(Item)
     })
-    return Promise.all(beans)
+    return Promise.all(beans).then(beans => beans.filter(Boolean))
   }
 }
 
@@ -56,6 +56,9 @@ export async function getBean<T = BeanInstance>(Cons: BeanClass | string, cache?
     return await getBean(nameBeanMap[Cons], cache)
   } else {
     const state = getState(Cons)
+    if (!state.isBean) {
+      return
+    }
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
       const bean: BeanInstance = beanMap.get(Cons)

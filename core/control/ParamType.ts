@@ -13,9 +13,6 @@ function regParam(target: any, methodName: string, paramIndex: number, type: Par
   if (!getState(Cons).controlMethods[methodName]) {
     getState(Cons).controlMethods[methodName] = new Route()
   }
-  if (!Array.isArray(getState(Cons).controlMethods[methodName].params)) {
-    getState(Cons).controlMethods[methodName].params = []
-  }
   // 注入参数信息
   getState(Cons).controlMethods[methodName].params[paramIndex] = type
 }

@@ -15,6 +15,8 @@ const defaultConfig = {
     // 默认生成接口前缀
     baseUrl: '/api',
   },
+  // 隐藏启动时的文件扫描信息
+  hideScanFile: true,
   // webpack配置，会与默认webpack配置进行合并
   webpack: {},
 }

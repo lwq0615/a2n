@@ -15,6 +15,7 @@ export {
 
 export {
   After,
+  AppLifecycle,
   Around,
   AroundInterceptor,
   Aspect,

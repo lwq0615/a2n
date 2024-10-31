@@ -1,5 +1,6 @@
 import { Method, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
+import { RequestMapping as RequestMappingType } from '@core/types'
 
 
 function getMapping(path: string, type: Method): MethodDecorator {
@@ -16,22 +17,42 @@ function getMapping(path: string, type: Method): MethodDecorator {
   }
 }
 
-export function RequestMapping(path: string): MethodDecorator {
-  return getMapping(path, Method.ALL)
+export const RequestMapping: RequestMappingType = (path) => {
+  if (typeof path === 'string') {
+    return getMapping(path, Method.ALL)
+  } else {
+    return getMapping('', Method.ALL)
+  }
 }
 
-export function Get(path: string): MethodDecorator {
-  return getMapping(path, Method.GET)
+export const Get: RequestMappingType = (path) => {
+  if (typeof path === 'string') {
+    return getMapping(path, Method.GET)
+  } else {
+    return getMapping('', Method.GET)
+  }
 }
 
-export function Post(path: string): MethodDecorator {
-  return getMapping(path, Method.POST)
+export const Post: RequestMappingType = (path) => {
+  if (typeof path === 'string') {
+    return getMapping(path, Method.POST)
+  } else {
+    return getMapping('', Method.POST)
+  }
 }
 
-export function Put(path: string): MethodDecorator {
-  return getMapping(path, Method.PUT)
+export const Put: RequestMappingType = (path) => {
+  if (typeof path === 'string') {
+    return getMapping(path, Method.PUT)
+  } else {
+    return getMapping('', Method.PUT)
+  }
 }
 
-export function Delete(path: string): MethodDecorator {
-  return getMapping(path, Method.DELETE)
+export const Delete: RequestMappingType = (path) => {
+  if (typeof path === 'string') {
+    return getMapping(path, Method.DELETE)
+  } else {
+    return getMapping('', Method.DELETE)
+  }
 }

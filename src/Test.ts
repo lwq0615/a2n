@@ -1,8 +1,7 @@
-import { ApiExport } from 'a2n'
+import { AppLifecycle } from 'a2n'
 
-@ApiExport
-export default class Test {
-  get() {
-    return 'test'
+export default class Test extends AppLifecycle {
+  async afterAppStart() {
+    console.log('start')
   }
 }

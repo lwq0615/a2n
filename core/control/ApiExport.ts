@@ -1,5 +1,5 @@
 import { getConfig } from '@core/config'
-import { getState, setBean } from '@core/ioc'
+import { Bean, getState } from '@core/ioc'
 import { getControlBean } from './Control'
 import { Method, Route } from './types'
 
@@ -14,9 +14,7 @@ export const ApiExport: ClassDecorator = (Cons: any) => {
     const state = getState(Cons)
     state.isApiExport = true
     state.controlMapping = getConfig().apiExport.baseUrl
-    if (!state.setBeanTask) {
-      state.setBeanTask = () => setBean(Cons)
-    }
+    Bean(Cons)
     Reflect.ownKeys(Cons.prototype).forEach((methodName: string) => {
       if (Cons.prototype[methodName] === Cons) {
         return

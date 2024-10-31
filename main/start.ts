@@ -1,7 +1,7 @@
-
 const { start, setConfig, getState } = require(process.env.npmName)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
+import { getLocalIP } from './ip'
 const fs = require('fs')
 const path = require('path')
 const a2nConfig = require(process.env.a2nConfigPath)
@@ -15,7 +15,9 @@ if (!fs.existsSync(scanPath)) {
   console.info('scan components in folder ' + scanPath)
   const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[.ts?|.js?]$/)
   requireComponent.keys().forEach(filepath => {
-    console.info('scan file: ' + path.resolve(process.env.componentScan, filepath))
+    if (!config.hideScanFile) {
+      console.info('scan file: ' + path.resolve(process.env.componentScan, filepath))
+    }
     const defaultExport = requireComponent(filepath).default
     getState(defaultExport).filePath = filepath.substring(1)
   })
@@ -23,9 +25,10 @@ if (!fs.existsSync(scanPath)) {
 
 start({
   callback: () => {
-    console.info(chalk.green('======================success======================'))
-    console.info('        ', symbol.success, chalk.green('server was start in port: ' + config.port))
-    console.info(chalk.green('==================================================='))
+    const ip = getLocalIP()
+    console.info(chalk.green('===========================success==========================='))
+    console.info('  ', symbol.success, chalk.green('server was start in port:'), chalk.blue(`${ip}${config.port}`))
+    console.info(chalk.green('============================================================='))
   },
 })
 

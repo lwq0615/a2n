@@ -1,5 +1,5 @@
-import { Express } from 'express-serve-static-core'
 import * as express from 'express'
+import { Express } from 'express-serve-static-core'
 import * as types from './types'
 
 declare namespace a2n {
@@ -19,6 +19,11 @@ declare namespace a2n {
    * 异常处理器
    */
   const ErrHandler: typeof types.ErrHandler
+
+  /**
+   * App生命周期管理
+   */
+  const AppLifecycle: typeof types.AppLifecycle
 
   /**
    * 标记类为切面类
@@ -60,9 +65,9 @@ declare namespace a2n {
   type Response = express.Response
 
   /**
-   * 启动服务器
+   * 关闭服务器
    */
-  const close: types.close
+  const close: types.Close
 
   /**
    * @param path 接口路径

@@ -1,5 +1,5 @@
+import { Bean } from '@core/ioc'
 import { getState } from '@core/ioc/beanState'
-import { setBean } from '@core/ioc'
 import { BeanClass, BeanInstance } from '@core/types'
 
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -30,9 +30,7 @@ type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) =>
 export const Aspect: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
   state.isAspect = true
-  if (!state.setBeanTask) {
-    state.setBeanTask = () => setBean(Cons)
-  }
+  Bean(Cons)
   const getHandle = (handle: Function) => {
     return function(...params: any) {
       return handle.bind(aspectBeanMap.get(Cons))(...params)

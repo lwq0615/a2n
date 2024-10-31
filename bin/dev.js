@@ -9,8 +9,8 @@ function dev(options, args) {
     webpack(webpackConfig).watch({
       aggregateTimeout: 300,
     }, (err, stats) => {
-      if (err || stats.errors) {
-        console.error(err || stats.errors)
+      if (err || stats?.compilation?.errors) {
+        console.error(err || stats?.compilation?.errors)
       }
     })
   } catch (err) {

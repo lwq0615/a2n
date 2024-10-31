@@ -14,6 +14,9 @@ export class BeanState {
   }
 
   beanClass: BeanClass
+  get isBean() {
+    return Boolean(this.setBeanTask)
+  }
   setBeanTask: Function
   isApiExport: boolean = false
   filePath: string

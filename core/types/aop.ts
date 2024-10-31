@@ -1,5 +1,5 @@
-import { BeanClass } from '.'
 import { Request, Response } from 'express'
+import { BeanClass } from '.'
 
 
 /**
@@ -56,3 +56,9 @@ export class ErrHandler {
  * 切面处理器
  */
 export type AspectHandler = (reg: RegExp) => MethodDecorator
+
+export class AppLifecycle {
+  async afterAppStart() {
+
+  }
+}

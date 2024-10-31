@@ -1,7 +1,8 @@
+import { invokeAppLifecycleAfter } from '@core/aop/appLifecycle'
 import { getConfig } from '@core/config'
 import { Method, ParamType } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
-import { BeanClass, StartParam } from '@core/types'
+import { BeanClass, Close, StartParam } from '@core/types'
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { Express } from 'express-serve-static-core'
@@ -86,13 +87,15 @@ export {
   app
 }
 
+// 启动服务
 export async function start(startParam: StartParam) {
   const config = getConfig()
   await initBeanFinish()
   server = app.listen(config.port, startParam.callback)
-
+  invokeAppLifecycleAfter()
 }
 
-export function close(callback?: (err?: Error) => void) {
+// 关闭服务
+export const close: Close = (callback) => {
   server?.close(callback)
 }

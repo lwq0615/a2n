@@ -43,5 +43,6 @@ module.exports = {
     '@typescript-eslint/no-unsafe-function-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'no-trailing-spaces': 'error',
+    '@typescript-eslint/no-wrapper-object-types': 'off',
   },
 }

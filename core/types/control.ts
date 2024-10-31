@@ -1,4 +1,3 @@
-import { BeanClass } from '.'
 
 
 
@@ -6,11 +5,11 @@ export interface StartParam {
   callback?: () => void
 }
 
-export type close = (callback?: (err?: Error) => void) => void
+export type Close = (callback?: (err?: Error) => void) => void
 
-export type Control = (path: string | BeanClass) => any
+export type Control = <TFunction extends Function>(path: string | TFunction) => any
 
-export type RequestMapping = (path: string) => MethodDecorator
+export type RequestMapping = <T>(path: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<T>) => any
 
 export type Query = (target: any, methodName?: string, paramIndex?: number) => any
 
