@@ -6,6 +6,9 @@ const { getAssignConfig } = require('./a2nDefaultConfig')
 const dotenv = require('dotenv')
 const pkg = require('../../package.json')
 const fs = require('fs')
+const nodeExternals = require('webpack-node-externals')
+const { HotModuleReplacementPlugin } = require('webpack')
+const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
 
 /**
  * 获取webpack配置文件
@@ -96,6 +99,30 @@ function getWebConfig(webpackConfig, options, args) {
   }
 }
 
+// 开发环境热更新相关配置
+function getDevWebConfig(config) {
+  return merge({
+    externals: [
+      nodeExternals({
+        allowlist: ['webpack/hot/poll?1000'],
+      }),
+    ],
+    devtool: 'source-map',
+    devServer: {
+      hot: true,
+    },
+    watch: true,
+    plugins: [
+      new HotModuleReplacementPlugin(),
+      new RunScriptWebpackPlugin({
+        // 启动的文件
+        name: 'a2n.serve.js',
+      }),
+    ],
+  }, config)
+}
+
 module.exports = {
   getWebConfig,
+  getDevWebConfig,
 }

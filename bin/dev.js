@@ -6,11 +6,9 @@ function dev(options, args) {
     const { webpackDevConfig } = require('../main/config/webpack-dev.config')
     const webpackConfig = webpackDevConfig(options, args)
 
-    webpack(webpackConfig).watch({
-      aggregateTimeout: 300,
-    }, (err, stats) => {
-      if (err || stats?.compilation?.errors) {
-        console.error(err || stats?.compilation?.errors)
+    webpack(webpackConfig, (err, stats) => {
+      if (err || stats.errors) {
+        console.error(err || stats.errors)
       }
     })
   } catch (err) {

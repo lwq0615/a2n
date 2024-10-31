@@ -1,7 +1,4 @@
-const { getWebConfig } = require('./webpack.config.js')
-const nodeExternals = require('webpack-node-externals')
-const { HotModuleReplacementPlugin } = require('webpack')
-const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
+const { getWebConfig, getDevWebConfig } = require('./webpack.base.js')
 const path = require('path')
 
 
@@ -12,22 +9,9 @@ const path = require('path')
  * @returns webpack配置文件
  */
 function webpackDevConfig(options, args) {
-  return getWebConfig({
+  return getWebConfig(getDevWebConfig({
     entry: [path.resolve(__dirname, '../start.ts'), 'webpack/hot/poll?1000'],
-    externals: [
-      nodeExternals({
-        allowlist: ['webpack/hot/poll?1000'],
-      }),
-    ],
-    devtool: 'source-map',
-    plugins: [
-      new HotModuleReplacementPlugin(),
-      new RunScriptWebpackPlugin({
-        // 启动的文件
-        name: 'a2n.serve.js',
-      }),
-    ],
-  }, options, args)
+  }), options, args)
 }
 
 module.exports = {
