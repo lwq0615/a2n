@@ -1,4 +1,4 @@
-export function getLocalIP() {
+export function getLocalIpAddress() {
   try {
     const os = require('os')
     const osType = os.type() //系统类型

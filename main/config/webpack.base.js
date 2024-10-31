@@ -8,6 +8,7 @@ const pkg = require('../../package.json')
 const fs = require('fs')
 const { HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 /**
  * 获取webpack配置文件
@@ -17,7 +18,10 @@ const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
  */
 function getWebConfig(webpackConfig, options, args) {
   // 配置文件
-  const a2nConfigPath = path.resolve(process.cwd(), options?.config || './a2n.config.js')
+  const a2nConfigPath = path.resolve(
+    process.cwd(),
+    options?.config || './a2n.config.js'
+  )
   let a2nConfig = getAssignConfig()
   if (!fs.existsSync(a2nConfigPath)) {
     console.info('tip: config file "' + a2nConfigPath + '" not exist!')
@@ -41,7 +45,7 @@ function getWebConfig(webpackConfig, options, args) {
     Object.assign(env, customEnv)
   }
 
-  Object.keys(env).forEach(key => {
+  Object.keys(env).forEach((key) => {
     env[key] = JSON.stringify(env[key])
   })
 
@@ -50,17 +54,24 @@ function getWebConfig(webpackConfig, options, args) {
     target: 'node',
     module: {
       rules: [
-        {
-          test: /[.ts?|.js?]$/,
-          use: 'ts-loader',
-          include: path.resolve(__dirname, '../start.ts'),
-        },
-        {
-          test: /[.ts?|.js?]$/,
-          use: 'ts-loader',
-          exclude: /node_modules/,
-        },
-      ],
+        { include: path.resolve(__dirname, '../start.ts') },
+        { exclude: /node_modules/ },
+      ].map((item) => {
+        return merge(
+          {
+            test: /[.ts?|.js?]$/,
+            use: [
+              {
+                loader: 'ts-loader',
+                options: {
+                  transpileOnly: false, // 设置为 false 进行完整类型检查，报错时中断构建
+                },
+              },
+            ],
+          },
+          item
+        )
+      }),
     },
     output: {
       filename: 'a2n.serve.js',
@@ -71,6 +82,7 @@ function getWebConfig(webpackConfig, options, args) {
     resolve: {
       extensions: ['.ts', '.js', '.json'],
     },
+    stats: 'errors-only',
     plugins: [
       new CleanWebpackPlugin(),
       new DefinePlugin({
@@ -82,6 +94,7 @@ function getWebConfig(webpackConfig, options, args) {
           npmName: JSON.stringify(pkg.name),
         },
       }),
+      new FriendlyErrorsWebpackPlugin(),
     ],
   }
   // 基于当前环境的webpack配置文件，此时还没有与a2n.config.js的webpack配置合并
@@ -100,24 +113,27 @@ function getWebConfig(webpackConfig, options, args) {
 
 // 开发环境热更新相关配置
 function getDevWebConfig(config) {
-  return merge({
-    devtool: 'source-map',
-    devServer: {
-      hot: true,
+  return merge(
+    {
+      devtool: 'source-map',
+      devServer: {
+        hot: true,
+      },
+      watch: true,
+      watchOptions: {
+        aggregateTimeout: 1000,
+        poll: 1000,
+      },
+      plugins: [
+        new HotModuleReplacementPlugin(),
+        new RunScriptWebpackPlugin({
+          // 启动的文件
+          name: 'a2n.serve.js',
+        }),
+      ],
     },
-    watch: true,
-    watchOptions: {
-      aggregateTimeout: 1000,
-      poll: 1000,
-    },
-    plugins: [
-      new HotModuleReplacementPlugin(),
-      new RunScriptWebpackPlugin({
-        // 启动的文件
-        name: 'a2n.serve.js',
-      }),
-    ],
-  }, config)
+    config
+  )
 }
 
 module.exports = {

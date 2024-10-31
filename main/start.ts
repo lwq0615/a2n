@@ -1,7 +1,7 @@
 const { start, setConfig, getState } = require(process.env.npmName)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
-import { getLocalIP } from './ip'
+const { getLocalIpAddress } = require('./ip')
 const fs = require('fs')
 const path = require('path')
 const a2nConfig = require(process.env.a2nConfigPath)
@@ -25,10 +25,8 @@ if (!fs.existsSync(scanPath)) {
 
 start({
   callback: () => {
-    const ip = getLocalIP()
-    console.info(chalk.green('===========================success==========================='))
-    console.info('  ', symbol.success, chalk.green('server was start in port:'), chalk.blue(`${ip}${config.port}`))
-    console.info(chalk.green('============================================================='))
+    const ip = getLocalIpAddress()
+    console.info('\n', symbol.success, chalk.green('server was start in port:'), chalk.blue(`${ip}${config.port}`))
   },
 })
 
