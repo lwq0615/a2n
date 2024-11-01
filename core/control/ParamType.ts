@@ -39,6 +39,10 @@ export function Query(target: any, methodName?: string, paramIndex?: number) {
   return getParamDecorators(target, methodName, paramIndex, ParamType.QUERY)
 }
 
+export function Param(target: any, methodName?: string, paramIndex?: number) {
+  return getParamDecorators(target, methodName, paramIndex, ParamType.PARAM)
+}
+
 export function Body(target: any, methodName?: string, paramIndex?: number) {
   return getParamDecorators(target, methodName, paramIndex, ParamType.BODY)
 }

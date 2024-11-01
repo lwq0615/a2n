@@ -38,6 +38,7 @@ export interface ParamInfo{
 export enum ParamType{
   QUERY = 'query',
   BODY = 'body',
+  PARAM = 'param',
   REQUEST = 'request',
   RESPONSE = 'response'
 }

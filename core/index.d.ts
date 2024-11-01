@@ -136,10 +136,16 @@ declare namespace a2n {
   const PostConstruct: MethodDecorator
 
   /**
-   * 将url上携带的所有参数注入到接口参数
+   * 将url?后携带的所有参数注入到接口参数
    * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
    */
   const Query: types.Query
+
+  /**
+   * 将url路径上携带的所有参数注入到接口参数，例如/get/:id，通过@Param('id')获取ID
+   * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
+   */
+  const Param: types.Param
 
   /**
    * 将post请求携带的报文参数注入到接口参数

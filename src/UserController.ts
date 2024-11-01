@@ -1,4 +1,4 @@
-import { Autowired, Control, Get, Post, Query } from 'a2n'
+import { Autowired, Control, Get, Param, Post, Query } from 'a2n'
 import UserService from './UserService'
 
 
@@ -8,9 +8,9 @@ export default class UserControl {
   @Autowired(UserService)
     service: UserService = null
 
-  @Get('/get')
-  get(a: any, @Query query: any) {
-    return 'query121'
+  @Get('/get/:id')
+  get(a: any, @Query query: any, @Param('id') id: number) {
+    return '123213'
   }
 
   @Post('/get')

@@ -46,11 +46,13 @@ export const regRoutes = function(Cons: BeanClass) {
       if (state.isApiExport) {
         params = req.body || []
       } else {
-        const urlParams = req.query
+        const queryParams = req.query
         const bodyParams = req.body
+        const urlParams = req.params
         const paramMap = {
-          [ParamType.QUERY]: urlParams,
+          [ParamType.QUERY]: queryParams,
           [ParamType.BODY]: bodyParams,
+          [ParamType.PARAM]: urlParams,
           [ParamType.REQUEST]: req,
           [ParamType.RESPONSE]: res,
         }
@@ -65,7 +67,7 @@ export const regRoutes = function(Cons: BeanClass) {
             }
           } else {
             // 参数没有注解，通过参数名称从query获取
-            params[i] = urlParams[route.paramNames[i]]
+            params[i] = queryParams[route.paramNames[i]]
           }
         }
       }

@@ -14,4 +14,6 @@ export type RequestMapping = <T>(path: string | Object, propertyKey?: string | s
 
 export type Query = (target: any, methodName?: string, paramIndex?: number) => any
 
-export type Body = (target: any, methodName?: string, paramIndex?: number) => any
+export type Param = Query
+
+export type Body = Query
