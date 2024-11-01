@@ -2,13 +2,14 @@ const path = require('path')
 const { merge } = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { DefinePlugin } = require('webpack')
-const { getAssignConfig } = require('./a2nDefaultConfig')
+const { getAssignConfig } = require('./getConfig')
 const dotenv = require('dotenv')
 const pkg = require('../../package.json')
 const fs = require('fs')
 const { HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const defaultConfigFile = path.resolve(__dirname, './a2n.default.config.js')
 
 /**
  * 获取webpack配置文件
@@ -18,17 +19,16 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
  */
 function getWebConfig(webpackConfig, options, args) {
   // 配置文件
-  const a2nConfigPath = path.resolve(
+  let a2nConfigPath = path.resolve(
     process.cwd(),
     options?.config || './a2n.config.js'
   )
-  let a2nConfig = getAssignConfig()
   if (!fs.existsSync(a2nConfigPath)) {
     console.info('tip: config file "' + a2nConfigPath + '" not exist!')
     console.info('tip: use default config\n')
-  } else {
-    a2nConfig = getAssignConfig(require(a2nConfigPath))
+    a2nConfigPath = defaultConfigFile
   }
+  const a2nConfig = getAssignConfig(require(a2nConfigPath))
   const env = dotenv.config({
     path: path.resolve(process.cwd(), '.env'), // 环境变量配置文件路径
     encoding: 'utf8', // 编码方式，默认utf8

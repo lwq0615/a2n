@@ -10,7 +10,7 @@ const config = setConfig(a2nConfig)
 
 const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
-  console.info(symbol.warning, chalk.yellow('warning: componentScan folder ' + scanPath + ' not exist!\n'))
+  console.info(symbol.error, chalk.red('warning: componentScan folder ' + scanPath + ' not exist!\n'))
 } else {
   console.info('scan components in folder ' + scanPath)
   const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[.ts?|.js?]$/)
@@ -21,14 +21,13 @@ if (!fs.existsSync(scanPath)) {
     const defaultExport = requireComponent(filepath).default
     getState(defaultExport).filePath = filepath.substring(1)
   })
+  start({
+    callback: () => {
+      const ip = getLocalIpAddress()
+      console.info('\n', symbol.success, chalk.green('server was start in port:'), chalk.blue(`${ip}${config.port}`))
+    },
+  })
 }
-
-start({
-  callback: () => {
-    const ip = getLocalIpAddress()
-    console.info('\n', symbol.success, chalk.green('server was start in port:'), chalk.blue(`${ip}${config.port}`))
-  },
-})
 
 if (module.hot) {
   module.hot.accept()

@@ -1,5 +1,5 @@
+import { getAssignConfig } from '@/main/config/getConfig'
 import { RunConfig } from '@core/types'
-import { getAssignConfig } from '@/main/config/a2nDefaultConfig'
 
 
 let config = {}
