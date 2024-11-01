@@ -2,9 +2,8 @@ import { Method, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
 import { RequestMapping as RequestMappingType } from '@core/types'
 
-
-function getMapping(path: string, type: Method): MethodDecorator {
-  return function(target: any, key: string, descriptor: object) {
+function regMapping(path: string, type: Method) {
+  const regMethod: MethodDecorator = (target, key, descriptor) => {
     const Cons = target.constructor
     if (!getState(Cons).controlMethods[key]) {
       getState(Cons).controlMethods[key] = new Route()
@@ -15,44 +14,34 @@ function getMapping(path: string, type: Method): MethodDecorator {
       type: type,
     })
   }
+  return regMethod
 }
 
-export const RequestMapping: RequestMappingType = (path) => {
-  if (typeof path === 'string') {
-    return getMapping(path, Method.ALL)
+function getMethodDecorator(target: string | Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<unknown>, type: Method) {
+  if (typeof target === 'string') {
+    return regMapping(target, type) as any
   } else {
-    return getMapping('', Method.ALL)
+    regMapping('', type)(target, propertyKey, descriptor)
   }
 }
 
-export const Get: RequestMappingType = (path) => {
-  if (typeof path === 'string') {
-    return getMapping(path, Method.GET)
-  } else {
-    return getMapping('', Method.GET)
-  }
+export const RequestMapping: RequestMappingType = (target: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<unknown>) => {
+  return getMethodDecorator(target, propertyKey, descriptor, Method.ALL)
 }
 
-export const Post: RequestMappingType = (path) => {
-  if (typeof path === 'string') {
-    return getMapping(path, Method.POST)
-  } else {
-    return getMapping('', Method.POST)
-  }
+export const Get: RequestMappingType = (target: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<unknown>) => {
+  return getMethodDecorator(target, propertyKey, descriptor, Method.GET)
 }
 
-export const Put: RequestMappingType = (path) => {
-  if (typeof path === 'string') {
-    return getMapping(path, Method.PUT)
-  } else {
-    return getMapping('', Method.PUT)
-  }
+
+export const Post: RequestMappingType = (target: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<unknown>) => {
+  return getMethodDecorator(target, propertyKey, descriptor, Method.POST)
 }
 
-export const Delete: RequestMappingType = (path) => {
-  if (typeof path === 'string') {
-    return getMapping(path, Method.DELETE)
-  } else {
-    return getMapping('', Method.DELETE)
-  }
+export const Put: RequestMappingType = (target: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<unknown>) => {
+  return getMethodDecorator(target, propertyKey, descriptor, Method.PUT)
+}
+
+export const Delete: RequestMappingType = (target: string | Object, propertyKey?: string | symbol, descriptor?: TypedPropertyDescriptor<unknown>) => {
+  return getMethodDecorator(target, propertyKey, descriptor, Method.DELETE)
 }

@@ -23,7 +23,7 @@ export class BeanState {
   isControl: boolean = false
   // 控制器处理器
   controlMethods: {
-    [methodName: string]: Route
+    [methodName: string | symbol]: Route
   } = {}
   controlMapping: string = ''
   // 依赖注入任务列表

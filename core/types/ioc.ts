@@ -3,9 +3,9 @@
 /**
  * bean的构造器类型（Class对象）
  */
-export interface BeanClass {
+export type BeanClass = {
   new(): BeanInstance | any
-}
+} | Function
 
 /**
  * bean对象实例

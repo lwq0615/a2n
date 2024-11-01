@@ -1,8 +1,8 @@
-import { Autowired, Control, Get, Param, Post, Query } from 'a2n'
+import { Autowired, Control, Get, Param, Query } from 'a2n'
 import UserService from './UserService'
 
 
-@Control('/')
+@Control('user')
 export default class UserControl {
 
   @Autowired(UserService)
@@ -13,7 +13,7 @@ export default class UserControl {
     return '123213'
   }
 
-  @Post('/get')
+  @Get
   get1(@Query query: any) {
     // console.log(query);
     console.log('first')

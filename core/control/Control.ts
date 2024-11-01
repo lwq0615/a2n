@@ -19,7 +19,7 @@ export function getControlBean(Cons: BeanClass) {
 /**
  * 在加载到Control时将路由信息进行注册
  */
-export const Control: ControlType = function(source) {
+export const Control: ControlType = function(source: string | BeanClass) {
   const setControl = (Cons: any, baseUrl = '') => {
     const state = getState(Cons)
     state.isControl = true
@@ -33,7 +33,7 @@ export const Control: ControlType = function(source) {
     return function(Cons: any) {
       Bean(source)(Cons)
       setControl(Cons, source)
-    } as ClassDecorator
+    }
   } else {
     if (!(source instanceof Function)) {
       throw new Error('@Control只接收string类型或者undefined参数')

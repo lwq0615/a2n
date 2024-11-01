@@ -1,11 +1,12 @@
 import { ParamInfo, ParamType, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
+import { RequestParamDecorator } from '@core/types'
 
 
 /**
  * 注册参数
  */
-function regParam(target: any, methodName: string, paramIndex: number, type: ParamInfo) {
+function regParam(target: any, methodName: string | symbol, paramIndex: number, type: ParamInfo) {
   const Cons = target.constructor
   if (!getState(Cons).controlMethods) {
     getState(Cons).controlMethods = {}
@@ -35,22 +36,22 @@ function getParamDecorators(target: any, methodName: string, paramIndex: number,
   }
 }
 
-export function Query(target: any, methodName?: string, paramIndex?: number) {
+export const Query: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.QUERY)
 }
 
-export function Param(target: any, methodName?: string, paramIndex?: number) {
+export const Param: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.PARAM)
 }
 
-export function Body(target: any, methodName?: string, paramIndex?: number) {
+export const Body: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.BODY)
 }
 
-export function Req(target: any, methodName: string, paramIndex: number) {
+export const Req: ParameterDecorator = (target, methodName, paramIndex) => {
   regParam(target, methodName, paramIndex, { type: ParamType.REQUEST })
 }
 
-export function Res(target: any, methodName: string, paramIndex: number) {
+export const Res: ParameterDecorator = (target, methodName, paramIndex) => {
   regParam(target, methodName, paramIndex, { type: ParamType.RESPONSE })
 }

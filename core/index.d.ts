@@ -139,19 +139,19 @@ declare namespace a2n {
    * 将url?后携带的所有参数注入到接口参数
    * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
    */
-  const Query: types.Query
+  const Query: types.RequestParamDecorator
 
   /**
    * 将url路径上携带的所有参数注入到接口参数，例如/get/:id，通过@Param('id')获取ID
    * 装饰器可以携带一个参数，含义是url上的某个参数名称，会将该参数的值注入到接口参数
    */
-  const Param: types.Param
+  const Param: types.RequestParamDecorator
 
   /**
    * 将post请求携带的报文参数注入到接口参数
    * 装饰器可以携带一个参数，含义是报文上的某个参数名称，会将该参数的值注入到接口参数
    */
-  const Body: types.Body
+  const Body: types.RequestParamDecorator
 
   /**
    * 将requset对象注入到接口参数
