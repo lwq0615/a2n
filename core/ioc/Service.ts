@@ -9,7 +9,7 @@ import { getState } from './beanState'
  */
 const Bean: Service = (source) => {
   if (typeof source === 'string') {
-    return function (Cons: any) {
+    return function(Cons: any) {
       const state = getState(Cons)
       state.setBeanTask = () => setBean(source, Cons)
     } as ClassDecorator

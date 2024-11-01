@@ -7,9 +7,9 @@ import { BeanCache } from './types'
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-export const Autowired = function (Cons: string | BeanClass | Promise<any>, required: boolean = true) {
-  return function (target: any, fieldName: string) {
-    const task = function (cache?: BeanCache) {
+export const Autowired = function(Cons: string | BeanClass | Promise<any>, required: boolean = true) {
+  return function(target: any, fieldName: string) {
+    const task = function(cache?: BeanCache) {
       return new Promise((resolve) => {
         const inject = (Cons: BeanClass | string) => {
           // 取出容器中的对象，开始进行属性注入

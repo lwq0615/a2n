@@ -26,7 +26,7 @@ const paths: { [path: string]: Method } = {}
 /**
  * 将路由注册到express
  */
-export const regRoutes = function (Cons: BeanClass) {
+export const regRoutes = function(Cons: BeanClass) {
   const state = getState(Cons)
   const keyList = Object.keys(state.controlMethods)
   const globalBaseUrl = getConfig().baseUrl

@@ -1,8 +1,8 @@
 export function getLocalIpAddress() {
   try {
     const os = require('os')
-    const osType = os.type() //系统类型
-    const netInfo = os.networkInterfaces() //网络信息
+    const osType = os.type() // 系统类型
+    const netInfo = os.networkInterfaces() // 网络信息
     let ip = ''
     if (osType === 'Windows_NT') {
       for (const devName in netInfo) {

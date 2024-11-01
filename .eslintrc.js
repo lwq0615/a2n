@@ -43,6 +43,14 @@ module.exports = {
     '@typescript-eslint/no-unsafe-function-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'no-trailing-spaces': 'error',
+    'space-before-function-paren': ['error', {
+      'anonymous': 'never',
+      'named': 'never',
+      'asyncArrow': 'always',
+    }],
     '@typescript-eslint/no-wrapper-object-types': 'off',
+    'spaced-comment': 'error',// 注释风格要不要有空格什么的
+    'space-before-blocks': 'error',  // if function等的大括号之前需要有空格
+    'no-irregular-whitespace': 'error', // 不规则的空白不允许
   },
 }

@@ -27,7 +27,7 @@ function getParamDecorators(target: any, methodName: string, paramIndex: number,
   }
   if (typeof target === 'string') {
     paramInfo.name = target
-    return function (target: any, methodName: string, paramIndex: number) {
+    return function(target: any, methodName: string, paramIndex: number) {
       regParam(target, methodName, paramIndex, paramInfo)
     } as undefined
   } else {

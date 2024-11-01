@@ -51,7 +51,7 @@ export const Aspect: ClassDecorator = (Cons: any) => {
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
 export function Before(reg: RegExp): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
     getState(Cons).beforeAspects.push({
       reg,
@@ -64,7 +64,7 @@ export function Before(reg: RegExp): MethodDecorator {
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
 export function After(reg: RegExp): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
     getState(Cons).afterAspects.push({
       reg,
@@ -77,7 +77,7 @@ export function After(reg: RegExp): MethodDecorator {
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
 export function Around(reg: RegExp): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
     getState(Cons).aroundAspects.push({
       reg,

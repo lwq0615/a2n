@@ -23,7 +23,7 @@ export function getProxy(bean: BeanInstance): BeanInstance {
     get(target, key: string) {
       if (isStart && isFunction(target[key])) {
         // 切面编程
-        return function (...params: any) {
+        return function(...params: any) {
           const aspects = getAspects()
           // 前置
           const name = target.constructor.name + '.' + key
