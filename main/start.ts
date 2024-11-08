@@ -1,4 +1,4 @@
-const { start, setConfig, getState } = require(process.env.npmName)
+const { start, setConfig, getState, isClass } = require(process.env.npmName)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
 const { getLocalIpAddress } = require('./ip')
@@ -19,6 +19,9 @@ if (!fs.existsSync(scanPath)) {
       console.info('scan file: ' + path.resolve(process.env.componentScan, filepath))
     }
     const defaultExport = requireComponent(filepath).default
+    if (!defaultExport || !isClass(defaultExport)) {
+      return
+    }
     getState(defaultExport).filePath = filepath.substring(1)
   })
   start({

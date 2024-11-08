@@ -40,4 +40,6 @@ export {
   start
 } from '@core/control'
 
+export { isClass } from './utils/function'
+
 export { Request, Response } from 'express'

@@ -30,7 +30,7 @@ export function isFunction(obj: any) {
 /**
  * 判断是否是一个类Class
  */
-function isClass(obj: any) {
+export function isClass(obj: any) {
   if (typeof obj != 'function') return false
   const str = obj.toString()
 
