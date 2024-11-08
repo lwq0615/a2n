@@ -32,7 +32,7 @@ function initTs(onSuccess, options) {
       const tsConfig = JSON.parse(content)
       const a2nConfig = getDevConfig(options?.config)
       tsConfig.compilerOptions.paths = {
-        '@/*': [`./${a2nConfig.componentScan}/*`.replaceAll('\\', '/').split('/').join('/')],
+        '@/*': [`./${a2nConfig.componentScan}/*`.replaceAll('\\', '/').split('/').filter(Boolean).join('/')],
       }
       fs.writeFile(tsconfigPath, JSON.stringify(tsConfig, null, 2), {
         flag: 'w',
