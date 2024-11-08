@@ -17,9 +17,10 @@ const { getDevConfig } = require('../main/config/getConfig')
  * @param onSuccess 生成ts成功后事件
  */
 function initTs(onSuccess, options) {
-  const tsconfigPath = path.resolve(process.cwd(), './tsconfig.json')
+  const configPath = configPath || './a2n.config.js'
+  const tsconfigPath = path.resolve(process.cwd(), configPath)
   if (!fs.existsSync(tsconfigPath)) {
-    console.info(symbols.info, chalk.hex('#4e8ed3')('create tsconfig.json file'))
+    console.info(symbols.info, chalk.hex('#4e8ed3')('create config file for ts'))
     const tsconfigTemplate = path.resolve(__dirname, '../tsconfig.json')
     fs.readFile(tsconfigTemplate, async (err, data) => {
       if (err) {
