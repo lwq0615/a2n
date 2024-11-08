@@ -2,7 +2,7 @@ const path = require('path')
 const { merge } = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { DefinePlugin } = require('webpack')
-const { getAssignConfig } = require('./getConfig')
+const { getDevConfig } = require('./getConfig')
 const dotenv = require('dotenv')
 const pkg = require('../../package.json')
 const fs = require('fs')
@@ -28,7 +28,7 @@ function getWebConfig(webpackConfig, options, args) {
     console.info('tip: use default config\n')
     a2nConfigPath = defaultConfigFile
   }
-  const a2nConfig = getAssignConfig(require(a2nConfigPath))
+  const a2nConfig = getDevConfig(options?.config)
   const env = dotenv.config({
     path: path.resolve(process.cwd(), '.env'), // 环境变量配置文件路径
     encoding: 'utf8', // 编码方式，默认utf8
@@ -65,6 +65,7 @@ function getWebConfig(webpackConfig, options, args) {
                 loader: 'ts-loader',
                 options: {
                   transpileOnly: false, // 设置为 false 进行完整类型检查，报错时中断构建
+                  configFile: path.resolve(process.cwd(), './tsconfig.json'),
                 },
               },
             ],
