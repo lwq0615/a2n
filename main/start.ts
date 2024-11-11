@@ -8,17 +8,19 @@ const a2nConfig = require(process.env.a2nConfigPath as string)
 const config = setConfig(a2nConfig)
 
 
-// 扫描node_modules目录下的Bean
-if (!config.hideScanFile) {
-  console.info(chalk.blue('scan dependencies beans in node_modules'))
-}
-const requireComponent = require.context(process.env.cwd + '/node_modules', true, /a2n\.inject\.js$/)
-requireComponent.keys().forEach(filepath => {
+if (!config.disabledScanNodeModules) {
+  // 扫描node_modules目录下的Bean
   if (!config.hideScanFile) {
-    console.info('- ' + path.resolve(process.cwd(), 'node_modules', filepath))
+    console.info(chalk.blue('scan dependencies beans in node_modules'))
   }
-  requireComponent(filepath)
-})
+  const requireComponent = require.context(process.env.cwd + '/node_modules', true, /a2n\.inject\.js$/)
+  requireComponent.keys().forEach(filepath => {
+    if (!config.hideScanFile) {
+      console.info('- ' + path.resolve(process.cwd(), 'node_modules', filepath))
+    }
+    requireComponent(filepath)
+  })
+}
 
 // 扫描componentScan配置目录下的Bean
 const scanPath = path.resolve(process.cwd(), config.componentScan)

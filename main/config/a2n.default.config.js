@@ -10,6 +10,8 @@ module.exports = {
   port: 8080,
   // 隐藏启动时的文件扫描信息
   hideScanFile: true,
+  // 禁止自动注入node_modules的依赖
+  disabledScanNodeModules: false,
   // webpack配置，会与默认webpack配置进行合并
   webpack: {},
 }
