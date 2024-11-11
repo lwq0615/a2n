@@ -4,7 +4,7 @@
  * bean的构造器类型（Class对象）
  */
 export type BeanClass = {
-  new(): BeanInstance | any
+  new(): BeanInstance
 } | Function
 
 /**
@@ -12,7 +12,7 @@ export type BeanClass = {
  */
 export type BeanInstance = {
   constructor: BeanClass,
-  [fieldName: string]: any
+  [fieldName: string | symbol]: any
 }
 
 /**

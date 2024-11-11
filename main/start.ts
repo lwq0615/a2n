@@ -1,4 +1,4 @@
-const { start, setConfig, getState, isClass } = require(process.env.npmName as string)
+const { start, setConfig } = require(process.env.npmName as string)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
 const { getLocalIpAddress } = require('./ip')
@@ -9,7 +9,9 @@ const config = setConfig(a2nConfig)
 
 
 // 扫描node_modules目录下的Bean
-console.info(chalk.blue('scan dependencies beans in node_modules'))
+if (!config.hideScanFile) {
+  console.info(chalk.blue('scan dependencies beans in node_modules'))
+}
 const requireComponent = require.context(process.env.cwd + '/node_modules', true, /a2n\.inject\.js$/)
 requireComponent.keys().forEach(filepath => {
   if (!config.hideScanFile) {
@@ -22,7 +24,9 @@ const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
   console.info(symbol.error, chalk.red('warning: componentScan folder ' + scanPath + ' not exist!\n'))
 } else {
-  console.info(chalk.blue('scan beans in folder: ' + scanPath))
+  if (!config.hideScanFile) {
+    console.info(chalk.blue('scan beans in folder: ' + scanPath))
+  }
   const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[.ts?|.js?]$/)
   requireComponent.keys().forEach(filepath => {
     if (!config.hideScanFile) {

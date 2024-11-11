@@ -9,7 +9,7 @@ module.exports = {
   // 服务启动端口号
   port: 8080,
   // 隐藏启动时的文件扫描信息
-  hideScanFile: false,
+  hideScanFile: true,
   // webpack配置，会与默认webpack配置进行合并
   webpack: {},
 }

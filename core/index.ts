@@ -9,8 +9,7 @@ export {
   Scope,
   Service,
   getBean,
-  getBeans,
-  getState
+  getBeans
 } from '@core/ioc'
 
 export {
@@ -38,7 +37,5 @@ export {
   close,
   start
 } from '@core/control'
-
-export { isClass } from './utils/function'
 
 export { Request, Response } from 'express'
