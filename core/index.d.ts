@@ -164,7 +164,7 @@ declare namespace a2n {
   const getBean: types.getBean
 
   /**
-   * 获取容器中的bean
+   * 获取容器中构造/继承于Cons的bean
    * @param Cons bean的构造器类型（Class对象）
    */
   const getBeans: types.getBeans
