@@ -3,17 +3,11 @@
 /**
  * bean的构造器类型（Class对象）
  */
-export type BeanClass = {
-  new(): BeanInstance
-} | Function
-
+export type BeanClass = abstract new (...args: any) => any
 /**
  * bean对象实例
  */
-export type BeanInstance = {
-  constructor: BeanClass,
-  [fieldName: string | symbol]: any
-}
+export type BeanInstance<T extends BeanClass = BeanClass> = InstanceType<T>
 
 /**
  * @param source bean名称
@@ -44,6 +38,6 @@ export interface RunConfig {
 
 export type Autowired = (Cons: string | BeanClass | Promise<any>, required?: boolean) => PropertyDecorator
 
-export type getBean = <T = BeanInstance>(Cons: BeanClass | string) => Promise<T>
+export type getBean = <T extends BeanClass = BeanClass>(Cons: T | string) => Promise<InstanceType<T>>
 
-export type getBeans = <T = BeanInstance>(Cons: BeanClass) => Promise<T[]>
+export type getBeans = <T extends BeanClass = BeanClass>(Cons: T) => Promise<InstanceType<T>[]>

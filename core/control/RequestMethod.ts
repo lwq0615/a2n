@@ -1,10 +1,10 @@
 import { Method, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
-import { RequestMapping as RequestMappingType } from '@core/types'
+import { BeanClass, RequestMapping as RequestMappingType } from '@core/types'
 
 function regMapping(path: string, type: Method) {
   const regMethod: MethodDecorator = (target, key, descriptor) => {
-    const Cons = target.constructor
+    const Cons = target.constructor as BeanClass
     if (!getState(Cons).controlMethods[key]) {
       getState(Cons).controlMethods[key] = new Route()
     }
