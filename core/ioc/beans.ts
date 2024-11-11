@@ -14,7 +14,7 @@ const beanMap: Map<BeanClass, BeanInstance> = new Map()
 const nameBeanMap: { [name: string]: BeanClass } = {}
 
 
-export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string, cache?: BeanCache): Promise<InstanceType<T>> {
+export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string, cache?: BeanCache): Promise<BeanInstance<T>> {
   if (typeof Cons === 'string') {
     return await getBean(nameBeanMap[Cons], cache)
   } else {
