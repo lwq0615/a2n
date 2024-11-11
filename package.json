@@ -18,6 +18,7 @@
     "lint:fix": "eslint --fix --ext .ts,.json,.js ./"
   },
   "files": [
+    "core/index.d.ts",
     "core/dist",
     "core/types",
     "main",
