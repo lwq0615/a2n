@@ -42,43 +42,35 @@ export const regRoutes = function(Cons: BeanClass) {
     paths[realPath] = route.type
     // 注册路由
     app[route.type](realPath, async (req: Request, res: Response) => {
-      let params: any[] = []
-      if (state.isApiExport) {
-        params = req.body || []
-      } else {
-        const queryParams = req.query
-        const bodyParams = req.body
-        const urlParams = req.params
-        const paramMap = {
-          [ParamType.QUERY]: queryParams,
-          [ParamType.BODY]: bodyParams,
-          [ParamType.PARAM]: urlParams,
-          [ParamType.REQUEST]: req,
-          [ParamType.RESPONSE]: res,
-        }
-        // 参数注入
-        for (const i in route.paramNames) {
-          // 通过注解注入的参数
-          if (route.params[i]) {
-            if (route.params[i].name) {
-              params[i] = paramMap[route.params[i].type][route.params[i].name]
-            } else {
-              params[i] = paramMap[route.params[i].type]
-            }
+      const params: any[] = []
+      const queryParams = req.query
+      const bodyParams = req.body
+      const urlParams = req.params
+      const paramMap = {
+        [ParamType.QUERY]: queryParams,
+        [ParamType.BODY]: bodyParams,
+        [ParamType.PARAM]: urlParams,
+        [ParamType.REQUEST]: req,
+        [ParamType.RESPONSE]: res,
+      }
+      // 参数注入
+      for (const i in route.paramNames) {
+        // 通过注解注入的参数
+        if (route.params[i]) {
+          if (route.params[i].name) {
+            params[i] = paramMap[route.params[i].type][route.params[i].name]
           } else {
-            // 参数没有注解，通过参数名称从query获取
-            params[i] = queryParams[route.paramNames[i]]
+            params[i] = paramMap[route.params[i].type]
           }
+        } else {
+          // 参数没有注解，通过参数名称从query获取
+          params[i] = queryParams[route.paramNames[i]]
         }
       }
       res.contentType('application/json')
       // 拦截器
       const callback = () => {
-        if (state.isApiExport) {
-          return route.handler(params)
-        } else {
-          return route.handler(...params)
-        }
+        return route.handler(...params)
       }
       doFilter(callback, req, res, Cons, methodName)
     })

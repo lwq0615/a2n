@@ -18,7 +18,6 @@ export class BeanState {
     return Boolean(this.setBeanTask)
   }
   setBeanTask: Function
-  isApiExport: boolean = false
   isControl: boolean = false
   // 控制器处理器
   controlMethods: {

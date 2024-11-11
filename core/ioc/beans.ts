@@ -127,7 +127,7 @@ export async function initBeanFinish() {
   doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
   for (const state of getStates().values()) {
-    if (state.isControl || state.isApiExport) {
+    if (state.isControl) {
       regRoutes(state.beanClass)
     }
   }
