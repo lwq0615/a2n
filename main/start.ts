@@ -8,21 +8,26 @@ const a2nConfig = require(process.env.a2nConfigPath as string)
 const config = setConfig(a2nConfig)
 
 
+// 扫描node_modules目录下的Bean
+console.info(chalk.blue('scan dependencies beans in node_modules'))
+const requireComponent = require.context(process.env.cwd + '/node_modules', true, /a2n\.inject\.js$/)
+requireComponent.keys().forEach(filepath => {
+  if (!config.hideScanFile) {
+    console.info('- ' + path.resolve(process.cwd(), 'node_modules', filepath))
+  }
+})
+
+// 扫描componentScan配置目录下的Bean
 const scanPath = path.resolve(process.cwd(), config.componentScan)
 if (!fs.existsSync(scanPath)) {
   console.info(symbol.error, chalk.red('warning: componentScan folder ' + scanPath + ' not exist!\n'))
 } else {
-  console.info('scan components in folder ' + scanPath)
+  console.info(chalk.blue('scan beans in folder: ' + scanPath))
   const requireComponent = require.context(process.env.cwd + '/' + process.env.componentScan, true, /[.ts?|.js?]$/)
   requireComponent.keys().forEach(filepath => {
     if (!config.hideScanFile) {
-      console.info('scan file: ' + path.resolve(process.env.componentScan, filepath))
+      console.info('- ' + path.resolve(process.env.componentScan, filepath))
     }
-    const defaultExport = requireComponent(filepath).default
-    if (!defaultExport || !isClass(defaultExport)) {
-      return
-    }
-    getState(defaultExport).filePath = filepath.substring(1)
   })
   start({
     callback: () => {

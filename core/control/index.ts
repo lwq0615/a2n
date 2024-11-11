@@ -1,4 +1,3 @@
-import ApiExport from './ApiExport'
 export { Control } from '@core/control/Control'
 export {
   Body, Param, Query, Req,
@@ -10,6 +9,3 @@ export {
 } from '@core/control/RequestMethod'
 export { app, close, start } from './express'
 
-export {
-  ApiExport
-}

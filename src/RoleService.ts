@@ -1,7 +1,6 @@
-import { ApiExport, Autowired, Bean, BeanScope, PostConstruct, Scope } from 'a2n'
+import { Autowired, Bean, BeanScope, PostConstruct, Scope } from 'a2n'
 
 @Bean('role')
-@ApiExport
 @Scope(BeanScope.PROTOTYPE)
 export default class RoleService {
 

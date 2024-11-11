@@ -19,7 +19,6 @@ export class BeanState {
   }
   setBeanTask: Function
   isApiExport: boolean = false
-  filePath: string
   isControl: boolean = false
   // 控制器处理器
   controlMethods: {

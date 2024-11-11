@@ -77,11 +77,6 @@ module.exports = {
   componentScan: 'src',
   // 服务启动端口号
   port: 8088,
-  // ApiExport 装饰器配置
-  apiExport: {
-    // 默认生成接口前缀
-    baseUrl: "/api"
-  },
   // 一些自定义的配置项
   datasource: {
     url: '123lll'

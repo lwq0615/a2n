@@ -76,12 +76,6 @@ declare namespace a2n {
   const Control: types.Control
 
   /**
-   * 将一个类导出为接口，该类的请求方法会被注册到express
-   * 建议每个文件最多将一个类标注为ApiExport
-   */
-  const ApiExport: ClassDecorator
-
-  /**
    * @param source bean名称
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */

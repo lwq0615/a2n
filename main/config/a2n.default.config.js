@@ -8,13 +8,8 @@ module.exports = {
   componentScan: 'src',
   // 服务启动端口号
   port: 8080,
-  // ApiExport 装饰器配置
-  apiExport: {
-    // 默认生成接口前缀
-    baseUrl: '/api',
-  },
   // 隐藏启动时的文件扫描信息
-  hideScanFile: true,
+  hideScanFile: false,
   // webpack配置，会与默认webpack配置进行合并
   webpack: {},
 }

@@ -9,6 +9,7 @@ const fs = require('fs')
 const { HotModuleReplacementPlugin } = require('webpack')
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const chalk = require('chalk')
 const defaultConfigFile = path.resolve(__dirname, './a2n.default.config.js')
 
 /**
@@ -24,8 +25,8 @@ function getWebConfig(webpackConfig, options, args) {
     options?.config || './a2n.config.js'
   )
   if (!fs.existsSync(a2nConfigPath)) {
-    console.info('tip: config file "' + a2nConfigPath + '" not exist!')
-    console.info('tip: use default config\n')
+    console.info(chalk.yellow('tip: config file "' + a2nConfigPath + '" not exist!'))
+    console.info(chalk.yellow('tip: use default config'))
     a2nConfigPath = defaultConfigFile
   }
   const a2nConfig = getDevConfig(options?.config)
@@ -56,6 +57,7 @@ function getWebConfig(webpackConfig, options, args) {
     module: {
       rules: [
         { include: path.resolve(__dirname, '../start.ts') },
+        { include: /a2n\.inject\.js$/ },
         { exclude: /node_modules/ },
       ].map((item) => {
         return merge(
@@ -65,6 +67,7 @@ function getWebConfig(webpackConfig, options, args) {
               {
                 loader: 'ts-loader',
                 options: {
+                  transpileOnly: false, // 设置为 false 进行完整类型检查，报错时中断构建
                   configFile: path.resolve(process.cwd(), './tsconfig.json'),
                 },
               },

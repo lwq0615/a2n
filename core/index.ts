@@ -26,7 +26,6 @@ export {
 
 export { getConfig, setConfig } from '@core/config'
 export {
-  ApiExport,
   Body,
   Control,
   Delete,

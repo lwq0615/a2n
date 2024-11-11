@@ -3,7 +3,6 @@ import { setAspectBeans } from '@core/aop/Aspect'
 import { setErrorHandlers } from '@core/aop/exception'
 import { setInterceptors } from '@core/aop/interceptor'
 import { getProxy, startProxy } from '@core/aop/proxy'
-import { invokeApiExport } from '@core/control/ApiExport'
 import { regRoutes } from '@core/control/express'
 import { BeanClass, BeanInstance, BeanScope } from '@core/types'
 import { isFunction } from '@core/utils/function'
@@ -116,8 +115,6 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
  * 通知bean容器，所有的bean都已经注册完成
  */
 export async function initBeanFinish() {
-  // 执行@ApiExport的配置函数
-  invokeApiExport()
   // 单例池生成bean
   for (const state of getStates().values()) {
     state.setBeanTask?.()
