@@ -1,7 +1,7 @@
 /**
  * 默认的a2n配置
  */
-const defaultConfig = {
+module.exports = {
   // 全局接口前缀
   baseUrl: '',
   // 组件扫描路径，该路径下的js,ts文件将会被容器扫描
@@ -18,5 +18,3 @@ const defaultConfig = {
   // webpack配置，会与默认webpack配置进行合并
   webpack: {},
 }
-
-module.exports = defaultConfig
