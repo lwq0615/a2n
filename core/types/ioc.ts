@@ -38,6 +38,11 @@ export interface RunConfig {
 
 export type Autowired = (Cons: string | BeanClass | Promise<any>, required?: boolean) => PropertyDecorator
 
-export type getBean = <T extends BeanClass = BeanClass>(Cons: T | string) => Promise<BeanInstance<T>>
+export interface getBean {
+  <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>>
+  <T extends BeanInstance>(name: string): Promise<T>
+}
 
-export type getBeans = <T extends BeanClass = BeanClass>(Cons: T) => Promise<BeanInstance<T>[]>
+export interface getBeans {
+  <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>[]>
+}
