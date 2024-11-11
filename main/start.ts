@@ -17,6 +17,7 @@ requireComponent.keys().forEach(filepath => {
   if (!config.hideScanFile) {
     console.info('- ' + path.resolve(process.cwd(), 'node_modules', filepath))
   }
+  requireComponent(filepath)
 })
 
 // 扫描componentScan配置目录下的Bean
@@ -32,6 +33,7 @@ if (!fs.existsSync(scanPath)) {
     if (!config.hideScanFile) {
       console.info('- ' + path.resolve(process.env.componentScan, filepath))
     }
+    requireComponent(filepath)
   })
   start({
     callback: () => {
