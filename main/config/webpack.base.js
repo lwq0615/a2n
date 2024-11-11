@@ -50,6 +50,7 @@ function getWebConfig(webpackConfig, options, args) {
   })
 
   const baseConfig = {
+    entry: path.resolve(__dirname, '../start.ts'),
     mode: 'development',
     target: 'node',
     module: {
@@ -64,7 +65,6 @@ function getWebConfig(webpackConfig, options, args) {
               {
                 loader: 'ts-loader',
                 options: {
-                  transpileOnly: false, // 设置为 false 进行完整类型检查，报错时中断构建
                   configFile: path.resolve(process.cwd(), './tsconfig.json'),
                 },
               },

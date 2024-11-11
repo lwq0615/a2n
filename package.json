@@ -4,7 +4,7 @@
   "description": "基于express的轻量级服务器",
   "main": "core/dist/a2n.core.js",
   "type": "commonjs",
-  "types": "core/dist/a2n.core.d.ts",
+  "types": "core/index.d.ts",
   "author": "liweiqiang",
   "license": "ISC",
   "bin": {

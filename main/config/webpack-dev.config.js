@@ -11,7 +11,6 @@ const path = require('path')
 function webpackDevConfig(options, args) {
   const a2nConfig = getDevConfig(options?.config)
   return getWebConfig(getDevWebConfig({
-    entry: path.resolve(__dirname, '../start.ts'),
     resolve: {
       alias: {
         '@': path.resolve(process.cwd(), './' + a2nConfig.componentScan),

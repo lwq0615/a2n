@@ -5,7 +5,6 @@ const pkg = require('./package.json')
 
 
 const webpackConfig =  getWebConfig(getDevWebConfig({
-  entry: './main/start.ts',
   resolve: {
     alias: {
       '@core': path.resolve(__dirname, './core'),

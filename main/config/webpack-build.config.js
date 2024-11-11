@@ -11,7 +11,6 @@ const path = require('path')
 function webpackBuildConfig(options, args) {
   return getWebConfig({
     mode: 'production',
-    entry: [path.resolve(__dirname, '../start.ts')],
   }, options, args)
 }
 

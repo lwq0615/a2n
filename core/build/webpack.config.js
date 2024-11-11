@@ -1,6 +1,5 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { DtsBuildPlugin } = require('./DtsBuildPlugin.js')
 
 
 module.exports = {
@@ -31,6 +30,5 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new DtsBuildPlugin(),
   ],
 }

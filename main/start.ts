@@ -1,10 +1,10 @@
-const { start, setConfig, getState, isClass } = require(process.env.npmName)
+const { start, setConfig, getState, isClass } = require(process.env.npmName as string)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
 const { getLocalIpAddress } = require('./ip')
 const fs = require('fs')
 const path = require('path')
-const a2nConfig = require(process.env.a2nConfigPath)
+const a2nConfig = require(process.env.a2nConfigPath as string)
 const config = setConfig(a2nConfig)
 
 
