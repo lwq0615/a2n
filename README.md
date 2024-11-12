@@ -232,7 +232,7 @@ export default class AuthInterceptor extends Interceptor {
 
 ### 自动配置
 
-a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i`添加到node_modules的依赖包中，如果包含`__a2n.inject.js`文件，则a2n会自动引入改文件。因此，只要在该文件中引入Bean相关代码，在安装此依赖包时，相关的Bean都会被自动注入容器中
+a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i`添加到node_modules的依赖包中，如果包含`__a2n.inject.js`文件，则a2n会自动查找并引入该文件。因此，只要在该文件中引入Bean相关代码，在安装此依赖包时，相关的Bean都会被自动注入容器中
 
 > 以下是开发一个简单的a2n依赖包的案例
 
