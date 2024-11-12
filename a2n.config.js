@@ -8,7 +8,4 @@ module.exports = {
   datasource: {
     url: '123lll',
   },
-  apiExport: {
-    baseUrl: 'api',
-  },
 }

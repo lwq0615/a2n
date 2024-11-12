@@ -4,15 +4,19 @@ import Autowired from './Autowired'
 import Config from './Config'
 import { PostConstruct } from './PostConstruct'
 import Service from './Service'
-export {
-  getBean,
-  getBeans,
-  initBeanFinish, setBean
-} from './beans'
+export { getBean, getBeans, initBeanFinish, setBean } from './beans'
 export { getBeanStateList } from './beanState'
 export { Scope } from './Scope'
 
 export {
-  Autowired, Service as Bean, BeanClass,
-  BeanInstance, BeanScope, Config, getConfig, PostConstruct, Service
+  Autowired,
+  Service as Bean,
+  BeanClass,
+  BeanInstance,
+  BeanScope,
+  Config,
+  getConfig,
+  PostConstruct,
+  Service
 }
+

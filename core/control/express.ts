@@ -10,7 +10,7 @@ import { doFilter } from '../aop'
 import { initBeanFinish } from '../ioc'
 
 const bodyParser = require('body-parser')
-const app: Express = express()
+export const app: Express = express()
 let server: http.Server = null
 
 /**
@@ -74,10 +74,6 @@ export const regRoutes = function(Cons: BeanClass) {
       doFilter(callback, req, res, Cons, methodName)
     })
   })
-}
-
-export {
-  app
 }
 
 // 启动服务
