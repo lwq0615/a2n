@@ -45,9 +45,6 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
         bean = getProxy(Reflect.construct(Cons, []))
         cache.classMap.set(Cons, bean)
         await injectBean(bean, cache)
-        if (isStart) {
-          doInitOverTasks([...cache.classMap.values()])
-        }
         return bean
       }
     }
@@ -107,6 +104,7 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
   }
   // 配置文件注入@Config
   state.configTasks?.forEach((task: Function) => task.call(bean))
+  doInitOverTasks([bean])
   state.injectOver = true
 }
 
@@ -122,8 +120,6 @@ export async function initBeanFinish() {
   for (const Cons of beanMap.keys()) {
     await injectBean(await getBean(Cons))
   }
-  // 所有bean依赖注入全部完成，执行@PostConstruct
-  doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
   for (const state of getStateMap().values()) {
     if (state.isControl) {
@@ -154,7 +150,7 @@ export async function initBeanFinish() {
  */
 function doInitOverTasks(beans: BeanInstance[]) {
   for (const bean of beans) {
-    getState(bean.constructor).initOverTasks.forEach(task => {
+    getState(Reflect.getPrototypeOf(bean).constructor as BeanClass).initOverTasks.forEach(task => {
       task.call(bean)
     })
   }
