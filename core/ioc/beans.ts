@@ -4,10 +4,9 @@ import { setErrorHandlers } from '@core/aop/exception'
 import { setInterceptors } from '@core/aop/interceptor'
 import { getProxy, startProxy } from '@core/aop/proxy'
 import { regRoutes } from '@core/control/express'
-import { BeanClass, BeanInstance, BeanScope } from '@core/types'
+import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { getState, getStates } from './beanState'
-import { BeanCache, BeanState } from './types'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()

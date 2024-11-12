@@ -1,6 +1,5 @@
-import { ParamInfo, ParamType, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
-import { RequestParamDecorator } from '@core/types'
+import { ParamInfo, ParamType, RequestParamDecorator, Route } from '@core/types'
 
 
 /**

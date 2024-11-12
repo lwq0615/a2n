@@ -2,6 +2,11 @@ import { Request, Response } from 'express'
 import { BeanClass } from '.'
 
 
+export interface AspectHandle {
+  reg: RegExp,
+  handle: Function
+}
+
 /**
  * 拦截器
  */

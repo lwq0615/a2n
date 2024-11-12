@@ -1,6 +1,5 @@
-import { Method, Route } from '@core/control/types'
 import { getState } from '@core/ioc/beanState'
-import { BeanClass, RequestMapping as RequestMappingType } from '@core/types'
+import { BeanClass, Method, RequestMapping as RequestMappingType, Route } from '@core/types'
 
 function regMapping(path: string, type: Method) {
   const regMethod: MethodDecorator = (target, key, descriptor) => {
