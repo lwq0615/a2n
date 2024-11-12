@@ -229,3 +229,28 @@ export default class AuthInterceptor extends Interceptor {
 
 }
 ```
+
+### 自动配置
+
+a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i`添加到node_modules的依赖包中，如果包含`__a2n.inject.js`文件，则a2n会自动引入改文件。因此，只要在该文件中引入Bean相关代码，在安装此依赖包时，相关的Bean都会被自动注入容器中
+
+> 以下是开发一个简单的a2n依赖包的案例
+
+* 创建一个npm项目（a2n-dep），在项目根目录创建`__a2n.inject.js`文件，在该文件内引入需要自动注入到容器中的bean
+![image](https://github.com/user-attachments/assets/aac856be-e3ee-4b9c-8ef3-8aa37d70e070)
+
+* 编写Bean代码，不需要安装a2n直接引入，并使用@Bean装饰器
+```ts
+import { AppLifecycle, Bean } from 'a2n'
+
+// 注册一个a2n生命周期管理Bean
+@Bean
+export default class User extends AppLifecycle {
+  // 在a2n启动完成后触发该函数
+  async afterAppStart() {
+    console.log('dep start')
+  }
+}
+```
+
+* 效果：当一个a2n项目引入此依赖包（yarn add a2n-dep或npm i a2n-dep）后，a2n项目启动成功后，会打印`dep start`
