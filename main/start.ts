@@ -13,7 +13,7 @@ if (!config.disabledScanNodeModules) {
   if (!config.hideScanFile) {
     console.info(chalk.blue('scan dependencies beans in node_modules'))
   }
-  const requireComponent = require.context(process.env.cwd + '/node_modules', true, /a2n\.inject\.js$/)
+  const requireComponent = require.context(process.env.cwd + '/node_modules', true, /__a2n\.inject\.js$/)
   requireComponent.keys().forEach(filepath => {
     if (!config.hideScanFile) {
       console.info('- ' + path.resolve(process.cwd(), 'node_modules', filepath))
