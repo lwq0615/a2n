@@ -6,7 +6,7 @@ import { getProxy, startProxy } from '@core/aop/proxy'
 import { regRoutes } from '@core/control/express'
 import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
-import { getState, getStates } from './beanState'
+import { getState, getStateMap } from './beanState'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -59,12 +59,12 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
  */
 export function getBeans<T extends BeanClass>(Cons: T | ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]> {
   if (isFunction(Cons)) {
-    const beans = [...getStates().values()].filter(Cons as any).map(state => {
+    const beans = [...getStateMap().values()].filter(Cons as any).map(state => {
       return getBean(state.beanClass)
     })
     return Promise.all(beans)
   } else {
-    const beans = [...getStates().keys()].filter(Item => Reflect.construct(Item, []) instanceof Cons).map(Item => {
+    const beans = [...getStateMap().keys()].filter(Item => Reflect.construct(Item, []) instanceof Cons).map(Item => {
       return getBean(Item)
     })
     return Promise.all(beans).then(beans => beans.filter(Boolean))
@@ -115,7 +115,7 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
  */
 export async function initBeanFinish() {
   // 单例池生成bean
-  for (const state of getStates().values()) {
+  for (const state of getStateMap().values()) {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入
@@ -125,7 +125,7 @@ export async function initBeanFinish() {
   // 所有bean依赖注入全部完成，执行@PostConstruct
   doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
-  for (const state of getStates().values()) {
+  for (const state of getStateMap().values()) {
     if (state.isControl) {
       regRoutes(state.beanClass)
     }

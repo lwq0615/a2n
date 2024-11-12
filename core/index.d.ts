@@ -170,6 +170,11 @@ declare namespace a2n {
   const getBeans: types.getBeans
 
   /**
+   * 获取Bean状态/配置中心
+   */
+  const getBeanStateList: types.getBeanStateList
+
+  /**
    * bean的构造器类型（Class对象）
    */
   type BeanClass = types.BeanClass

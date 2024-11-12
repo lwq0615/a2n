@@ -21,6 +21,10 @@ export function getState(Cons: BeanClass): BeanState {
   return state
 }
 
-export function getStates() {
+export function getStateMap() {
   return states
+}
+
+export function getBeanStateList() {
+  return [...states.values()]
 }

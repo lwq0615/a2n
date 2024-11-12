@@ -91,3 +91,7 @@ export interface getBeans {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>[]>
   <T extends BeanClass = BeanClass>(flag: ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]>
 }
+
+export interface getBeanStateList {
+  (): BeanState[]
+}
