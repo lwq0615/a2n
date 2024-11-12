@@ -239,7 +239,7 @@ a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i
 * 创建一个npm项目（a2n-dep），在项目根目录创建`__a2n.inject.js`文件，在该文件内引入需要自动注入到容器中的bean
 ![image](https://github.com/user-attachments/assets/aac856be-e3ee-4b9c-8ef3-8aa37d70e070)
 
-* 编写Bean代码，不需要安装a2n直接引入，并使用@Bean装饰器
+* 编写src/User.ts代码，不需要安装a2n直接引入，并使用@Bean装饰器（如果`a2n-dep`项目中需要引入其他依赖，请添加依赖到`peerDependencies`中）
 ```ts
 import { AppLifecycle, Bean } from 'a2n'
 
