@@ -9,7 +9,8 @@ export {
   Scope,
   Service,
   getBean,
-  getBeans
+  getBeans,
+  registerCustomerDecorator
 } from '@core/ioc'
 
 export {

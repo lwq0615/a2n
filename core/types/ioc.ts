@@ -17,6 +17,11 @@ export class BeanState {
       throw new Error('错误的参数Object')
     }
     this.beanClass = Cons
+    setTimeout(() => {
+      // 延迟执行，等待所有依赖注入任务执行完毕
+      // console.log(this.beanClass)
+      // console.log(this.classDecorators)
+    }, 1000)
   }
 
   beanClass: BeanClass

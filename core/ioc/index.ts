@@ -5,7 +5,7 @@ import Config from './Config'
 import { PostConstruct } from './PostConstruct'
 import Service from './Service'
 export { getBean, getBeans, initBeanFinish, setBean } from './beans'
-export { getBeanStateList } from './beanState'
+export { getBeanStateList, registerCustomerDecorator } from './beanState'
 export { Scope } from './Scope'
 
 export {

@@ -21,33 +21,32 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
     if (!state.isBean) {
       return
     }
-    if (state.scope === BeanScope.SINGLETON) {
-      // 单例模式，从单例池查找
-      const bean: BeanInstance = beanMap.get(Cons)
-      // 此时的单例bean有可能是未进行依赖注入的，先进行依赖注入
-      await injectBean(bean, cache)
-      return bean
-    } else {
-      // 多例模式，每次获取bean的时候创建新的bean
-      // 多例模式的第一个bean，创建缓存池，该bean和依赖的多例bean创建时会存入缓存池，防止循环依赖
-      const isStart = !cache
-      if (isStart) {
-        cache = {
-          classMap: new Map<BeanClass, BeanInstance>(),
-        }
-      }
-      // 如果缓存池已经存在该类型的bean，从缓存池获取
-      let bean: BeanInstance = cache.classMap.get(Cons)
-      if (bean) {
-        return bean
-      } else {
-        // 创建新的bean，并存入缓存池
-        bean = getProxy(Reflect.construct(Cons, []))
-        cache.classMap.set(Cons, bean)
-        await injectBean(bean, cache)
-        return bean
+    // 创建缓存池，该bean和依赖的bean注入时会存入缓存池，防止循环依赖
+    const isStart = !cache
+    if (isStart) {
+      cache = {
+        classMap: new Map<BeanClass, BeanInstance>(),
       }
     }
+    // 如果缓存池已经存在该类型的bean，从缓存池获取
+    let bean: BeanInstance = cache.classMap.get(Cons)
+    if (bean) {
+      return bean
+    }
+    if (state.scope === BeanScope.SINGLETON) {
+      // 单例模式，从单例池查找
+      bean = beanMap.get(Cons)
+    } else {
+      // 多例模式，创建新的bean
+      bean = getProxy(Reflect.construct(Cons, []))
+    }
+    // 此时的bean有可能是未进行依赖注入的，先进行依赖注入
+    cache.classMap.set(Cons, bean)
+    await injectBean(bean, cache)
+    if (isStart) {
+      doInitOverTasks([...cache.classMap.values()])
+    }
+    return bean
   }
 }
 
@@ -104,7 +103,7 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
   }
   // 配置文件注入@Config
   state.configTasks?.forEach((task: Function) => task.call(bean))
-  doInitOverTasks([bean])
+  // 所有bean依赖注入全部完成，执行@PostConstruct
   state.injectOver = true
 }
 
@@ -118,6 +117,10 @@ export async function initBeanFinish() {
   }
   // 开始对单例池的bean进行依赖注入
   for (const Cons of beanMap.keys()) {
+    // 在前面的bean注入中可能就依赖了后面的bean，所以在注入前面的bean过程中，后面的bean也可能已经被注入完成了
+    if (getState(Cons).injectOver) {
+      continue
+    }
     await injectBean(await getBean(Cons))
   }
   // 控制器注册接口路由

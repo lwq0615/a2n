@@ -28,3 +28,12 @@ export function getStateMap() {
 export function getBeanStateList() {
   return [...states.values()]
 }
+
+export function registerCustomerDecorator(decorator: Function, Cons: BeanClass, name?: string) {
+  const state = getState(Cons)
+  if (name) {
+    state.addMethodDecorator(name, decorator)
+  } else {
+    state.addClassDecorator(decorator)
+  }
+}

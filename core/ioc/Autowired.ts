@@ -17,11 +17,11 @@ export const Autowired = function(Cons: string | BeanClass | Promise<any>, requi
               throw new Error('属性\'' + fieldName + '\'注入失败,没有在容器中查找到bean: ' + (typeof Cons === 'string' ? Cons : Cons.name))
             }
             if (!bean) {
-              resolve(1)
+              resolve(bean)
               return
             }
             this[fieldName] = bean
-            resolve(1)
+            resolve(bean)
           })
         }
         // 循环依赖处理
