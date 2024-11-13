@@ -1,18 +1,19 @@
-import { After, Around, BeanClass, Before } from 'a2n'
+import { After, Around, Aspect, BeanClass, Before } from 'a2n'
 
 
-// @Aspect
+@Aspect
 export default class InterceptorHandler {
 
   @After(/^[U]/)
-  as1p() {
-    console.log('after')
-
+  as1p(Cons: BeanClass, name: string) {
+    // console.log(Cons)
+    // console.log('after')
   }
 
   @Before(/^[U]/)
   asp(Cons: BeanClass, name: string) {
-    console.log('before')
+    // console.log(Cons)
+    // console.log('before')
 
   }
 
@@ -21,8 +22,7 @@ export default class InterceptorHandler {
     console.log(Cons)
     console.log(name)
     const res = callback()
-    return res.name + 'ann'
+    return res
   }
-
 
 }

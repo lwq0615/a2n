@@ -1,11 +1,12 @@
 import { Bean } from '@core/ioc'
 import { getState } from '@core/ioc/beanState'
-import { BeanClass, BeanInstance } from '@core/types'
+import { AspectItem, BeanClass, BeanInstance } from '@core/types'
+
 
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
-const beforeAspects: Map<RegExp, AspectHandle> = new Map()
-const afterAspects: Map<RegExp, AspectHandle> = new Map()
-const aroundAspects: Map<RegExp, AroundAspectHandle> = new Map()
+const beforeAspects: AspectItem[] = []
+const afterAspects: AspectItem[] = []
+const aroundAspects: AspectItem[] = []
 
 export function getAspects() {
   return {
@@ -21,9 +22,6 @@ export function setAspectBeans(beans: BeanInstance[]) {
   })
 }
 
-type AspectHandle = (Cons: BeanClass, name: string) => void
-type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
-
 /**
  * 注册该类下的切面方法
  */
@@ -37,13 +35,22 @@ export const Aspect: ClassDecorator = (Cons: any) => {
     }
   }
   state.beforeAspects.forEach(aspect => {
-    beforeAspects.set(aspect.reg, getHandle(aspect.handle))
+    beforeAspects.push({
+      reg: aspect.reg,
+      handle: getHandle(aspect.handle),
+    })
   })
   state.afterAspects.forEach(aspect => {
-    afterAspects.set(aspect.reg, getHandle(aspect.handle))
+    afterAspects.push({
+      reg: aspect.reg,
+      handle: getHandle(aspect.handle),
+    })
   })
   state.aroundAspects.forEach(aspect => {
-    aroundAspects.set(aspect.reg, getHandle(aspect.handle))
+    aroundAspects.push({
+      reg: aspect.reg,
+      handle: getHandle(aspect.handle),
+    })
   })
 }
 

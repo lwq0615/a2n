@@ -1,4 +1,4 @@
-import { AspectHandle } from './aop'
+import { AspectItem } from './aop'
 import { Route } from './control'
 
 // bean多例缓存池对象
@@ -35,11 +35,11 @@ export class BeanState {
   // bean是否是切面类
   isAspect: boolean = false
   // 前置切面
-  beforeAspects: AspectHandle[] = []
+  beforeAspects: AspectItem[] = []
   // 后置切面
-  afterAspects: AspectHandle[] = []
+  afterAspects: AspectItem[] = []
   // 环绕切面
-  aroundAspects: AspectHandle[] = []
+  aroundAspects: AspectItem[] = []
   // 是否已经完成依赖注入
   injectOver: boolean = false
 }

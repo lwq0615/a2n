@@ -1,5 +1,5 @@
 import { getState } from '@core/ioc/beanState'
-import { BeanClass, BeanInstance } from '@core/types'
+import { AroundAspectHandle, AspectHandle, AspectItem, BeanClass, BeanInstance } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { getAspects } from './Aspect'
 
@@ -12,7 +12,15 @@ export function startProxy() {
 // 是否需要代理
 export function isNeedProxy(Cons: BeanClass) {
   // 切面类不允许代理，防止切面代理切面导致的死循环
-  return !getState(Cons).isAspect
+  const state = getState(Cons)
+  return !state.isAspect
+}
+
+function isMatch(aspect: AspectItem, Cons: BeanClass, name: string) {
+  if (aspect.reg) {
+    return aspect.reg.test(Cons.name + '.' + name)
+  }
+  return false
 }
 
 export function getProxy(bean: BeanInstance): BeanInstance {
@@ -27,27 +35,24 @@ export function getProxy(bean: BeanInstance): BeanInstance {
       // 切面编程
       return function(...params: any) {
         const aspects = getAspects()
+        const Cons = Reflect.getPrototypeOf(target).constructor as BeanClass
+        const before = aspects.beforeAspects.filter(item => isMatch(item, Cons, key))
+        const around = aspects.aroundAspects.filter(item => isMatch(item, Cons, key))
+        const after = aspects.afterAspects.filter(item => isMatch(item, Cons, key))
         // 前置
-        const name = target.constructor.name + '.' + key
-        for (const reg of aspects.beforeAspects.keys()) {
-          if (reg.test(name)) {
-            aspects.beforeAspects.get(reg)(target.constructor, key)
-          }
+        for (const item of before) {
+          (item.handle as AspectHandle)(Cons, key)
         }
         // 环绕
-        const aroundReg = [...aspects.aroundAspects.keys()].find(reg => reg.test(name))
-        const aroundHandle = aspects.aroundAspects.get(aroundReg)
-        let result: any = void 0
-        if (aroundHandle) {
-          result = aroundHandle(() => target[key](...params), target.constructor, key)
-        } else {
-          result = target[key](...params)
+        let resultGetter = () => target[key](...params)
+        for (const item of around) {
+          const oldResultGetter = resultGetter
+          resultGetter = () => (item.handle as AroundAspectHandle)(oldResultGetter, Cons, key)
         }
+        const result = resultGetter()
         // 后置
-        for (const reg of aspects.afterAspects.keys()) {
-          if (reg.test(name)) {
-            aspects.afterAspects.get(reg)(target.constructor, key)
-          }
+        for (const item of after) {
+          (item.handle as AspectHandle)(Cons, key)
         }
         return result
       }

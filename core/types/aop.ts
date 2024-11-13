@@ -1,10 +1,12 @@
 import { Request, Response } from 'express'
 import { BeanClass } from '.'
 
+export type AspectHandle = (Cons: BeanClass, name: string) => void
+export type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
 
-export interface AspectHandle {
+export interface AspectItem {
   reg: RegExp,
-  handle: Function
+  handle: AspectHandle | AroundAspectHandle
 }
 
 /**

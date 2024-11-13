@@ -24,6 +24,7 @@ module.exports = {
     'space-infix-ops': 'error',
     'no-const-assign': 'error',
     'no-var': 'error',
+    'comma-spacing': 'error',
     'array-callback-return': 'error',
     'keyword-spacing': 'error',
     'comma-dangle': ['error', {
@@ -49,7 +50,7 @@ module.exports = {
       'asyncArrow': 'always',
     }],
     '@typescript-eslint/no-wrapper-object-types': 'off',
-    'spaced-comment': 'error',// 注释风格要不要有空格什么的
+    'spaced-comment': 'error', // 注释风格要不要有空格什么的
     'space-before-blocks': 'error',  // if function等的大括号之前需要有空格
     'no-irregular-whitespace': 'error', // 不规则的空白不允许
   },
