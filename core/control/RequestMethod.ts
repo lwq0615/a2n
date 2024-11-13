@@ -1,14 +1,26 @@
 import { getState } from '@core/ioc/beanState'
 import { BeanClass, Method, RequestMapping as RequestMappingType, Route } from '@core/types'
 
+function getDecoratorByType(type: Method) {
+  return ({
+    [Method.ALL]: RequestMapping,
+    [Method.GET]: Get,
+    [Method.POST]: Post,
+    [Method.PUT]: Put,
+    [Method.DELETE]: Delete,
+  })[type]
+}
+
 function regMapping(path: string, type: Method) {
   const regMethod: MethodDecorator = (target, key, descriptor) => {
     const Cons = target.constructor as BeanClass
-    if (!getState(Cons).controlMethods[key]) {
-      getState(Cons).controlMethods[key] = new Route()
+    const state = getState(Cons)
+    state.addMethodDecorator(key, getDecoratorByType(type))
+    if (!state.controlMethods[key]) {
+      state.controlMethods[key] = new Route()
     }
     // 将当前method注册为handler
-    Object.assign(getState(Cons).controlMethods[key], {
+    Object.assign(state.controlMethods[key], {
       path: path,
       type: type,
     })
@@ -20,6 +32,7 @@ function getMethodDecorator(target: string | Object, propertyKey: string | symbo
   if (typeof target === 'string') {
     return regMapping(target, type) as any
   } else {
+    getState(target.constructor as BeanClass).addMethodDecorator(propertyKey, getDecoratorByType(type))
     regMapping('', type)(target, propertyKey, descriptor)
   }
 }

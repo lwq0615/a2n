@@ -36,7 +36,9 @@ export const Autowired = function(Cons: string | BeanClass | Promise<any>, requi
         }
       })
     }
-    getState(target.constructor).autowiredTasks.push(task)
+    const state = getState(target.constructor)
+    state.addMethodDecorator(fieldName, Autowired)
+    state.autowiredTasks.push(task)
   } as PropertyDecorator
 }
 

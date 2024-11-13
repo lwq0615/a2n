@@ -27,7 +27,7 @@ export function setAspectBeans(beans: BeanInstance[]) {
  */
 export const Aspect: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
-  state.isAspect = true
+  state.addClassDecorator(Aspect)
   Bean(Cons)
   const getHandle = (handle: Function) => {
     return function(...params: any) {
@@ -60,7 +60,9 @@ export const Aspect: ClassDecorator = (Cons: any) => {
 export function Before(reg: RegExp): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
-    getState(Cons).beforeAspects.push({
+    const state = getState(Cons)
+    state.addMethodDecorator(key, Before)
+    state.beforeAspects.push({
       reg,
       handle: target[key],
     })
@@ -73,7 +75,9 @@ export function Before(reg: RegExp): MethodDecorator {
 export function After(reg: RegExp): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
-    getState(Cons).afterAspects.push({
+    const state = getState(Cons)
+    state.addMethodDecorator(key, After)
+    state.afterAspects.push({
       reg,
       handle: target[key],
     })
@@ -86,7 +90,9 @@ export function After(reg: RegExp): MethodDecorator {
 export function Around(reg: RegExp): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
     const Cons = target.constructor
-    getState(Cons).aroundAspects.push({
+    const state = getState(Cons)
+    state.addMethodDecorator(key, Around)
+    state.aroundAspects.push({
       reg,
       handle: target[key],
     })

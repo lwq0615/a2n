@@ -22,7 +22,7 @@ export function getControlBean(Cons: BeanClass) {
 export const Control: ControlType = function(source: string | BeanClass) {
   const setControl = (Cons: any, baseUrl = '') => {
     const state = getState(Cons)
-    state.isControl = true
+    state.addClassDecorator(Control)
     state.controlMapping = baseUrl
     Object.keys(state.controlMethods).forEach(methodName => {
       state.controlMethods[methodName].handler = async (...params: any) => (await getControlBean(Cons))?.[methodName](...params)

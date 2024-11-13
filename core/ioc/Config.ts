@@ -1,5 +1,6 @@
-import { getState } from './beanState'
 import { getConfig } from '@core/config'
+import { BeanClass } from '@core/types'
+import { getState } from './beanState'
 const _ = require('lodash')
 
 /**
@@ -10,7 +11,9 @@ export const Config = function(name: string) {
     const task = function() {
       this[fieldName] = _.get(getConfig(), name)
     }
-    getState(target.constructor).configTasks.push(task)
+    const state = getState(target.constructor as BeanClass)
+    state.addMethodDecorator(fieldName, Config)
+    state.configTasks.push(task)
   } as PropertyDecorator
 }
 

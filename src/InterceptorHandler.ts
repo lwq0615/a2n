@@ -19,8 +19,8 @@ export default class InterceptorHandler {
 
   @Around(/^[U]/)
   asp2(callback: Function, Cons: BeanClass, name: string) {
-    console.log(Cons)
-    console.log(name)
+    // console.log(Cons)
+    // console.log(name)
     const res = callback()
     return res
   }

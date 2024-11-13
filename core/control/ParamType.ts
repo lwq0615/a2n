@@ -5,16 +5,17 @@ import { ParamInfo, ParamType, RequestParamDecorator, Route } from '@core/types'
 /**
  * 注册参数
  */
-function regParam(target: any, methodName: string | symbol, paramIndex: number, type: ParamInfo) {
+function regParam(target: any, methodName: string | symbol, paramIndex: number, paramInfo: ParamInfo) {
   const Cons = target.constructor
-  if (!getState(Cons).controlMethods) {
-    getState(Cons).controlMethods = {}
+  const state = getState(Cons)
+  if (!state.controlMethods) {
+    state.controlMethods = {}
   }
-  if (!getState(Cons).controlMethods[methodName]) {
-    getState(Cons).controlMethods[methodName] = new Route()
+  if (!state.controlMethods[methodName]) {
+    state.controlMethods[methodName] = new Route()
   }
   // 注入参数信息
-  getState(Cons).controlMethods[methodName].params[paramIndex] = type
+  state.controlMethods[methodName].params[paramIndex] = paramInfo
 }
 
 

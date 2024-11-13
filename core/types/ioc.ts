@@ -1,3 +1,6 @@
+import { Aspect } from '@core/aop'
+import { Control } from '@core/control'
+import { Bean } from '@core/ioc'
 import { AspectItem } from './aop'
 import { Route } from './control'
 
@@ -10,15 +13,37 @@ export interface BeanCache {
 export class BeanState {
 
   constructor(Cons: BeanClass) {
+    if (Cons === Object) {
+      throw new Error('错误的参数Object')
+    }
     this.beanClass = Cons
   }
 
   beanClass: BeanClass
+  classDecorators: Function[] = []
+  methodDecorators: { [name: string | symbol]: Function[] } = {}
+  addClassDecorator(decorator: Function) {
+    this.classDecorators.push(decorator)
+  }
+  addMethodDecorator(name: string | symbol, decorator: Function) {
+    if (!this.methodDecorators[name]) {
+      this.methodDecorators[name] = []
+    }
+    this.methodDecorators[name].push(decorator)
+  }
+  // 是否是Bean
   get isBean() {
-    return Boolean(this.setBeanTask)
+    return this.classDecorators.includes(Bean)
+  }
+  // 是否是控制器
+  get isControl() {
+    return this.classDecorators.includes(Control)
+  }
+  // bean是否是切面类
+  get isAspect() {
+    return this.classDecorators.includes(Aspect)
   }
   setBeanTask: Function
-  isControl: boolean = false
   // 控制器处理器
   controlMethods: {
     [methodName: string | symbol]: Route
@@ -32,8 +57,6 @@ export class BeanState {
   initOverTasks: Function[] = []
   // bean创建方式
   scope: BeanScope = BeanScope.SINGLETON
-  // bean是否是切面类
-  isAspect: boolean = false
   // 前置切面
   beforeAspects: AspectItem[] = []
   // 后置切面
