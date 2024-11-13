@@ -12,6 +12,6 @@ export default class RoleService {
   @PostConstruct
   init() {
     // 依赖注入完成后，将会执行@PostConstruct的内容
-    console.log(this.user)
+    // console.log(this.user)
   }
 }

@@ -1,7 +1,8 @@
-import { Autowired, Bean, Config, PostConstruct } from 'a2n'
+import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope } from 'a2n'
 import RoleService from './RoleService'
 
 @Bean
+@Scope(BeanScope.PROTOTYPE)
 export default class UserServicer {
 
   @Autowired(RoleService)
@@ -13,7 +14,7 @@ export default class UserServicer {
   @PostConstruct
   init() {
     // 依赖注入完成后，将会执行@PostConstruct的内容
-    console.log(this.role)
+    // console.log(this.role)
     // registerCustomerDecorator(Autowired, UserServicer)
   }
 
