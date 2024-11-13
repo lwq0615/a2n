@@ -5,7 +5,8 @@ export type AspectHandle = (Cons: BeanClass, name: string) => void
 export type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
 
 export interface AspectItem {
-  reg: RegExp,
+  reg?: RegExp
+  test?: Function
   handle: AspectHandle | AroundAspectHandle
 }
 
@@ -57,7 +58,7 @@ export abstract class ErrHandler {
 /**
  * 切面处理器
  */
-export type AspectHandler = (reg: RegExp) => MethodDecorator
+export type AspectHandler = (match: RegExp | Function) => MethodDecorator
 
 export abstract class AppLifecycle {
   abstract afterAppStart(): void

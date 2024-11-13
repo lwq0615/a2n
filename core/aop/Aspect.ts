@@ -57,13 +57,14 @@ export const Aspect: ClassDecorator = (Cons: any) => {
 /**
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
-export function Before(reg: RegExp): MethodDecorator {
+export function Before(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
+    const name = typeof match === 'function' ? 'test' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, Before)
     state.beforeAspects.push({
-      reg,
+      [name]: match,
       handle: target[key],
     })
   }
@@ -72,13 +73,14 @@ export function Before(reg: RegExp): MethodDecorator {
 /**
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
-export function After(reg: RegExp): MethodDecorator {
+export function After(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
+    const name = typeof match === 'function' ? 'test' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, After)
     state.afterAspects.push({
-      reg,
+      [name]: match,
       handle: target[key],
     })
   }
@@ -87,13 +89,14 @@ export function After(reg: RegExp): MethodDecorator {
 /**
  * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
  */
-export function Around(reg: RegExp): MethodDecorator {
+export function Around(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
+    const name = typeof match === 'function' ? 'test' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, Around)
     state.aroundAspects.push({
-      reg,
+      [name]: match,
       handle: target[key],
     })
   }
