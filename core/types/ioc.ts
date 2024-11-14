@@ -125,7 +125,6 @@ export interface getBeanStateList {
  * @param Cons bean类型
  * @param name 方法名称，如果传入则注册为方法装饰器，否则注册为类装饰器
  */
-
 export interface registerCustomerDecorator {
   (decorator: Function, Cons: BeanClass, name?: string | symbol): void
 }
