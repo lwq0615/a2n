@@ -6,7 +6,7 @@ import { getProxy, startProxy } from '@core/aop/proxy'
 import { regRoutes } from '@core/control/express'
 import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
-import { getState, getStateMap } from './beanState'
+import { getState, getStateByInstance, getStateMap } from './beanState'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -44,7 +44,7 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
     cache.classMap.set(Cons, bean)
     await injectBean(bean, cache)
     if (isStart) {
-      doInitOverTasks([...cache.classMap.values()])
+      doInitOverTasks([...cache.classMap.values()].filter(bean => getStateByInstance(bean).scope === BeanScope.PROTOTYPE))
     }
     return bean
   }
@@ -123,6 +123,7 @@ export async function initBeanFinish() {
     }
     await injectBean(await getBean(Cons))
   }
+  doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
   for (const state of getStateMap().values()) {
     if (state.isControl) {

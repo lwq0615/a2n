@@ -1,4 +1,4 @@
-import { BeanClass, BeanState } from '@core/types'
+import { BeanClass, BeanInstance, BeanState } from '@core/types'
 
 const states = new Map<BeanClass, BeanState>()
 
@@ -19,6 +19,10 @@ export function getState(Cons: BeanClass): BeanState {
   state = new BeanState(Cons)
   states.set(Cons, state)
   return state
+}
+
+export function getStateByInstance(bean: BeanInstance) {
+  return getState(Reflect.getPrototypeOf(bean).constructor as BeanClass)
 }
 
 export function getStateMap() {
