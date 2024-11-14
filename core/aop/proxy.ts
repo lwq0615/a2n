@@ -19,9 +19,9 @@ export function isNeedProxy(Cons: BeanClass) {
 function isMatch(aspect: AspectItem, Cons: BeanClass, name: string) {
   if (aspect.reg) {
     return aspect.reg.test(Cons.name + '.' + name)
-  } else if (aspect.test) {
+  } else if (aspect.decorator) {
     const state = getState(Cons)
-    return state.methodDecorators[name].some(item => item === aspect.test)
+    return state.methodDecorators[name].some(item => item === aspect.decorator)
   }
   return false
 }

@@ -6,7 +6,7 @@ export type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: str
 
 export interface AspectItem {
   reg?: RegExp
-  test?: Function
+  decorator?: Function
   handle: AspectHandle | AroundAspectHandle
 }
 
