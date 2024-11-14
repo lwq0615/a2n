@@ -184,6 +184,11 @@ declare namespace a2n {
    */
   type BeanInstance = types.BeanInstance
 
+  /**
+   * 注册自定义装饰器
+   */
+  const registerCustomerDecorator: types.registerCustomerDecorator
+
 }
 
 export = a2n

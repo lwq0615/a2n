@@ -33,7 +33,7 @@ export function getBeanStateList() {
   return [...states.values()]
 }
 
-export function registerCustomerDecorator(decorator: Function, Cons: BeanClass, name?: string) {
+export function registerCustomerDecorator(decorator: Function, Cons: BeanClass, name?: string | symbol) {
   const state = getState(Cons)
   if (name) {
     state.addMethodDecorator(name, decorator)
