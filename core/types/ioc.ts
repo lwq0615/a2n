@@ -1,6 +1,3 @@
-import { Aspect } from '@core/aop'
-import { Control } from '@core/control'
-import { Bean } from '@core/ioc'
 import { AspectItem } from './aop'
 import { Route } from './control'
 
@@ -20,28 +17,35 @@ export class BeanState {
   }
 
   beanClass: BeanClass
-  classDecorators: Function[] = []
-  methodDecorators: { [name: string | symbol]: Function[] } = {}
+  #classDecorators: Function[] = []
+  #methodDecorators: { [name: string | symbol]: Function[] } = {}
+  #fieldDecorators: { [name: string | symbol]: Function[] } = {}
   addClassDecorator(decorator: Function) {
-    this.classDecorators.push(decorator)
+    this.#classDecorators.push(decorator)
   }
   addMethodDecorator(name: string | symbol, decorator: Function) {
-    if (!this.methodDecorators[name]) {
-      this.methodDecorators[name] = []
+    if (!this.#methodDecorators[name]) {
+      this.#methodDecorators[name] = []
     }
-    this.methodDecorators[name].push(decorator)
+    this.#methodDecorators[name].push(decorator)
   }
-  // 是否是Bean
-  get isBean() {
-    return this.classDecorators.includes(Bean)
+  addFieldDecorator(name: string | symbol, decorator: Function) {
+    if (!this.#fieldDecorators[name]) {
+      this.#fieldDecorators[name] = []
+    }
+    this.#fieldDecorators[name].push(decorator)
   }
-  // 是否是控制器
-  get isControl() {
-    return this.classDecorators.includes(Control)
-  }
-  // bean是否是切面类
-  get isAspect() {
-    return this.classDecorators.includes(Aspect)
+  /**
+   * 判断【类|方法|属性】是否添加了装饰器
+   * @param decorator 装饰器
+   * @param methodName 可选，方法名称
+   * @returns
+   */
+  hasDecorator(decorator: Function, name?: string | symbol) {
+    if (name) {
+      return this.#methodDecorators[name]?.includes(decorator) || this.#fieldDecorators[name]?.includes(decorator)
+    }
+    return this.#classDecorators.includes(decorator)
   }
   setBeanTask: Function
   // 控制器处理器
@@ -105,17 +109,21 @@ export interface RunConfig {
 
 export type Autowired = (Cons: string | BeanClass | Promise<any>, required?: boolean) => PropertyDecorator
 
-export interface getBean {
+export interface GetBean {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>>
   <T extends BeanInstance>(name: string): Promise<T>
 }
 
-export interface getBeans {
+export interface GetBeans {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>[]>
   <T extends BeanClass = BeanClass>(flag: ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]>
 }
 
-export interface getBeanStateList {
+export interface GetBeanState {
+  (Cons: BeanClass): BeanState | undefined
+}
+
+export interface GetBeanStateList {
   (): BeanState[]
 }
 
@@ -125,6 +133,6 @@ export interface getBeanStateList {
  * @param Cons bean类型
  * @param name 方法名称，如果传入则注册为方法装饰器，否则注册为类装饰器
  */
-export interface registerCustomerDecorator {
+export interface RegisterCustomerDecorator {
   (decorator: Function, Cons: BeanClass, name?: string | symbol): void
 }

@@ -15,7 +15,7 @@ export default class UserControl {
 
   @Get
   get1(@Query query: any) {
-    // console.log(query);
+    // console.log(query)
     return 'query'
   }
 

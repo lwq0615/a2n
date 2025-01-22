@@ -1,6 +1,7 @@
 import { getState } from '@core/ioc/beanState'
 import { AroundAspectHandle, AspectHandle, AspectItem, BeanClass, BeanInstance } from '@core/types'
 import { isFunction } from '@core/utils/function'
+import { isAspect } from '@core/utils/state'
 import { getAspects } from './Aspect'
 
 let isStart = false
@@ -12,8 +13,7 @@ export function startProxy() {
 // 是否需要代理
 export function isNeedProxy(Cons: BeanClass) {
   // 切面类不允许代理，防止切面代理切面导致的死循环
-  const state = getState(Cons)
-  return !state.isAspect
+  return !isAspect(Cons)
 }
 
 function isMatch(aspect: AspectItem, Cons: BeanClass, name: string) {
@@ -21,7 +21,7 @@ function isMatch(aspect: AspectItem, Cons: BeanClass, name: string) {
     return aspect.reg.test(Cons.name + '.' + name)
   } else if (aspect.decorator) {
     const state = getState(Cons)
-    return state.methodDecorators[name].some(item => item === aspect.decorator)
+    return state.hasDecorator(aspect.decorator, name)
   }
   return false
 }

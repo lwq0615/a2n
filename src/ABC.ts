@@ -1,6 +1,6 @@
-import { Autowired, Bean, PostConstruct } from 'a2n'
+import { Aspect, Autowired, PostConstruct } from 'a2n'
 
-@Bean('rolec')
+@Aspect
 export default class CCC {
 
   @Autowired(import('./UserService'))
@@ -12,5 +12,9 @@ export default class CCC {
   init() {
     // 依赖注入完成后，将会执行@PostConstruct的内容
     // console.log(this.user)
+  }
+
+  before() {
+    console.log('before')
   }
 }

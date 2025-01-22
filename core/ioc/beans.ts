@@ -6,6 +6,7 @@ import { getProxy, startProxy } from '@core/aop/proxy'
 import { regRoutes } from '@core/control/express'
 import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
+import { isAspect, isBean, isControl } from '@core/utils/state'
 import { getState, getStateByInstance, getStateMap } from './beanState'
 
 // bean容器, 单例池
@@ -18,7 +19,7 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
     return await getBean(nameBeanMap[Cons], cache)
   } else {
     const state = getState(Cons)
-    if (!state.isBean) {
+    if (!isBean(state.beanClass)) {
       return
     }
     // 创建缓存池，该bean和依赖的bean注入时会存入缓存池，防止循环依赖
@@ -126,7 +127,7 @@ export async function initBeanFinish() {
   doInitOverTasks([...beanMap.values()])
   // 控制器注册接口路由
   for (const state of getStateMap().values()) {
-    if (state.isControl) {
+    if (isControl(state.beanClass)) {
       regRoutes(state.beanClass)
     }
   }
@@ -139,7 +140,7 @@ export async function initBeanFinish() {
     setErrorHandlers(res)
   })
   // 设置扫描生效的切面bean
-  const task3 = getBeans((state) => state.isAspect).then(res => {
+  const task3 = getBeans((state) => isAspect(state.beanClass)).then(res => {
     setAspectBeans(res)
   })
   // 开启切面

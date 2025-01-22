@@ -148,12 +148,12 @@ declare namespace a2n {
   const Body: types.RequestParamDecorator
 
   /**
-   * 将requset对象注入到接口参数
+   * 将request对象注入到接口参数
    */
   const Req: ParameterDecorator
 
   /**
-   * 将requset对象注入到接口参数
+   * 将request对象注入到接口参数
    */
   const Res: ParameterDecorator
 
@@ -161,18 +161,23 @@ declare namespace a2n {
    * 获取容器中的bean
    * @param Cons bean的构造器类型（Class对象）或者bean名称
    */
-  const getBean: types.getBean
+  const getBean: types.GetBean
 
   /**
    * 获取容器中构造/继承于Cons的bean
    * @param Cons bean的构造器类型（Class对象）
    */
-  const getBeans: types.getBeans
+  const getBeans: types.GetBeans
 
   /**
    * 获取Bean状态/配置中心
    */
-  const getBeanStateList: types.getBeanStateList
+  const getBeanState: types.GetBeanState
+
+  /**
+   * 获取Bean状态/配置中心
+   */
+  const getBeanStateList: types.GetBeanStateList
 
   /**
    * bean的构造器类型（Class对象）
@@ -187,7 +192,7 @@ declare namespace a2n {
   /**
    * 注册自定义装饰器
    */
-  const registerCustomerDecorator: types.registerCustomerDecorator
+  const registerCustomerDecorator: types.RegisterCustomerDecorator
 
 }
 

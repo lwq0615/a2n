@@ -9,6 +9,7 @@ export {
   Scope,
   Service,
   getBean,
+  getState as getBeanState,
   getBeans,
   registerCustomerDecorator
 } from '@core/ioc'

@@ -3,7 +3,9 @@ import { getState } from '@core/ioc/beanState'
 import { AspectItem, BeanClass, BeanInstance } from '@core/types'
 
 
+// 切面类的bean实例，用来执行切面拦截器方法
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
+// 各个切面拦截器
 const beforeAspects: AspectItem[] = []
 const afterAspects: AspectItem[] = []
 const aroundAspects: AspectItem[] = []
@@ -36,30 +38,31 @@ export const Aspect: ClassDecorator = (Cons: any) => {
   }
   state.beforeAspects.forEach(aspect => {
     beforeAspects.push({
-      reg: aspect.reg,
+      ...aspect,
       handle: getHandle(aspect.handle),
     })
   })
   state.afterAspects.forEach(aspect => {
     afterAspects.push({
-      reg: aspect.reg,
+      ...aspect,
       handle: getHandle(aspect.handle),
     })
   })
   state.aroundAspects.forEach(aspect => {
     aroundAspects.push({
-      reg: aspect.reg,
+      ...aspect,
       handle: getHandle(aspect.handle),
     })
   })
 }
 
 /**
- * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {RegExp} match 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {Function} match 装饰器
  */
 export function Before(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
-    const name = typeof match === 'function' ? 'test' : 'reg'
+    const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, Before)
@@ -71,11 +74,12 @@ export function Before(match: RegExp | Function): MethodDecorator {
 }
 
 /**
- * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {RegExp} match 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {Function} match 装饰器
  */
 export function After(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
-    const name = typeof match === 'function' ? 'test' : 'reg'
+    const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, After)
@@ -87,11 +91,12 @@ export function After(match: RegExp | Function): MethodDecorator {
 }
 
 /**
- * @param reg 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {RegExp} match 正则表达式，校验[调用的bean的类名.调用的方法名]
+ * @param {Function} match 装饰器
  */
 export function Around(match: RegExp | Function): MethodDecorator {
   return function(target: any, key: string, descriptor: object) {
-    const name = typeof match === 'function' ? 'test' : 'reg'
+    const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addMethodDecorator(key, Around)

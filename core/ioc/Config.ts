@@ -12,7 +12,7 @@ export const Config = function(name: string) {
       this[fieldName] = _.get(getConfig(), name)
     }
     const state = getState(target.constructor as BeanClass)
-    state.addMethodDecorator(fieldName, Config)
+    state.addFieldDecorator(fieldName, Config)
     state.configTasks.push(task)
   } as PropertyDecorator
 }
