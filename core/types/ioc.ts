@@ -17,23 +17,23 @@ export class BeanState {
   }
 
   beanClass: BeanClass
-  #classDecorators: Function[] = []
-  #methodDecorators: { [name: string | symbol]: Function[] } = {}
-  #fieldDecorators: { [name: string | symbol]: Function[] } = {}
+  classDecorators: Function[] = []
+  methodDecorators: { [name: string | symbol]: Function[] } = {}
+  fieldDecorators: { [name: string | symbol]: Function[] } = {}
   addClassDecorator(decorator: Function) {
-    this.#classDecorators.push(decorator)
+    this.classDecorators.push(decorator)
   }
   addMethodDecorator(name: string | symbol, decorator: Function) {
-    if (!this.#methodDecorators[name]) {
-      this.#methodDecorators[name] = []
+    if (!this.methodDecorators[name]) {
+      this.methodDecorators[name] = []
     }
-    this.#methodDecorators[name].push(decorator)
+    this.methodDecorators[name].push(decorator)
   }
   addFieldDecorator(name: string | symbol, decorator: Function) {
-    if (!this.#fieldDecorators[name]) {
-      this.#fieldDecorators[name] = []
+    if (!this.fieldDecorators[name]) {
+      this.fieldDecorators[name] = []
     }
-    this.#fieldDecorators[name].push(decorator)
+    this.fieldDecorators[name].push(decorator)
   }
   /**
    * 判断【类|方法|属性】是否添加了装饰器
@@ -43,9 +43,9 @@ export class BeanState {
    */
   hasDecorator(decorator: Function, name?: string | symbol) {
     if (name) {
-      return this.#methodDecorators[name]?.includes(decorator) || this.#fieldDecorators[name]?.includes(decorator)
+      return this.methodDecorators[name]?.includes(decorator) || this.fieldDecorators[name]?.includes(decorator)
     }
-    return this.#classDecorators.includes(decorator)
+    return this.classDecorators.includes(decorator)
   }
   setBeanTask: Function
   // 控制器处理器
