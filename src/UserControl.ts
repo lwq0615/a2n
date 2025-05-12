@@ -5,11 +5,12 @@ import UserService from './UserService'
 @Control('user')
 export default class UserControl {
 
-  @Autowired(UserService)
+  @Autowired
     service: UserService = null
 
   @Get('/get/:id')
   get(a: any, @Query query: any, @Param('id') id: number) {
+    // console.log(this.service)
     return '123213'
   }
 

@@ -5,8 +5,8 @@ import RoleService from './RoleService'
 @Scope(BeanScope.PROTOTYPE)
 export default class UserServicer {
 
-  @Autowired(RoleService)
-    role: any = null
+  @Autowired
+    role: RoleService
 
   @Config('datasource.url')
     url: string = null

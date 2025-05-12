@@ -1,5 +1,7 @@
+export { type Autowired } from '@core/ioc'
 import { AspectItem } from './aop'
 import { Route } from './control'
+
 
 // bean多例缓存池对象
 export interface BeanCache {
@@ -107,7 +109,6 @@ export interface RunConfig {
   [name: string]: any
 }
 
-export type Autowired = (Cons: string | BeanClass | Promise<any>, required?: boolean) => PropertyDecorator
 
 export interface GetBean {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>>

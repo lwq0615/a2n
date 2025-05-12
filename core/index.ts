@@ -1,17 +1,13 @@
+import 'Reflect-metadata'
+
 export {
   Autowired,
   Bean,
   BeanClass,
   BeanInstance,
   BeanScope,
-  Config,
-  PostConstruct,
-  Scope,
-  Service,
-  getBean,
-  getState as getBeanState,
-  getBeans,
-  registerCustomerDecorator
+  Config, getBean, getBeans, getState as getBeanState, PostConstruct, registerCustomerDecorator, Scope,
+  Service
 } from '@core/ioc'
 
 export {
@@ -27,17 +23,13 @@ export {
 
 export { getConfig, setConfig } from '@core/config'
 export {
-  Body,
-  Control,
+  app, Body, close, Control,
   Delete,
   Get, Param, Post,
   Put,
   Query, Req,
   RequestMapping,
-  Res,
-  app,
-  close,
-  start
+  Res, start
 } from '@core/control'
 
 export { Request, Response } from 'express'
