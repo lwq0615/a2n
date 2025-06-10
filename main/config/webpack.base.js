@@ -79,7 +79,7 @@ function getWebConfig(webpackConfig, options, args) {
     },
     output: {
       filename: 'a2n.serve.js',
-      path: path.resolve(__dirname, '../../dist'),
+      path: path.resolve(process.cwd(), './dist'),
       library: 'a2n',
       libraryTarget: 'umd',
     },
@@ -125,8 +125,12 @@ function getDevWebConfig(config) {
       },
       watch: true,
       watchOptions: {
+        ignored: /node_modules/,
         aggregateTimeout: 1000,
         poll: 1000,
+      },
+      output: {
+        path: path.resolve(__dirname, '../../dist'),
       },
       plugins: [
         new HotModuleReplacementPlugin(),

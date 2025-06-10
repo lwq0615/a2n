@@ -1,6 +1,10 @@
-export { type Autowired } from '@core/ioc'
 import { AspectItem } from './aop'
 import { Route } from './control'
+
+export interface Autowired {
+  (Cons: string | Promise<any>): PropertyDecorator;
+  (target: Object, propertyKey: string | symbol): void;
+}
 
 
 // bean多例缓存池对象

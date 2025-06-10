@@ -7,7 +7,7 @@ function dev(options, args) {
     const webpackConfig = webpackDevConfig(options, args)
 
     webpack(webpackConfig, (err, stats) => {
-      if (err || stats?.compilation?.errors) {
+      if (err || stats?.compilation?.errors?.length) {
         console.error(err || stats?.compilation?.errors)
       }
     })

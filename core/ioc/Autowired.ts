@@ -1,5 +1,5 @@
 import { getBean } from '@core/ioc/beans'
-import { BeanCache, BeanClass } from '@core/types'
+import { type Autowired as AutowiredType, BeanCache, BeanClass } from '@core/types'
 import { getState } from './beanState'
 
 /**
@@ -43,15 +43,10 @@ function getTask(fieldName: string, injectBean?: string | Promise<any> | BeanCla
   }
 }
 
-export interface Autowired {
-  (Cons: string | Promise<any>): PropertyDecorator;
-  (target: Object, propertyKey: string | symbol): void;
-}
-
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-export const Autowired: Autowired = function(Cons: Object | string | Promise<any>, propertyKey?: string | symbol) {
+export const Autowired: AutowiredType = function(Cons: Object | string | Promise<any>, propertyKey?: string | symbol) {
   if (typeof Cons === 'string' || Cons instanceof Promise) {
     return function(target, key) {
       const task = getTask(key as string, Cons)
