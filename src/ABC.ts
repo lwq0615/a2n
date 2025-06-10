@@ -2,9 +2,8 @@ import { Aspect, Autowired, PostConstruct } from 'a2n'
 
 @Aspect
 export default class CCC {
-
   @Autowired(import('./UserService'))
-    user: any = null
+  user: any = null
 
   test = 1
 

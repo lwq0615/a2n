@@ -8,17 +8,17 @@ import { getState } from './beanState'
  * @returns 注入任务
  */
 function getTask(fieldName: string, injectBean?: string | Promise<any> | BeanClass) {
-  return function(cache?: BeanCache) {
+  return function (cache?: BeanCache) {
     return new Promise((resolve) => {
       const inject = (Cons: BeanClass | string) => {
         // 取出容器中的对象，开始进行属性注入
         getBean(Cons, cache).then((bean) => {
           if (!bean) {
             throw new Error(
-              '属性\'' +
+              "属性'" +
                 fieldName +
-                '\'注入失败,没有在容器中查找到bean: ' +
-                (typeof Cons === 'string' ? Cons : Cons.name)
+                "'注入失败,没有在容器中查找到bean: " +
+                (typeof Cons === 'string' ? Cons : Cons.name),
             )
           }
           if (!bean) {
@@ -46,9 +46,9 @@ function getTask(fieldName: string, injectBean?: string | Promise<any> | BeanCla
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-export const Autowired: AutowiredType = function(Cons: Object | string | Promise<any>, propertyKey?: string | symbol) {
+export const Autowired: AutowiredType = function (Cons: object | string | Promise<any>, propertyKey?: string | symbol) {
   if (typeof Cons === 'string' || Cons instanceof Promise) {
-    return function(target, key) {
+    return function (target, key) {
       const task = getTask(key as string, Cons)
       const state = getState(target.constructor as BeanClass)
       state.addMethodDecorator(key, Autowired)

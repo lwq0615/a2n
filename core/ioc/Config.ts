@@ -6,9 +6,9 @@ const _ = require('lodash')
 /**
  * 加载配置文件内容到属性中
  */
-export const Config = function(name: string) {
-  return function(target: any, fieldName: string) {
-    const task = function() {
+export const Config = function (name: string) {
+  return function (target: any, fieldName: string) {
+    const task = function () {
       this[fieldName] = _.get(getConfig(), name)
     }
     const state = getState(target.constructor as BeanClass)

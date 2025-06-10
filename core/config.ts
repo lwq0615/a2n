@@ -1,7 +1,6 @@
 import { getAssignConfig } from '@/main/config/getConfig'
 import { RunConfig } from '@core/types'
 
-
 let config = {}
 
 export function setConfig(runConfig: RunConfig): RunConfig {

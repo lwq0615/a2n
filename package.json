@@ -15,8 +15,8 @@
     "dev": "node webpack.config.js",
     "test": "node bin/index.js dev",
     "build": "node core/build/webpack.config.js",
-    "lint": "eslint --ext .ts,.json,.js ./",
-    "lint:fix": "eslint --fix --ext .ts,.json,.js ./"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "files": [
     "core/index.d.ts",
@@ -36,11 +36,15 @@
     "aop"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.12.2",
-    "@typescript-eslint/parser": "^8.12.2",
+    "@eslint/js": "^9.28.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
     "body-parser": "^1.20.1",
-    "eslint": "8.57.0",
-    "express": "^4.18.2"
+    "eslint": "^9.28.0",
+    "eslint-plugin-prettier": "^5.4.1",
+    "express": "^4.18.2",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3",
+    "typescript-eslint": "^8.34.0"
   },
   "dependencies": {
     "@types/express": "^5.0.0",
@@ -52,6 +56,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "commander": "^12.0.0",
     "dotenv": "^16.4.5",
+    "eslint-config-prettier": "^10.1.5",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "lodash": "^4.17.21",
     "log-symbols": "^4.0.0",
@@ -91,27 +96,71 @@
     "webpack-node-externals": "^3.0.0"
   },
   "peerDependenciesMeta": {
-    "@types/express": { "optional": false },
-    "@types/express-serve-static-core": { "optional": false },
-    "@types/lodash": { "optional": false },
-    "@types/webpack-env": { "optional": false },
-    "@types/webpack-node-externals": { "optional": false },
-    "chalk": { "optional": false },
-    "clean-webpack-plugin": { "optional": false },
-    "commander": { "optional": false },
-    "dotenv": { "optional": false },
-    "friendly-errors-webpack-plugin": { "optional": false },
-    "lodash": { "optional": false },
-    "log-symbols": { "optional": false },
-    "reflect-metadata": { "optional": false },
-    "run-script-webpack-plugin": { "optional": false },
-    "ts-loader": { "optional": false },
-    "ts-node": { "optional": false },
-    "tsconfig-paths": { "optional": false },
-    "typescript": { "optional": false },
-    "webpack": { "optional": false },
-    "webpack-cli": { "optional": false },
-    "webpack-merge": { "optional": false },
-    "webpack-node-externals": { "optional": false }
+    "@types/express": {
+      "optional": false
+    },
+    "@types/express-serve-static-core": {
+      "optional": false
+    },
+    "@types/lodash": {
+      "optional": false
+    },
+    "@types/webpack-env": {
+      "optional": false
+    },
+    "@types/webpack-node-externals": {
+      "optional": false
+    },
+    "chalk": {
+      "optional": false
+    },
+    "clean-webpack-plugin": {
+      "optional": false
+    },
+    "commander": {
+      "optional": false
+    },
+    "dotenv": {
+      "optional": false
+    },
+    "friendly-errors-webpack-plugin": {
+      "optional": false
+    },
+    "lodash": {
+      "optional": false
+    },
+    "log-symbols": {
+      "optional": false
+    },
+    "reflect-metadata": {
+      "optional": false
+    },
+    "run-script-webpack-plugin": {
+      "optional": false
+    },
+    "ts-loader": {
+      "optional": false
+    },
+    "ts-node": {
+      "optional": false
+    },
+    "tsconfig-paths": {
+      "optional": false
+    },
+    "typescript": {
+      "optional": false
+    },
+    "webpack": {
+      "optional": false
+    },
+    "webpack-cli": {
+      "optional": false
+    },
+    "webpack-merge": {
+      "optional": false
+    },
+    "webpack-node-externals": {
+      "optional": false
+    }
   }
 }

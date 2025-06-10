@@ -9,7 +9,7 @@ export function getControlBean(Cons: BeanClass) {
   if (controlMap.get(Cons)) {
     return controlMap.get(Cons)
   } else {
-    return getBean(Cons).then(bean => {
+    return getBean(Cons).then((bean) => {
       controlMap.set(Cons, bean)
       return bean
     })
@@ -19,18 +19,19 @@ export function getControlBean(Cons: BeanClass) {
 /**
  * 在加载到Control时将路由信息进行注册
  */
-export const Control: ControlType = function(source: string | BeanClass) {
+export const Control: ControlType = function (source: string | BeanClass) {
   const setControl = (Cons: any, baseUrl = '') => {
     const state = getState(Cons)
     state.addClassDecorator(Control)
     state.controlMapping = baseUrl
-    Object.keys(state.controlMethods).forEach(methodName => {
-      state.controlMethods[methodName].handler = async (...params: any) => (await getControlBean(Cons))?.[methodName](...params)
+    Object.keys(state.controlMethods).forEach((methodName) => {
+      state.controlMethods[methodName].handler = async (...params: any) =>
+        (await getControlBean(Cons))?.[methodName](...params)
       state.controlMethods[methodName].paramNames = getFunParameterNames(Cons.prototype[methodName])
     })
   }
   if (typeof source === 'string') {
-    return function(Cons: any) {
+    return function (Cons: any) {
       Bean(source)(Cons)
       setControl(Cons, source)
     }

@@ -1,16 +1,28 @@
 {
-  "editor.tabSize": 2,
-  "eslint.run": "onSave",
-  // 自动修复所有文件
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
-    // "source.organizeImports": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
   },
-  // 格式化工具
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[json]": {
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   }
 }

@@ -2,7 +2,6 @@ import { Aspect } from '@core/aop'
 import { Control } from '@core/control'
 import { Bean, BeanClass, getState } from '@core/ioc'
 
-
 // bean是否是切面类
 export function isAspect(Cons: BeanClass) {
   const state = getState(Cons)

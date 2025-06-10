@@ -10,13 +10,17 @@ const path = require('path')
  */
 function webpackDevConfig(options, args) {
   const a2nConfig = getDevConfig(options?.config)
-  return getWebConfig(getDevWebConfig({
-    resolve: {
-      alias: {
-        '@': path.resolve(process.cwd(), './' + a2nConfig.componentScan),
+  return getWebConfig(
+    getDevWebConfig({
+      resolve: {
+        alias: {
+          '@': path.resolve(process.cwd(), './' + a2nConfig.componentScan),
+        },
       },
-    },
-  }), options, args)
+    }),
+    options,
+    args,
+  )
 }
 
 module.exports = {

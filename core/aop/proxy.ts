@@ -36,15 +36,15 @@ export function getProxy(bean: BeanInstance): BeanInstance {
         return target[key]
       }
       // 切面编程
-      return function(...params: any) {
+      return function (...params: any) {
         const aspects = getAspects()
         const Cons = Reflect.getPrototypeOf(target).constructor as BeanClass
-        const before = aspects.beforeAspects.filter(item => isMatch(item, Cons, key))
-        const around = aspects.aroundAspects.filter(item => isMatch(item, Cons, key))
-        const after = aspects.afterAspects.filter(item => isMatch(item, Cons, key))
+        const before = aspects.beforeAspects.filter((item) => isMatch(item, Cons, key))
+        const around = aspects.aroundAspects.filter((item) => isMatch(item, Cons, key))
+        const after = aspects.afterAspects.filter((item) => isMatch(item, Cons, key))
         // 前置
         for (const item of before) {
-          (item.handle as AspectHandle)(Cons, key)
+          ;(item.handle as AspectHandle)(Cons, key)
         }
         // 环绕
         let resultGetter = () => target[key](...params)
@@ -55,7 +55,7 @@ export function getProxy(bean: BeanInstance): BeanInstance {
         const result = resultGetter()
         // 后置
         for (const item of after) {
-          (item.handle as AspectHandle)(Cons, key)
+          ;(item.handle as AspectHandle)(Cons, key)
         }
         return result
       }

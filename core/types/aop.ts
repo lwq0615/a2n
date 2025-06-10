@@ -24,7 +24,6 @@ export abstract class Interceptor {
   abstract doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): Promise<boolean>
 }
 
-
 /**
  * 环绕拦截器
  * 环绕拦截器最多只能注册一个

@@ -3,9 +3,8 @@ import { Autowired, Bean, BeanScope, PostConstruct, Scope } from 'a2n'
 @Bean('role')
 @Scope(BeanScope.PROTOTYPE)
 export default class RoleService {
-
   @Autowired(import('./UserService'))
-    user: any = null
+  user: any = null
 
   test = 1
 

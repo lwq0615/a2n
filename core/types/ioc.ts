@@ -2,10 +2,9 @@ import { AspectItem } from './aop'
 import { Route } from './control'
 
 export interface Autowired {
-  (Cons: string | Promise<any>): PropertyDecorator;
-  (target: Object, propertyKey: string | symbol): void;
+  (Cons: string | Promise<any>): PropertyDecorator
+  (target: object, propertyKey: string | symbol): void
 }
-
 
 // bean多例缓存池对象
 export interface BeanCache {
@@ -14,7 +13,6 @@ export interface BeanCache {
 
 // bean状态中心
 export class BeanState {
-
   constructor(Cons: BeanClass) {
     if (Cons === Object) {
       throw new Error('错误的参数Object')
@@ -96,7 +94,7 @@ export enum BeanScope {
   // 单例
   SINGLETON = 0,
   // 多例
-  PROTOTYPE = 1
+  PROTOTYPE = 1,
 }
 
 export type Scope = (scope: BeanScope) => ClassDecorator
@@ -104,15 +102,14 @@ export type Scope = (scope: BeanScope) => ClassDecorator
 export type Config = (name: string) => PropertyDecorator
 
 export interface RunConfig {
-  port?: number,
-  baseUrl?: string,
-  componentScan?: string,
+  port?: number
+  baseUrl?: string
+  componentScan?: string
   apiExport?: {
     baseUrl?: string
   }
   [name: string]: any
 }
-
 
 export interface GetBean {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>>
@@ -121,7 +118,7 @@ export interface GetBean {
 
 export interface GetBeans {
   <T extends BeanClass = BeanClass>(Cons: T): Promise<BeanInstance<T>[]>
-  <T extends BeanClass = BeanClass>(flag: ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]>
+  <T extends BeanClass = BeanClass>(flag: (state: BeanState) => boolean): Promise<BeanInstance<T>[]>
 }
 
 export interface GetBeanState {

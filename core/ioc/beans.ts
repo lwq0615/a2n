@@ -13,8 +13,10 @@ import { getState, getStateByInstance, getStateMap } from './beanState'
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
 const nameBeanMap: { [name: string]: BeanClass } = {}
 
-
-export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string, cache?: BeanCache): Promise<BeanInstance<T>> {
+export async function getBean<T extends BeanClass = BeanClass>(
+  Cons: T | string,
+  cache?: BeanCache,
+): Promise<BeanInstance<T>> {
   if (typeof Cons === 'string') {
     return await getBean(nameBeanMap[Cons], cache)
   } else {
@@ -45,7 +47,9 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
     cache.classMap.set(Cons, bean)
     await injectBean(bean, cache)
     if (isStart) {
-      doInitOverTasks([...cache.classMap.values()].filter(bean => getStateByInstance(bean).scope === BeanScope.PROTOTYPE))
+      doInitOverTasks(
+        [...cache.classMap.values()].filter((bean) => getStateByInstance(bean).scope === BeanScope.PROTOTYPE),
+      )
     }
     return bean
   }
@@ -56,15 +60,17 @@ export async function getBean<T extends BeanClass = BeanClass>(Cons: T | string,
  */
 export function getBeans<T extends BeanClass>(Cons: T | ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]> {
   if (isFunction(Cons)) {
-    const beans = [...getStateMap().values()].filter(Cons as any).map(state => {
+    const beans = [...getStateMap().values()].filter(Cons as any).map((state) => {
       return getBean(state.beanClass)
     })
     return Promise.all(beans)
   } else {
-    const beans = [...getStateMap().keys()].filter(Item => Reflect.construct(Item, []) instanceof Cons).map(Item => {
-      return getBean(Item)
-    })
-    return Promise.all(beans).then(beans => beans.filter(Boolean))
+    const beans = [...getStateMap().keys()]
+      .filter((Item) => Reflect.construct(Item, []) instanceof Cons)
+      .map((Item) => {
+        return getBean(Item)
+      })
+    return Promise.all(beans).then((beans) => beans.filter(Boolean))
   }
 }
 
@@ -132,15 +138,15 @@ export async function initBeanFinish() {
     }
   }
   // 设置扫描生效的拦截器
-  const task1 = Promise.all([getBeans(Interceptor), getBeans(AroundInterceptor)]).then(res => {
+  const task1 = Promise.all([getBeans(Interceptor), getBeans(AroundInterceptor)]).then((res) => {
     setInterceptors(res[0], res[1]?.[0])
   })
   // 设置扫描生效的异常处理器
-  const task2 = getBeans(ErrHandler).then(res => {
+  const task2 = getBeans(ErrHandler).then((res) => {
     setErrorHandlers(res)
   })
   // 设置扫描生效的切面bean
-  const task3 = getBeans((state) => isAspect(state.beanClass)).then(res => {
+  const task3 = getBeans((state) => isAspect(state.beanClass)).then((res) => {
     setAspectBeans(res)
   })
   // 开启切面
@@ -155,7 +161,7 @@ export async function initBeanFinish() {
  */
 function doInitOverTasks(beans: BeanInstance[]) {
   for (const bean of beans) {
-    getState(Reflect.getPrototypeOf(bean).constructor as BeanClass).initOverTasks.forEach(task => {
+    getState(Reflect.getPrototypeOf(bean).constructor as BeanClass).initOverTasks.forEach((task) => {
       task.call(bean)
     })
   }

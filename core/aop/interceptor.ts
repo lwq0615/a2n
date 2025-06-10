@@ -18,7 +18,7 @@ export async function doFilter(callback: Function, req: Request, res: Response, 
       if (typeof interceptor.doFilter !== 'function') {
         throw new Error('Interceptor 必须实现方法doFilter')
       }
-      if (!await interceptor.doFilter(req, res, Cons, methodName)) {
+      if (!(await interceptor.doFilter(req, res, Cons, methodName))) {
         return
       }
     }

@@ -2,7 +2,6 @@ import { Bean } from '@core/ioc'
 import { getState } from '@core/ioc/beanState'
 import { AspectItem, BeanClass, BeanInstance } from '@core/types'
 
-
 // 切面类的bean实例，用来执行切面拦截器方法
 const aspectBeanMap: Map<BeanClass, BeanInstance> = new Map()
 // 各个切面拦截器
@@ -19,7 +18,7 @@ export function getAspects() {
 }
 
 export function setAspectBeans(beans: BeanInstance[]) {
-  beans?.forEach(bean => {
+  beans?.forEach((bean) => {
     aspectBeanMap.set(bean.constructor, bean)
   })
 }
@@ -32,23 +31,23 @@ export const Aspect: ClassDecorator = (Cons: any) => {
   state.addClassDecorator(Aspect)
   Bean(Cons)
   const getHandle = (handle: Function) => {
-    return function(...params: any) {
+    return function (...params: any) {
       return handle.bind(aspectBeanMap.get(Cons))(...params)
     }
   }
-  state.beforeAspects.forEach(aspect => {
+  state.beforeAspects.forEach((aspect) => {
     beforeAspects.push({
       ...aspect,
       handle: getHandle(aspect.handle),
     })
   })
-  state.afterAspects.forEach(aspect => {
+  state.afterAspects.forEach((aspect) => {
     afterAspects.push({
       ...aspect,
       handle: getHandle(aspect.handle),
     })
   })
-  state.aroundAspects.forEach(aspect => {
+  state.aroundAspects.forEach((aspect) => {
     aroundAspects.push({
       ...aspect,
       handle: getHandle(aspect.handle),
@@ -61,7 +60,7 @@ export const Aspect: ClassDecorator = (Cons: any) => {
  * @param {Function} match 装饰器
  */
 export function Before(match: RegExp | Function): MethodDecorator {
-  return function(target: any, key: string, descriptor: object) {
+  return function (target: any, key: string, descriptor: object) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
@@ -78,7 +77,7 @@ export function Before(match: RegExp | Function): MethodDecorator {
  * @param {Function} match 装饰器
  */
 export function After(match: RegExp | Function): MethodDecorator {
-  return function(target: any, key: string, descriptor: object) {
+  return function (target: any, key: string, descriptor: object) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
@@ -95,7 +94,7 @@ export function After(match: RegExp | Function): MethodDecorator {
  * @param {Function} match 装饰器
  */
 export function Around(match: RegExp | Function): MethodDecorator {
-  return function(target: any, key: string, descriptor: object) {
+  return function (target: any, key: string, descriptor: object) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
@@ -106,4 +105,3 @@ export function Around(match: RegExp | Function): MethodDecorator {
     })
   }
 }
-

@@ -3,7 +3,6 @@ import { Express } from 'express-serve-static-core'
 import * as types from './types'
 
 declare namespace a2n {
-
   /**
    * 拦截器
    * 继承Interceptor并注入到bean可开启拦截器
@@ -193,7 +192,6 @@ declare namespace a2n {
    * 注册自定义装饰器
    */
   const registerCustomerDecorator: types.RegisterCustomerDecorator
-
 }
 
 export = a2n

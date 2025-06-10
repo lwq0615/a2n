@@ -19,24 +19,24 @@ let server: http.Server = null
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
-
 const paths: { [path: string]: Method } = {}
 /**
  * 将路由注册到express
  */
-export const regRoutes = function(Cons: BeanClass) {
+export const regRoutes = function (Cons: BeanClass) {
   const state = getState(Cons)
   const keyList = Object.keys(state.controlMethods)
   const globalBaseUrl = getConfig().baseUrl
   const baseUrl = state.controlMapping
-  keyList.forEach(methodName => {
+  keyList.forEach((methodName) => {
     const route = state.controlMethods[methodName]
     // 规范化路由路径
-    const pathArr: string[] = (globalBaseUrl + '/' + baseUrl + '/' + route.path).split('/').filter((item: string) => item)
+    const pathArr: string[] = (globalBaseUrl + '/' + baseUrl + '/' + route.path)
+      .split('/')
+      .filter((item: string) => item)
     const realPath = '/' + pathArr.join('/')
-    if ((realPath in paths) && route.type === paths[realPath]) {
-      throw new Error('重复的接口: \'' + realPath + '\'')
+    if (realPath in paths && route.type === paths[realPath]) {
+      throw new Error("重复的接口: '" + realPath + "'")
     }
     paths[realPath] = route.type
     // 注册路由

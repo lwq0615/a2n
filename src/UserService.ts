@@ -4,12 +4,11 @@ import RoleService from './RoleService'
 @Bean
 @Scope(BeanScope.PROTOTYPE)
 export default class UserServicer {
-
   @Autowired
-    role: RoleService
+  role: RoleService
 
   @Config('datasource.url')
-    url: string = null
+  url: string = null
 
   @PostConstruct
   init() {
@@ -21,6 +20,4 @@ export default class UserServicer {
   getUser(query: any) {
     return query.name
   }
-
-
 }

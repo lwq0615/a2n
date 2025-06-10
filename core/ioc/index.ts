@@ -8,15 +8,4 @@ export { getBean, getBeans, initBeanFinish, setBean } from './beans'
 export { getBeanStateList, getState, registerCustomerDecorator } from './beanState'
 export { Scope } from './Scope'
 
-export {
-  Autowired,
-  Service as Bean,
-  BeanClass,
-  BeanInstance,
-  BeanScope,
-  Config,
-  getConfig,
-  PostConstruct,
-  Service
-}
-
+export { Autowired, Service as Bean, BeanClass, BeanInstance, BeanScope, Config, getConfig, PostConstruct, Service }

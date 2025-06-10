@@ -1,6 +1,4 @@
 const { getWebConfig } = require('./webpack.base.js')
-const path = require('path')
-
 
 /**
  * 获取webpack生产环境配置文件
@@ -9,9 +7,13 @@ const path = require('path')
  * @returns webpack配置文件
  */
 function webpackBuildConfig(options, args) {
-  return getWebConfig({
-    mode: 'production',
-  }, options, args)
+  return getWebConfig(
+    {
+      mode: 'production',
+    },
+    options,
+    args,
+  )
 }
 
 module.exports = {

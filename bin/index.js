@@ -11,7 +11,6 @@ const chalk = require('chalk')
 const symbols = require('log-symbols')
 const { getDevConfig } = require('../main/config/getConfig')
 
-
 /**
  * 生成ts配置文件
  * @param onSuccess 生成ts成功后事件
@@ -37,32 +36,39 @@ function initTs(options) {
       tsConfig.compilerOptions.paths = {
         '@/*': [`./${a2nConfig.componentScan}/*`.replaceAll('\\', '/').split('/').filter(Boolean).join('/')],
       }
-      fs.writeFile(tsConfigPath, JSON.stringify(tsConfig, null, 2), {
-        flag: 'w',
-      }, (err) => {
-        if (err) {
-          console.error(err)
-          reject(err)
-          return
-        }
-        resolve()
-      })
+      fs.writeFile(
+        tsConfigPath,
+        JSON.stringify(tsConfig, null, 2),
+        {
+          flag: 'w',
+        },
+        (err) => {
+          if (err) {
+            console.error(err)
+            reject(err)
+            return
+          }
+          resolve()
+        },
+      )
     })
   })
 }
 
-
-program.name('a2n')
+program
+  .name('a2n')
   .version(pkg.version)
   .usage('<command> [args]')
   .option('-e, --env <name>', 'set env name')
   .option('-c, --config <file>', 'set config file')
-program.command('dev')
+program
+  .command('dev')
   .description('start server')
   .action((options, command) => {
     initTs(program.opts()).then(() => dev(program.opts(), command.args))
   })
-program.command('build')
+program
+  .command('build')
   .description('build server')
   .action((options, command) => {
     initTs(program.opts()).then(() => build(program.opts(), command.args))
@@ -70,5 +76,3 @@ program.command('build')
 program.parse(process.argv)
 // 当没有输入参数的时候给个提示
 if (program.args.length < 1) return program.help()
-
-

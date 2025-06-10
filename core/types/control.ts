@@ -1,16 +1,13 @@
-
-
 /**
  * 请求方法
  */
-export enum Method{
+export enum Method {
   ALL = 'use',
   GET = 'get',
   POST = 'post',
   PUT = 'put',
-  DELETE = 'delete'
+  DELETE = 'delete',
 }
-
 
 /**
  * 路由信息
@@ -23,27 +20,24 @@ export class Route {
   paramNames: string[] = []
 }
 
-
 /**
  * 参数信息
  */
-export interface ParamInfo{
-  type: ParamType,
+export interface ParamInfo {
+  type: ParamType
   name?: string
 }
-
 
 /**
  * 参数类型
  */
-export enum ParamType{
+export enum ParamType {
   QUERY = 'query',
   BODY = 'body',
   PARAM = 'param',
   REQUEST = 'request',
-  RESPONSE = 'response'
+  RESPONSE = 'response',
 }
-
 
 export interface StartParam {
   callback?: () => void
@@ -58,10 +52,14 @@ export interface Control {
 
 export interface RequestMapping {
   (path: string): MethodDecorator
-  <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>): TypedPropertyDescriptor<T> | void
+  <T>(
+    target: object,
+    propertyKey: string | symbol,
+    descriptor: TypedPropertyDescriptor<T>,
+  ): TypedPropertyDescriptor<T> | void
 }
 
 export interface RequestParamDecorator {
   (name: string): ParameterDecorator
-  (target: Object, propertyKey: string | symbol | undefined, parameterIndex: number): void
+  (target: object, propertyKey: string | symbol | undefined, parameterIndex: number): void
 }

@@ -2,7 +2,6 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
-
 const getConfig = (type) => {
   return {
     mode: 'production',
@@ -29,15 +28,13 @@ const getConfig = (type) => {
     },
     output: {
       path: path.resolve(process.cwd(), './core/dist'),
-      filename: `a2n.core.${type === 'module' ? 'm' : 'c' }js`,
+      filename: `a2n.core.${type === 'module' ? 'm' : 'c'}js`,
       library: {
         // name: 'a2n',
         type: type,
       },
     },
-    plugins: [
-      type === 'commonjs' && new CleanWebpackPlugin(),
-    ],
+    plugins: [type === 'commonjs' && new CleanWebpackPlugin()],
   }
 }
 
@@ -57,10 +54,13 @@ function build(type) {
   })
 }
 
-build('commonjs').then(() => {
-  return build('module')
-}).then(() => {
-  console.log('build success')
-}).catch(err => {
-  console.error(err)
-})
+build('commonjs')
+  .then(() => {
+    return build('module')
+  })
+  .then(() => {
+    console.log('build success')
+  })
+  .catch((err) => {
+    console.error(err)
+  })

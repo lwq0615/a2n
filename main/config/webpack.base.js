@@ -20,10 +20,7 @@ const defaultConfigFile = path.resolve(__dirname, './a2n.default.config.js')
  */
 function getWebConfig(webpackConfig, options, args) {
   // 配置文件
-  let a2nConfigPath = path.resolve(
-    process.cwd(),
-    options?.config || './a2n.config.js'
-  )
+  let a2nConfigPath = path.resolve(process.cwd(), options?.config || './a2n.config.js')
   if (!fs.existsSync(a2nConfigPath)) {
     console.info(chalk.yellow('tip: config file "' + a2nConfigPath + '" not exist!'))
     console.info(chalk.yellow('tip: use default config'))
@@ -73,7 +70,7 @@ function getWebConfig(webpackConfig, options, args) {
               },
             ],
           },
-          item
+          item,
         )
       }),
     },
@@ -140,7 +137,7 @@ function getDevWebConfig(config) {
         }),
       ],
     },
-    config
+    config,
   )
 }
 

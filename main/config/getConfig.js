@@ -15,10 +15,7 @@ function getDevConfig(configPath) {
   if (configPath && !fs.existsSync(path.resolve(process.cwd(), configPath))) {
     throw new Error(`a2n config file "${configPath}" not found`)
   }
-  let a2nConfigPath = path.resolve(
-    process.cwd(),
-    configPath || './a2n.config.js'
-  )
+  let a2nConfigPath = path.resolve(process.cwd(), configPath || './a2n.config.js')
   if (!fs.existsSync(a2nConfigPath)) {
     a2nConfigPath = defaultConfigFile
   }

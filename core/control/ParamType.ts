@@ -1,7 +1,6 @@
 import { getState } from '@core/ioc/beanState'
 import { ParamInfo, ParamType, RequestParamDecorator, Route } from '@core/types'
 
-
 /**
  * 注册参数
  */
@@ -18,7 +17,6 @@ function regParam(target: any, methodName: string | symbol, paramIndex: number, 
   state.controlMethods[methodName].params[paramIndex] = paramInfo
 }
 
-
 /**
  * 获取参数装饰器
  */
@@ -28,7 +26,7 @@ function getParamDecorators(target: any, methodName: string, paramIndex: number,
   }
   if (typeof target === 'string') {
     paramInfo.name = target
-    return function(target: any, methodName: string, paramIndex: number) {
+    return function (target: any, methodName: string, paramIndex: number) {
       regParam(target, methodName, paramIndex, paramInfo)
     } as undefined
   } else {
@@ -36,15 +34,15 @@ function getParamDecorators(target: any, methodName: string, paramIndex: number,
   }
 }
 
-export const Query: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
+export const Query: RequestParamDecorator = (target: string | object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.QUERY)
 }
 
-export const Param: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
+export const Param: RequestParamDecorator = (target: string | object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.PARAM)
 }
 
-export const Body: RequestParamDecorator = (target: string | Object, methodName?: string, paramIndex?: number) => {
+export const Body: RequestParamDecorator = (target: string | object, methodName?: string, paramIndex?: number) => {
   return getParamDecorators(target, methodName, paramIndex, ParamType.BODY)
 }
 

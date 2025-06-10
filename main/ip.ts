@@ -17,10 +17,10 @@ export function getLocalIpAddress() {
     } else if (osType === 'Linux') {
       ip = netInfo.eth0[0].address
     } else if (osType === 'Darwin') {
-    // mac操作系统
+      // mac操作系统
       ip = netInfo.eth0[0].address
     } else {
-    // 其他操作系统
+      // 其他操作系统
     }
     return 'http://' + ip + ':'
   } catch {
