@@ -10,6 +10,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const symbols = require('log-symbols')
 const { getDevConfig } = require('../main/config/getConfig')
+const { exec } = require('./exec')
 
 /**
  * 生成ts配置文件
@@ -72,6 +73,15 @@ program
   .description('build server')
   .action((options, command) => {
     initTs(program.opts()).then(() => build(program.opts(), command.args))
+  })
+program
+  .command('pnpm:init')
+  .description('init pnpm packages')
+  .action(async (options, command) => {
+    const installCmd = Object.keys(pkg.dependencies).reduce((cmd, dep) => {
+      return cmd + ` ${dep}@${pkg.dependencies[dep]}`
+    }, 'pnpm install')
+    await exec(installCmd)
   })
 program.parse(process.argv)
 // 当没有输入参数的时候给个提示

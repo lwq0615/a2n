@@ -5,7 +5,7 @@ export default class CCC {
   @Autowired(import('./UserService'))
   user: any = null
 
-  test = 1
+  test = 10
 
   @PostConstruct
   init() {

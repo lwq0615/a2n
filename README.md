@@ -52,9 +52,12 @@ npm install a2n
 ```json
 "scripts": {
   "dev": "a2n dev",
-  "build": "a2n build"
+  "build": "a2n build",
+  "pnpm:init": "a2n pnpm:init"
 }
 ```
+
+> 如果使用的是pnpm，需要在install后运行`pnpm pnpm:init`
 
 - 运行服务
 
