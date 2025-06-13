@@ -34,7 +34,7 @@ const getConfig = (type) => {
         type: type,
       },
     },
-    plugins: [type === 'commonjs' && new CleanWebpackPlugin()],
+    plugins: [type === 'commonjs' && new CleanWebpackPlugin()].filter(Boolean),
   }
 }
 
