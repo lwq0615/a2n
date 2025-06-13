@@ -14,7 +14,7 @@ export default class UserServicer {
   init() {
     // 依赖注入完成后，将会执行@PostConstruct的内容
     // console.log(this.role)
-    // registerCustomerDecorator(Autowired, UserServicer)
+    // registerCustomDecorator(Autowired, UserServicer)
   }
 
   getUser(query: any) {

@@ -21,23 +21,23 @@ export class BeanState {
   }
 
   beanClass: BeanClass
-  classDecorators: Function[] = []
-  methodDecorators: { [name: string | symbol]: Function[] } = {}
-  fieldDecorators: { [name: string | symbol]: Function[] } = {}
+  classDecorators: Set<Function> = new Set()
+  methodDecorators: { [name: string | symbol]: Set<Function> } = {}
+  fieldDecorators: { [name: string | symbol]: Set<Function> } = {}
   addClassDecorator(decorator: Function) {
-    this.classDecorators.push(decorator)
+    this.classDecorators.add(decorator)
   }
   addMethodDecorator(name: string | symbol, decorator: Function) {
     if (!this.methodDecorators[name]) {
-      this.methodDecorators[name] = []
+      this.methodDecorators[name] = new Set()
     }
-    this.methodDecorators[name].push(decorator)
+    this.methodDecorators[name].add(decorator)
   }
   addFieldDecorator(name: string | symbol, decorator: Function) {
     if (!this.fieldDecorators[name]) {
-      this.fieldDecorators[name] = []
+      this.fieldDecorators[name] = new Set()
     }
-    this.fieldDecorators[name].push(decorator)
+    this.fieldDecorators[name].add(decorator)
   }
   /**
    * 判断【类|方法|属性】是否添加了装饰器
@@ -47,9 +47,9 @@ export class BeanState {
    */
   hasDecorator(decorator: Function, name?: string | symbol) {
     if (name) {
-      return this.methodDecorators[name]?.includes(decorator) || this.fieldDecorators[name]?.includes(decorator)
+      return this.methodDecorators[name]?.has(decorator) || this.fieldDecorators[name]?.has(decorator)
     }
-    return this.classDecorators.includes(decorator)
+    return this.classDecorators.has(decorator)
   }
   setBeanTask: Function
   // 控制器处理器
@@ -91,7 +91,7 @@ export type BeanInstance<T extends BeanClass = BeanClass> = InstanceType<T>
 export type Service = (source: string | BeanClass) => any
 
 export enum BeanScope {
-  // 单例
+  // 单例（默认）
   SINGLETON = 0,
   // 多例
   PROTOTYPE = 1,

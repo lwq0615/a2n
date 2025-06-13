@@ -11,7 +11,7 @@ export {
   getBeans,
   getState as getBeanState,
   PostConstruct,
-  registerCustomerDecorator,
+  registerCustomDecorator,
   Scope,
   Service,
 } from '@core/ioc'

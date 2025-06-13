@@ -32,7 +32,7 @@ export function getBeanStateList() {
   return [...states.values()]
 }
 
-export function registerCustomerDecorator(decorator: Function, Cons: BeanClass, name?: string | symbol) {
+export function registerCustomDecorator(decorator: Function, Cons: BeanClass, name?: string | symbol) {
   const state = getState(Cons)
   if (name) {
     if (typeof Cons.prototype[name] === 'function') {

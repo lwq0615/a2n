@@ -191,7 +191,7 @@ declare namespace a2n {
   /**
    * 注册自定义装饰器
    */
-  const registerCustomerDecorator: types.RegisterCustomerDecorator
+  const registerCustomDecorator: types.RegisterCustomerDecorator
 }
 
 export = a2n
