@@ -42,7 +42,7 @@ export class BeanState {
   /**
    * 判断【类|方法|属性】是否添加了装饰器
    * @param decorator 装饰器
-   * @param methodName 可选，方法名称
+   * @param name 可选，方法or属性名称
    * @returns
    */
   hasDecorator(decorator: Function, name?: string | symbol) {
@@ -133,7 +133,7 @@ export interface GetBeanStateList {
  * 注册自定义装饰器
  * @param decorator 装饰器函数
  * @param Cons bean类型
- * @param name 方法名称，如果传入则注册为方法装饰器，否则注册为类装饰器
+ * @param name 方法or属性名称，如果传入则注册为方法or属性装饰器，否则注册为类装饰器
  */
 export interface RegisterCustomerDecorator {
   (decorator: Function, Cons: BeanClass, name?: string | symbol): void

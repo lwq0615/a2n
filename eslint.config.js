@@ -6,7 +6,7 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 
 module.exports = [
   {
-    ignores: ['node_modules', '**/dist', '.history'],
+    ignores: ['node_modules', '**/dist', '.history', '.idea'],
   },
   /** js推荐配置 */
   eslint.configs.recommended,

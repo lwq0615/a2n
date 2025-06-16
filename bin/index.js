@@ -9,12 +9,11 @@ const path = require('path')
 const fs = require('fs')
 const chalk = require('chalk')
 const symbols = require('log-symbols')
-const { getDevConfig } = require('../main/config/getConfig')
+const { getDevConfig } = require('../main/config/a2n-config')
 const { exec } = require('./exec')
 
 /**
  * 生成ts配置文件
- * @param onSuccess 生成ts成功后事件
  */
 function initTs(options) {
   const a2nConfig = getDevConfig(options?.config)
@@ -76,7 +75,7 @@ program
   })
 program
   .command('pnpm:init')
-  .description('init pnpm packages')
+  .description('init pnpm dependencies')
   .action(async (options, command) => {
     const installCmd = Object.keys(pkg.dependencies).reduce((cmd, dep) => {
       return cmd + ` ${dep}@${pkg.dependencies[dep]}`

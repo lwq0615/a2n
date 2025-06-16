@@ -4,10 +4,13 @@ const states = new Map<BeanClass, BeanState>()
 
 /**
  * 获取状态中心
- * @param Cons bean类型
+ * @param Cons bean类型 | bean原型
  * @returns 状态中心
  */
-export function getState(Cons: BeanClass): BeanState {
+export function getState(Cons: BeanClass | object): BeanState {
+  if (typeof Cons === 'object') {
+    return getState(Cons.constructor)
+  }
   if (!Cons) {
     return null
   }

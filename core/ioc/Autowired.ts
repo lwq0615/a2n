@@ -50,7 +50,7 @@ export const Autowired: AutowiredType = function (Cons: object | string | Promis
   if (typeof Cons === 'string' || Cons instanceof Promise) {
     return function (target, key) {
       const task = getTask(key as string, Cons)
-      const state = getState(target.constructor as BeanClass)
+      const state = getState(target)
       state.addMethodDecorator(key, Autowired)
       state.autowiredTasks.push(task)
     } as PropertyDecorator

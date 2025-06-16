@@ -1,4 +1,4 @@
-const { getDevConfig } = require('./getConfig.js')
+const { getDevConfig } = require('./a2n-config.js')
 const { getWebConfig, getDevWebConfig } = require('./webpack.base.js')
 const path = require('path')
 
