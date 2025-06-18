@@ -1,13 +1,23 @@
 import { invokeAppLifecycleAfter, invokeAppLifecycleClose } from '@core/aop/app-lifecycle'
 import { getConfig } from '@core/config'
 import { getState } from '@core/ioc/bean-state'
-import { BeanClass, Close, Method, ParamType, StartParam } from '@core/types'
+import { BeanClass, Close, Method, ParamType, Context, StartParam, GetContext, BeanInstance } from '@core/types'
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { Express } from 'express-serve-static-core'
 import * as http from 'http'
 import { doFilter } from '../aop'
 import { initBeanFinish } from '../ioc'
+import { AsyncLocalStorage } from 'node:async_hooks'
+
+export const asyncRequestLocalStorage = new AsyncLocalStorage<{
+  ctx: Context
+  requestScopeBeanMap: Map<BeanClass, BeanInstance>
+}>()
+
+export const getContext: GetContext = () => {
+  return asyncRequestLocalStorage.getStore().ctx
+}
 
 const bodyParser = require('body-parser')
 export const app: Express = express()
@@ -45,6 +55,15 @@ export const regRoutes = function (Cons: BeanClass) {
       const queryParams = req.query
       const bodyParams = req.body
       const urlParams = req.params
+      const ctx: Context = {
+        request: req,
+        response: res,
+        params: urlParams,
+        query: queryParams,
+        body: bodyParams,
+        control: Cons,
+        method: methodName,
+      }
       const paramMap = {
         [ParamType.QUERY]: queryParams,
         [ParamType.BODY]: bodyParams,
@@ -67,11 +86,19 @@ export const regRoutes = function (Cons: BeanClass) {
         }
       }
       res.contentType('application/json')
-      // 拦截器
-      const callback = () => {
-        return route.handler(...params)
-      }
-      doFilter(callback, req, res, Cons, methodName)
+      asyncRequestLocalStorage.run(
+        {
+          ctx,
+          requestScopeBeanMap: new Map(),
+        },
+        () => {
+          // 拦截器
+          const callback = () => {
+            return route.handler(...params)
+          }
+          doFilter(callback)
+        },
+      )
     })
   })
 }

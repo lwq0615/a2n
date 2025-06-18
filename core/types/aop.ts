@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { BeanClass } from '.'
+import { BeanClass, Context } from '.'
 
 export type AspectHandle = (Cons: BeanClass, name: string) => void
 export type AroundAspectHandle = (callback: Function, Cons: BeanClass, name: string) => any
@@ -15,13 +15,10 @@ export interface AspectItem {
  */
 export abstract class Interceptor {
   /**
-   * @param req 请求对象
-   * @param res 响应对象
-   * @param Cons 请求进入的控制器Class
-   * @param methodName 请求进入的控制器方法名称
+   * @param ctx 请求上下文
    * @return true：不拦截，false：拦截请求
    */
-  abstract doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): Promise<boolean>
+  abstract doFilter(ctx: Context): Promise<boolean>
 }
 
 /**
@@ -31,13 +28,10 @@ export abstract class Interceptor {
 export abstract class AroundInterceptor {
   /**
    * @param callback 要执行的控制器方法
-   * @param req 请求对象
-   * @param res 响应对象
-   * @param Cons 请求进入的控制器Class
-   * @param methodName 请求进入的控制器方法名称
+   * @param ctx 请求上下文
    * @return 拦截器返回的值会作为请求响应值
    */
-  abstract doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string): Promise<any>
+  abstract doFilter(callback: Function, ctx: Context): Promise<any>
 }
 
 /**
@@ -46,12 +40,11 @@ export abstract class AroundInterceptor {
 export abstract class ErrHandler {
   /**
    * @param err 错误对象
-   * @param req 请求对象
-   * @param res 响应对象
+   * @param ctx 请求上下文
    * @param value 上一个异常处理器传递的响应返回值
    * @return 请求的响应返回值
    */
-  abstract handler(err: Error, req: Request, res: Response, value?: any): any
+  abstract handler(err: Error, ctx: Context, value?: any): any
 }
 
 /**

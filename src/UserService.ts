@@ -1,9 +1,8 @@
-import { Autowired, Bean, BeanScope, Config, PostConstruct, Scope } from 'a2n'
+import { Autowired, Bean, Config, Context, getContext, PostConstruct } from 'a2n'
 import RoleService from './RoleService'
 
 @Bean
-@Scope(BeanScope.PROTOTYPE)
-export default class UserServicer {
+export default class UserService {
   @Autowired
   role: RoleService
 
@@ -18,6 +17,7 @@ export default class UserServicer {
   }
 
   getUser(query: any) {
-    return query.name
+    const ctx: Context = getContext()
+    return ctx.request.path
   }
 }

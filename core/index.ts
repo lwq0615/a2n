@@ -34,6 +34,8 @@ export {
   RequestMapping,
   Res,
   start,
+  getContext,
+  Context,
 } from '@core/control'
 
 export { Request, Response } from 'express'

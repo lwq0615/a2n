@@ -44,18 +44,18 @@ export function getProxy(bean: BeanInstance): BeanInstance {
         const after = aspects.afterAspects.filter((item) => isMatch(item, Cons, key))
         // 前置
         for (const item of before) {
-          ;(item.handle as AspectHandle)(Cons, key)
+          Reflect.apply(item.handle, item, [Cons, key])
         }
         // 环绕
         let resultGetter = () => target[key](...params)
         for (const item of around) {
           const oldResultGetter = resultGetter
-          resultGetter = () => (item.handle as AroundAspectHandle)(oldResultGetter, Cons, key)
+          resultGetter = () => Reflect.apply(item.handle, item, [oldResultGetter, Cons, key])
         }
         const result = resultGetter()
         // 后置
         for (const item of after) {
-          ;(item.handle as AspectHandle)(Cons, key)
+          Reflect.apply(item.handle, item, [Cons, key])
         }
         return result
       }

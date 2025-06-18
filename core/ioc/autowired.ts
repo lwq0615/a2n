@@ -1,5 +1,5 @@
-import { getBean } from '@core/ioc/beans'
-import { type Autowired as AutowiredType, BeanCache, BeanClass } from '@core/types'
+import { getBean, GetBeanOption } from '@core/ioc/beans'
+import { type Autowired as AutowiredType, BeanClass } from '@core/types'
 import { getState } from './bean-state'
 
 /**
@@ -8,11 +8,11 @@ import { getState } from './bean-state'
  * @returns 注入任务
  */
 function getTask(fieldName: string, injectBean?: string | Promise<any> | BeanClass) {
-  return function (cache?: BeanCache) {
+  return function (option?: GetBeanOption) {
     return new Promise((resolve) => {
       const inject = (Cons: BeanClass | string) => {
         // 取出容器中的对象，开始进行属性注入
-        getBean(Cons, cache).then((bean) => {
+        getBean(Cons, option).then((bean) => {
           if (!bean) {
             throw new Error(
               "属性'" +

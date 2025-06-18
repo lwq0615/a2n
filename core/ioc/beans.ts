@@ -3,51 +3,69 @@ import { setAspectBeans } from '@core/aop/aspect'
 import { setErrorHandlers } from '@core/aop/exception'
 import { setInterceptors } from '@core/aop/interceptor'
 import { getProxy, startProxy } from '@core/aop/proxy'
-import { regRoutes } from '@core/control/express'
-import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
+import { asyncRequestLocalStorage, regRoutes } from '@core/control/express'
+import { BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect, isBean, isControl } from '@core/utils/state'
-import { getState, getStateMap } from './bean-state'
+import { getBeanStateList, getState, getStateMap } from './bean-state'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
 const nameBeanMap: { [name: string]: BeanClass } = {}
 
+export type GetBeanOption = {
+  cache?: Map<BeanClass, BeanInstance>
+}
+
+// 创建一个被切面代理的bean，此时bean还未进行依赖注入
+function createBean(Cons: BeanClass) {
+  return getProxy(Reflect.construct(Cons, []))
+}
+
 export async function getBean<T extends BeanClass = BeanClass>(
   Cons: T | string,
-  cache?: BeanCache,
+  option: GetBeanOption = {},
 ): Promise<BeanInstance<T>> {
   if (typeof Cons === 'string') {
-    return await getBean(nameBeanMap[Cons], cache)
+    return await getBean(nameBeanMap[Cons], option)
   } else {
     const state = getState(Cons)
     if (!isBean(state.beanClass)) {
       return
     }
     // 创建缓存池，该bean和依赖的bean注入时会存入缓存池，防止循环依赖
-    const isStart = !cache
+    const isStart = !option.cache
     if (isStart) {
-      cache = {
-        classMap: new Map<BeanClass, BeanInstance>(),
-      }
+      option.cache = new Map<BeanClass, BeanInstance>()
     }
     // 如果缓存池已经存在该类型的bean，从缓存池获取
-    let bean: BeanInstance = cache.classMap.get(Cons)
+    let bean: BeanInstance = option.cache.get(Cons)
     if (bean) {
       return bean
     }
+    const requestScopeBeanMap = asyncRequestLocalStorage.getStore()?.requestScopeBeanMap
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
       bean = beanMap.get(Cons)
+    } else if (state.scope === BeanScope.REQUEST && requestScopeBeanMap) {
+      // 如果是请求作用域，且已经存在于上下文，从上下文获取
+      bean = requestScopeBeanMap.get(Cons)
+      if (bean) {
+        return bean
+      } else {
+        bean = createBean(Cons)
+        requestScopeBeanMap.set(Cons, bean)
+      }
     } else {
       // 多例模式，创建新的bean
-      bean = getProxy(Reflect.construct(Cons, []))
+      bean = createBean(Cons)
+      option.cache.set(Cons, bean)
     }
     // 此时的bean有可能是未进行依赖注入的，先进行依赖注入
-    cache.classMap.set(Cons, bean)
-    await injectBean(bean, cache)
+    // 例如单例1 -> 多例 -> 单例2，单例2则是未注入状态
+    await injectBean(bean, option)
     if (isStart) {
-      doInitOverTasks([...cache.classMap.values()].filter((bean) => getState(bean).scope === BeanScope.PROTOTYPE))
+      doInitOverTasks([...option.cache.values()].filter((bean) => getState(bean).scope === BeanScope.PROTOTYPE))
     }
     return bean
   }
@@ -72,39 +90,41 @@ export function getBeans<T extends BeanClass>(Cons: T | ((state: BeanState) => b
   }
 }
 
-export function setBean(source: any | string, Cons?: BeanClass) {
-  // 多例模式，不在单例池创建bean
+// 单例池生成bean & 注册bean的name和class映射
+export function setBean(source: BeanClass | string, Cons?: BeanClass) {
   if (typeof source === 'string') {
     if (source in nameBeanMap) {
       throw new Error('重复的bean名称: ' + source)
     }
     nameBeanMap[source] = Cons
+    // 多例模式，不在单例池创建bean
     if (getState(Cons).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(Cons, getProxy(Reflect.construct(Cons, [])))
+    beanMap.set(Cons, createBean(Cons))
   } else {
+    // 多例模式，不在单例池创建bean
     if (getState(source).scope === BeanScope.PROTOTYPE) {
       return
     }
-    beanMap.set(source, getProxy(Reflect.construct(source, [])))
+    beanMap.set(source, createBean(source))
   }
 }
 
 /**
  * bean依赖注入，配置文件属性注入
  * @param bean 初始化的bean
- * @param cache 缓存池，cache不为空，表示注入的是多例的bean
+ * @param option 获取bean的配置
  */
-const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
+const injectBean = async (bean: BeanInstance, option?: GetBeanOption) => {
   const state = getState(bean.constructor)
-  // 如果是单例bean切已经注入完成，则跳过
+  // 如果是单例bean且已经注入完成，则跳过
   if (state.injectOver && state.scope === BeanScope.SINGLETON) {
     return
   }
   // 依赖注入@Autowired
   for (const task of state.autowiredTasks) {
-    await task.call(bean, cache)
+    await task.call(bean, option)
   }
   // 配置文件注入@Config
   state.configTasks?.forEach((task: Function) => task.call(bean))
@@ -116,8 +136,8 @@ const injectBean = async (bean: BeanInstance, cache?: BeanCache) => {
  * 通知bean容器，所有的bean都已经注册完成
  */
 export async function initBeanFinish() {
-  // 单例池生成bean
-  for (const state of getStateMap().values()) {
+  // 单例池生成bean & 注册bean的name和class映射
+  for (const state of getBeanStateList()) {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入

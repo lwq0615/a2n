@@ -1,7 +1,6 @@
-import { BeanClass } from '@core/types'
-import { Request, Response } from 'express'
 import { doErrHandler } from './exception'
 import { Interceptor, AroundInterceptor } from '@core/types'
+import { getContext } from '@core/control'
 
 let interceptors: Interceptor[] = []
 let aroundInterceptor: AroundInterceptor = null
@@ -11,26 +10,27 @@ export function setInterceptors(interceptor: Interceptor[], around: AroundInterc
   aroundInterceptor = around
 }
 
-export async function doFilter(callback: Function, req: Request, res: Response, Cons: BeanClass, methodName: string) {
+export async function doFilter(callback: Function) {
+  const ctx = getContext()
   try {
     // 拦截器
     for (const interceptor of interceptors) {
       if (typeof interceptor.doFilter !== 'function') {
         throw new Error('Interceptor 必须实现方法doFilter')
       }
-      if (!(await interceptor.doFilter(req, res, Cons, methodName))) {
+      if (!(await interceptor.doFilter(ctx))) {
         return
       }
     }
     let result = null
     // 环绕拦截器
     if (aroundInterceptor) {
-      result = await aroundInterceptor.doFilter(callback, req, res, Cons, methodName)
+      result = await aroundInterceptor.doFilter(callback, ctx)
     } else {
       result = await callback()
     }
-    res.send(JSON.stringify(result))
+    ctx.response.send(JSON.stringify(result))
   } catch (err) {
-    doErrHandler(err, req, res)
+    doErrHandler(err, ctx)
   }
 }

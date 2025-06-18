@@ -1,3 +1,6 @@
+import { Request, Response } from 'express'
+import { BeanClass } from '@core/types/ioc'
+
 /**
  * 请求方法
  */
@@ -63,3 +66,15 @@ export interface RequestParamDecorator {
   (name: string): ParameterDecorator
   (target: object, propertyKey: string | symbol | undefined, parameterIndex: number): void
 }
+
+export type Context = {
+  request: Request
+  response: Response
+  params: Request['params']
+  query: Request['query']
+  body: Request['body']
+  control: BeanClass
+  method: string
+}
+
+export type GetContext = () => Context

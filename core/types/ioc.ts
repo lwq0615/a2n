@@ -6,11 +6,6 @@ export interface Autowired {
   (target: object, propertyKey: string | symbol): void
 }
 
-// bean多例缓存池对象
-export interface BeanCache {
-  classMap: Map<BeanClass, BeanInstance>
-}
-
 // bean状态中心
 export class BeanState {
   constructor(Cons: BeanClass) {
