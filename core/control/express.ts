@@ -1,7 +1,7 @@
 import { invokeAppLifecycleAfter, invokeAppLifecycleClose } from '@core/aop/app-lifecycle'
 import { getConfig } from '@core/config'
 import { getState } from '@core/ioc/bean-state'
-import { BeanClass, Close, Method, ParamType, Context, StartParam, GetContext, BeanInstance } from '@core/types'
+import { BeanClass, BeanInstance, Close, Context, GetContext, Method, ParamType, StartParam } from '@core/types'
 import * as express from 'express'
 import { Request, Response } from 'express'
 import { Express } from 'express-serve-static-core'
@@ -125,10 +125,10 @@ export const close: Close = (callback) => {
 
 // 监听 SIGINT 信号（Ctrl+C）
 process.on('SIGINT', () => {
-  onClose()
+  close()
 })
 
 // 监听 SIGTERM 信号（系统终止）
 process.on('SIGTERM', () => {
-  onClose()
+  close()
 })

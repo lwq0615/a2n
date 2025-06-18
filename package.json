@@ -1,6 +1,6 @@
 {
   "name": "a2n",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "基于express的轻量级服务器",
   "main": "core/dist/a2n.core.cjs",
   "module": "core/dist/a2n.core.mjs",
