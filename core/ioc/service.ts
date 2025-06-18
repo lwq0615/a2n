@@ -1,6 +1,6 @@
 import { setBean } from '@core/ioc/beans'
 import { Service } from '@core/types'
-import { getState } from './beanState'
+import { getState } from './bean-state'
 
 /**
  * 在加载到Service时将其注册到bean容器中

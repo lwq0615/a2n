@@ -1,6 +1,6 @@
 import { getBean } from '@core/ioc/beans'
 import { type Autowired as AutowiredType, BeanCache, BeanClass } from '@core/types'
-import { getState } from './beanState'
+import { getState } from './bean-state'
 
 /**
  * @param fieldName 需要注入的属性名

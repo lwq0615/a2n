@@ -1,8 +1,8 @@
-import { getState } from '@core/ioc/beanState'
+import { getState } from '@core/ioc/bean-state'
 import { AroundAspectHandle, AspectHandle, AspectItem, BeanClass, BeanInstance } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect } from '@core/utils/state'
-import { getAspects } from './Aspect'
+import { getAspects } from './aspect'
 
 let isStart = false
 

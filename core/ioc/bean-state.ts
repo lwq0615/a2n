@@ -23,10 +23,6 @@ export function getState(Cons: BeanClass | object): BeanState {
   return state
 }
 
-export function getStateByInstance(bean: BeanInstance) {
-  return getState(Reflect.getPrototypeOf(bean).constructor as BeanClass)
-}
-
 export function getStateMap() {
   return states
 }
@@ -35,7 +31,13 @@ export function getBeanStateList() {
   return [...states.values()]
 }
 
-export function registerCustomDecorator(decorator: Function, Cons: BeanClass, name?: string | symbol) {
+/**
+ * 注册自定义装饰器
+ * @param decorator 装饰器
+ * @param Cons 类
+ * @param name 属性
+ */
+export function registerCustomDecorator(decorator: Function, Cons: BeanClass, name?: string) {
   const state = getState(Cons)
   if (name) {
     if (typeof Cons.prototype[name] === 'function') {

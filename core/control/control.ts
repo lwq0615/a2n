@@ -1,20 +1,7 @@
-import { Bean, getBean } from '@core/ioc'
-import { getState } from '@core/ioc/beanState'
-import { BeanClass, BeanInstance, Control as ControlType } from '@core/types'
+import { Bean, BeanScope, getBean } from '@core/ioc'
+import { getState } from '@core/ioc/bean-state'
+import { BeanClass, Control as ControlType } from '@core/types'
 import { getFunParameterNames } from '@core/utils/function'
-
-const controlMap: Map<BeanClass, BeanInstance> = new Map()
-
-export function getControlBean(Cons: BeanClass) {
-  if (controlMap.get(Cons)) {
-    return controlMap.get(Cons)
-  } else {
-    return getBean(Cons).then((bean) => {
-      controlMap.set(Cons, bean)
-      return bean
-    })
-  }
-}
 
 /**
  * 在加载到Control时将路由信息进行注册
@@ -22,11 +9,12 @@ export function getControlBean(Cons: BeanClass) {
 export const Control: ControlType = function (source: string | BeanClass) {
   const setControl = (Cons: any, baseUrl = '') => {
     const state = getState(Cons)
+    state.scope = BeanScope.REQUEST
     state.addClassDecorator(Control)
     state.controlMapping = baseUrl
     Object.keys(state.controlMethods).forEach((methodName) => {
       state.controlMethods[methodName].handler = async (...params: any) =>
-        (await getControlBean(Cons))?.[methodName](...params)
+        (await getBean(Cons))?.[methodName](...params)
       state.controlMethods[methodName].paramNames = getFunParameterNames(Cons.prototype[methodName])
     })
   }

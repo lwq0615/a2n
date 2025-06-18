@@ -1,6 +1,6 @@
-import { invokeAppLifecycleAfter } from '@core/aop/appLifecycle'
+import { invokeAppLifecycleAfter, invokeAppLifecycleClose } from '@core/aop/app-lifecycle'
 import { getConfig } from '@core/config'
-import { getState } from '@core/ioc/beanState'
+import { getState } from '@core/ioc/bean-state'
 import { BeanClass, Close, Method, ParamType, StartParam } from '@core/types'
 import * as express from 'express'
 import { Request, Response } from 'express'
@@ -84,7 +84,24 @@ export async function start(startParam: StartParam) {
   invokeAppLifecycleAfter()
 }
 
+function onClose() {
+  invokeAppLifecycleClose()
+}
+
 // 关闭服务
 export const close: Close = (callback) => {
-  server?.close(callback)
+  server?.close((...args) => {
+    callback?.(...args)
+    onClose()
+  })
 }
+
+// 监听 SIGINT 信号（Ctrl+C）
+process.on('SIGINT', () => {
+  onClose()
+})
+
+// 监听 SIGTERM 信号（系统终止）
+process.on('SIGTERM', () => {
+  onClose()
+})

@@ -1,6 +1,6 @@
 import { getConfig } from '@core/config'
 import { BeanClass } from '@core/types'
-import { getState } from './beanState'
+import { getState } from './bean-state'
 const _ = require('lodash')
 
 /**

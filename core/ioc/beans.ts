@@ -1,5 +1,5 @@
 import { AroundInterceptor, ErrHandler, Interceptor } from '@core/aop'
-import { setAspectBeans } from '@core/aop/Aspect'
+import { setAspectBeans } from '@core/aop/aspect'
 import { setErrorHandlers } from '@core/aop/exception'
 import { setInterceptors } from '@core/aop/interceptor'
 import { getProxy, startProxy } from '@core/aop/proxy'
@@ -7,7 +7,7 @@ import { regRoutes } from '@core/control/express'
 import { BeanCache, BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect, isBean, isControl } from '@core/utils/state'
-import { getState, getStateByInstance, getStateMap } from './beanState'
+import { getState, getStateMap } from './bean-state'
 
 // bean容器, 单例池
 const beanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -47,9 +47,7 @@ export async function getBean<T extends BeanClass = BeanClass>(
     cache.classMap.set(Cons, bean)
     await injectBean(bean, cache)
     if (isStart) {
-      doInitOverTasks(
-        [...cache.classMap.values()].filter((bean) => getStateByInstance(bean).scope === BeanScope.PROTOTYPE),
-      )
+      doInitOverTasks([...cache.classMap.values()].filter((bean) => getState(bean).scope === BeanScope.PROTOTYPE))
     }
     return bean
   }
@@ -161,7 +159,7 @@ export async function initBeanFinish() {
  */
 function doInitOverTasks(beans: BeanInstance[]) {
   for (const bean of beans) {
-    getState(Reflect.getPrototypeOf(bean).constructor as BeanClass).initOverTasks.forEach((task) => {
+    getState(bean).initOverTasks.forEach((task) => {
       task.call(bean)
     })
   }

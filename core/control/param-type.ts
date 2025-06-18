@@ -1,4 +1,4 @@
-import { getState } from '@core/ioc/beanState'
+import { getState } from '@core/ioc/bean-state'
 import { ParamInfo, ParamType, RequestParamDecorator, Route } from '@core/types'
 
 /**

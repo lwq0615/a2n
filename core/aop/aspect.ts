@@ -1,5 +1,5 @@
-import { Bean } from '@core/ioc'
-import { getState } from '@core/ioc/beanState'
+import { Bean, BeanScope } from '@core/ioc'
+import { getState } from '@core/ioc/bean-state'
 import { AspectItem, BeanClass, BeanInstance } from '@core/types'
 
 // 切面类的bean实例，用来执行切面拦截器方法
@@ -29,6 +29,7 @@ export function setAspectBeans(beans: BeanInstance[]) {
 export const Aspect: ClassDecorator = (Cons: any) => {
   const state = getState(Cons)
   state.addClassDecorator(Aspect)
+  state.scope = BeanScope.REQUEST
   Bean(Cons)
   const getHandle = (handle: Function) => {
     return function (...params: any) {

@@ -4,7 +4,15 @@ import { AppLifecycle } from '@core/types'
 export function invokeAppLifecycleAfter() {
   getBeans(AppLifecycle).then((appLifecycleList) => {
     appLifecycleList.forEach((appLifecycle) => {
-      appLifecycle.afterAppStart?.()
+      appLifecycle.afterAppStart()
+    })
+  })
+}
+
+export function invokeAppLifecycleClose() {
+  getBeans(AppLifecycle).then((appLifecycleList) => {
+    appLifecycleList.forEach((appLifecycle) => {
+      appLifecycle.afterAppClose()
     })
   })
 }

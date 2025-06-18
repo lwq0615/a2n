@@ -95,6 +95,8 @@ export enum BeanScope {
   SINGLETON = 0,
   // 多例
   PROTOTYPE = 1,
+  // 请求作用域
+  REQUEST = 2,
 }
 
 export type Scope = (scope: BeanScope) => ClassDecorator

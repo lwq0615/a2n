@@ -59,6 +59,12 @@ export abstract class ErrHandler {
  */
 export type AspectHandler = (match: RegExp | Function) => MethodDecorator
 
+/**
+ * 应用生命周期
+ */
 export abstract class AppLifecycle {
-  abstract afterAppStart(): void
+  // 应用启动后，此时bean已经全部完成注入
+  afterAppStart() {}
+  // 应用关闭后
+  afterAppClose() {}
 }

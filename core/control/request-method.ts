@@ -1,4 +1,4 @@
-import { getState } from '@core/ioc/beanState'
+import { getState } from '@core/ioc/bean-state'
 import { BeanClass, Method, RequestMapping as RequestMappingType, Route } from '@core/types'
 
 function getDecoratorByType(type: Method) {
