@@ -27,6 +27,14 @@ function getWebConfig(webpackConfig, options, args) {
     a2nConfigPath = defaultConfigFile
   }
   const a2nConfig = getDevConfig(options?.config)
+  // 获取bean的扫描路径
+  const scanPath = path.resolve(process.cwd(), a2nConfig.componentScan)
+  // 判断路径是否存在或者空文件夹
+  if (!fs.existsSync(scanPath)) {
+    throw new Error(chalk.red('componentScan folder ' + scanPath + ' not exist!'))
+  } else if (fs.readdirSync(scanPath).length === 0) {
+    throw new Error(chalk.red('componentScan folder ' + scanPath + ' is empty!'))
+  }
   const env = dotenv.config({
     path: path.resolve(process.cwd(), '.env'), // 环境变量配置文件路径
     encoding: 'utf8', // 编码方式，默认utf8

@@ -1,7 +1,6 @@
 import * as express from 'express'
 import { Express } from 'express-serve-static-core'
 import * as types from './types'
-import { GetContext } from './types'
 
 declare namespace a2n {
   /**
@@ -197,7 +196,10 @@ declare namespace a2n {
   /**
    * 注册自定义装饰器
    */
-  const getContext: GetContext
+  const Context: types.Context
+
+
+  const getContext: types.GetContext
 }
 
 export = a2n

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { BeanClass } from '@core/types/ioc'
+import { BeanClass } from '.'
 
 /**
  * 请求方法

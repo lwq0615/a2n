@@ -1,5 +1,5 @@
 import { Aspect, Before } from 'a2n'
-import { CustomAspect } from '@/src/UserService'
+import { CustomAspect } from './UserService'
 
 @Aspect
 export default class CCC {
