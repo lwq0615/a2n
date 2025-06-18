@@ -14,6 +14,7 @@ const beanMap: Map<BeanClass, BeanInstance> = new Map()
 const nameBeanMap: { [name: string]: BeanClass } = {}
 
 export type GetBeanOption = {
+  // 多例bean缓存池
   cache?: Map<BeanClass, BeanInstance>
 }
 
@@ -43,6 +44,7 @@ export async function getBean<T extends BeanClass = BeanClass>(
     if (bean) {
       return bean
     }
+    // 获取请求上下文的bean载体，拿不到则说明不是通过请求生成bean
     const requestScopeBeanMap = asyncRequestLocalStorage.getStore()?.requestScopeBeanMap
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
@@ -66,7 +68,9 @@ export async function getBean<T extends BeanClass = BeanClass>(
     await injectBean(bean, option)
     if (isStart) {
       doInitOverTasks([...option.cache.values()])
-      // TODO
+      if (requestScopeBeanMap) {
+        doInitOverTasks([...requestScopeBeanMap.values()])
+      }
     }
     return bean
   }
@@ -75,7 +79,9 @@ export async function getBean<T extends BeanClass = BeanClass>(
 /**
  * 通过类型获取该类型和继承自该类型的bean
  */
-export function getBeans<T extends BeanClass>(Cons: T | ((state: BeanState) => boolean)): Promise<BeanInstance<T>[]> {
+export async function getBeans<T extends BeanClass>(
+  Cons: T | ((state: BeanState) => boolean),
+): Promise<BeanInstance<T>[]> {
   if (isFunction(Cons)) {
     const beans = [...getStateMap().values()].filter(Cons as any).map((state) => {
       return getBean(state.beanClass)

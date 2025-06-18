@@ -1,3 +1,5 @@
+import { BeanClass } from '@core/types'
+
 const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm
 const DEFAULT_PARAMS = /=[^,]+/gm
 const FAT_ARROWS = /=>.*$/gm
@@ -16,14 +18,14 @@ export function getFunParameterNames(fn: Function): string[] {
 /**
  * 判断是否是一个函数
  */
-export function isFunction(obj: any) {
+export function isFunction(obj: any): obj is Function {
   return Object.prototype.toString.call(obj) === '[object Function]' && !isClass(obj)
 }
 
 /**
  * 判断是否是一个类Class
  */
-export function isClass(obj: any) {
+export function isClass(obj: any): obj is BeanClass {
   if (typeof obj != 'function') return false
   const str = obj.toString()
 
