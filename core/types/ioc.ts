@@ -17,12 +17,14 @@ export class BeanState {
 
   beanClass: BeanClass
   classDecorators: Set<Function> = new Set()
-  methodDecorators: { [name: string]: Set<Function> } = {}
-  fieldDecorators: { [name: string]: Set<Function> } = {}
+  methodDecorators: { [name: string | symbol]: Set<Function> } = {}
+  fieldDecorators: { [name: string | symbol]: Set<Function> } = {}
+  // 添加类装饰器
   addClassDecorator(decorator: Function) {
     this.classDecorators.add(decorator)
   }
-  addFieldDecorator(name: string, decorator: Function) {
+  // 添加属性装饰器
+  addFieldDecorator(name: string | symbol, decorator: Function) {
     if (typeof this.beanClass.prototype[name] === 'function') {
       if (!this.methodDecorators[name]) {
         this.methodDecorators[name] = new Set()
@@ -69,6 +71,8 @@ export class BeanState {
   aroundAspects: AspectItem[] = []
   // 是否已经完成依赖注入
   injectOver: boolean = false
+  // 自定义装饰器的各个逻辑
+  customDecorator: {} = {}
 }
 
 /**
@@ -134,5 +138,5 @@ export interface GetBeanStateList {
  * @param name 方法or属性名称，如果传入则注册为方法or属性装饰器，否则注册为类装饰器
  */
 export interface RegisterCustomerDecorator {
-  (decorator: Function, Cons: BeanClass, name?: string | symbol): void
+  (decorator: Function, Cons: BeanClass | object, name?: string | symbol): void
 }

@@ -2,7 +2,7 @@
 
 <div align="center">
   
-一套基于Spring设计理念开发的NodeJs服务端框架（>=V2.0.9）
+基于Spring设计理念开发的NodeJs服务端框架（>=V2.1.0）
 
 [NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
@@ -11,29 +11,19 @@
   
 </div>
 
-> 该项目是基于 Node+Express 开发的服务端框架，设计理念全部基于 Java Spring 框架，实现了 Spring 的IOC、AOP等主要功能，对 Node 感兴趣的小伙伴可以前往 Github 或者 NPM 下载体验。
+## ✨ 语言
+
+- 🌍 基于 NodeJs+Express+TS 进行开发
+- 🌈 采用了 Java 语言 Spring 框架的设计理念
 
 ## ✨ 特性
 
-- 🌍 基于 NodeJs+Express 进行开发。
-- 🌈 采用了 Java 语言 Spring 框架的设计理念，实现了 Spring 中 AOP，IOC 等主要的功能。
-- ⚙️ 在体验 Spring 设计模式的同时，又可以使用 npm 强大的插件功能。
-- 🛡 使用 TypeScript 开发，提供完整的类型定义文件。
-- 📦 如果你曾经是一个Java程序员并且有一定的Js基础，那么可以以极低的学习成本使用a2n进行开发。
+- 🌍 无需配置即可快速启动项目
+- 🔨 实现了 Spring 中 AOP，IOC，自动配置等主要的功能
+- 🌈 支持自定义装饰器
+- 📦 自动追踪的全局ctx上下文
 
-## ✨ 版本新特性
-
-- 🌍 弃用了项目脚手架（a2n-cli），采用更简洁的命令行工具。
-- 🌈 默认的配置文件，不需要编写任何配置，也可以运行项目。
-- ⚙️ 将自定义配置文件内容通过合并到项目配置中。
-- 📦 自定义的环境变量配置。
-- 🔨 依赖自动配置。
-
-## 修复
-
-- ⚙️ 修复了单例Bean中循环依赖导致的死循环
-
-## 📦 搭建
+## 📦 快速开始
 
 - 初始化 npm 环境
 
@@ -71,6 +61,8 @@ npm run dev
 npm run build
 ```
 
+> 打包后的产物在根目录`dist`文件夹内，入口文件为`a2n.serve.js`，通过`node dist/a2n.serve.js`运行
+
 ## 🔨 项目结构
 
 - 配置文件 a2n.config.js
@@ -83,11 +75,11 @@ module.exports = {
   baseUrl: '/api',
   // 组件扫描路径，该路径下的js,ts文件将会被容器扫描，默认src
   componentScan: 'src',
-  // 服务启动端口号
+  // 服务启动端口号，默认8080
   port: 8088,
   // 一些自定义的配置项
   datasource: {
-    url: '123lll'
+    url: 'mysql:127.0.0.1:3306'
   },
   // webpack配置，值可以是以下两种情况
   // 1.一个object，会通过webpack-merge与默认webpack配置进行合并
@@ -178,13 +170,15 @@ import OtherBean from "./OtherBean";
 // @Service将该类交给bean容器管理，与@Bean具有相同的功能，只是命名不同
 @Service
 // @Scope定义了bean的创建方式，BeanScope.PROTOTYPE：多例，每次获取创建新的bean
+// BeanScope.REQUEST，每个请求生成一次bean
 // BeanScope.SINGLETON（默认），在单例池生成bean，每次从单例池获取
 @Scope(BeanScope.PROTOTYPE)
 export default class UserServicer {
 
   // 获取一个RoleService类型的bean注入到role属性
-  @Autowired(RoleService)
-  role: any = null
+  // 从2.0.15版本开始，可以省略Autowired的装饰器参数，根据ts类型进行注入
+  @Autowired
+  role: RoleService
 
   // 从a2n.config.js配置文件中查询datasource.url注入到url属性中
   @Config('datasource.url')
@@ -210,7 +204,7 @@ export default class UserServicer {
 ### 拦截器
 
 ```ts
-import { Bean, Interceptor, Request, Response, BeanClass } from "a2n";
+import { Bean, Interceptor, Context } from "a2n";
 
 /**
  * 继承Interceptor类并注入到容器中，该类会被注册为拦截器
@@ -222,13 +216,12 @@ export default class AuthInterceptor extends Interceptor {
   /**
    * 拦截器校验方法
    * @param req 请求对象
-   * @param res 响应对象
-   * @param Cons 请求进入的Control类
-   * @param methodName 请求进入Control的方法名
+   * @param ctx 请求上下文
    * @returns false：拦截，true：不拦截
    */
-  async doFilter(req: Request, res: Response, Cons: BeanClass, methodName: string): boolean {
-    if(req.baseUrl === "/user") {
+  async doFilter(req: Request, ctx: Context): boolean {
+    // 从2.1.0版本开始，doFilter的第二个参数变更为ctx，ctx内包含了之前的所有参数内容
+    if(ctx.request.baseUrl === "/user") {
       return true
     }else {
       return false
@@ -240,7 +233,7 @@ export default class AuthInterceptor extends Interceptor {
 
 ### 自动配置
 
-a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i`添加到node_modules的依赖包中，如果包含`__a2n.inject.js`文件，则a2n会自动查找并引入该文件。因此，只要在该文件中引入Bean相关代码，在安装此依赖包时，相关的Bean都会被自动注入容器中
+a2n也提供了SpringBoot中的自动配置功能，通过`yarn add`或者`npm i`（暂不支持pnpm）添加到node_modules的依赖包中，如果包含`__a2n.inject.js`文件，则a2n会自动查找并引入该文件。因此，只要在该文件中引入Bean相关代码，在安装此依赖包时，相关的Bean都会被自动注入容器中
 
 > 以下是开发一个简单的a2n依赖包的案例
 
@@ -251,14 +244,57 @@ a2n也提供了springboot中的自动配置功能，通过`yarn add`或者`npm i
 ```ts
 import { AppLifecycle, Bean } from 'a2n'
 
-// 注册一个a2n生命周期管理Bean
+// 继承AppLifecycle的bean都会被注册为生命周期管理器
 @Bean
-export default class User extends AppLifecycle {
+export default class AppLife extends AppLifecycle {
   // 在a2n启动完成后触发该函数
-  async afterAppStart() {
+  afterAppStart() {
     console.log('dep start')
+  }
+  // 在a2n程序关闭时触发函数
+  afterAppClose() {
+    console.log('app close')
   }
 }
 ```
 
 * 效果：当一个a2n项目引入此依赖包（yarn add a2n-dep或npm i a2n-dep）后，a2n项目启动成功后，会打印`dep start`
+
+### 自定义装饰器
+
+通过自定义装饰器，配合Aspect切面实现对函数的精准切面控制
+
+* 定义一个自定义装饰器，装饰需要切入的函数
+
+```ts
+import { Bean, Context, getContext, registerCustomDecorator } from 'a2n'
+
+export const CustomAspect: MethodDecorator = (target, name) => {
+  registerCustomDecorator(CustomAspect, target, name)
+}
+
+@Bean
+export default class UserService {
+  @CustomAspect
+  getUser(query: any) {
+    const ctx: Context = getContext()
+    return ctx.request.path
+  }
+}
+```
+* 添加一个切面类，在被`CustomAspect`装饰的函数执行前插入逻辑
+
+```ts
+import { Aspect, Before } from 'a2n'
+import { CustomAspect } from '@/src/UserService'
+
+@Aspect
+export default class AspectHandler {
+  @Before(CustomAspect)
+  before() {
+    console.log('before')
+  }
+}
+```
+
+* 至此，调用任何装饰了`CustomAspect`的bean函数，都会触发`AspectHandler.before`逻辑，例如`UserService.getUser`函数，

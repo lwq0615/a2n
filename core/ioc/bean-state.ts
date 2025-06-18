@@ -1,4 +1,4 @@
-import { BeanClass, BeanInstance, BeanState } from '@core/types'
+import { BeanClass, BeanState } from '@core/types'
 
 const states = new Map<BeanClass, BeanState>()
 
@@ -37,7 +37,7 @@ export function getBeanStateList() {
  * @param Cons 类
  * @param name 属性
  */
-export function registerCustomDecorator(decorator: Function, Cons: BeanClass, name?: string) {
+export function registerCustomDecorator(decorator: Function, Cons: BeanClass | object, name?: string | symbol) {
   const state = getState(Cons)
   if (name) {
     state.addFieldDecorator(name, decorator)

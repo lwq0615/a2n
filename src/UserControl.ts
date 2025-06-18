@@ -4,7 +4,7 @@ import UserService from './UserService'
 @Control('user')
 export default class UserControl {
   @Autowired
-  service: UserService = null
+  service: UserService
 
   @Get('/get/:id')
   get(a: any, @Query query: any, @Param('id') id: number) {
@@ -14,6 +14,7 @@ export default class UserControl {
 
   @Get
   get1(@Query query: any) {
+    this.service.getUser(query)
     return 'query23'
   }
 }
