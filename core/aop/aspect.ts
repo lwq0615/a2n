@@ -65,7 +65,7 @@ export function Before(match: RegExp | Function): MethodDecorator {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
-    state.addMethodDecorator(key, Before)
+    state.addFieldDecorator(key, Before)
     state.beforeAspects.push({
       [name]: match,
       handle: target[key],
@@ -82,7 +82,7 @@ export function After(match: RegExp | Function): MethodDecorator {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
-    state.addMethodDecorator(key, After)
+    state.addFieldDecorator(key, After)
     state.afterAspects.push({
       [name]: match,
       handle: target[key],
@@ -99,7 +99,7 @@ export function Around(match: RegExp | Function): MethodDecorator {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
-    state.addMethodDecorator(key, Around)
+    state.addFieldDecorator(key, Around)
     state.aroundAspects.push({
       [name]: match,
       handle: target[key],

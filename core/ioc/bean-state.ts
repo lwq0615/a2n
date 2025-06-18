@@ -40,11 +40,7 @@ export function getBeanStateList() {
 export function registerCustomDecorator(decorator: Function, Cons: BeanClass, name?: string) {
   const state = getState(Cons)
   if (name) {
-    if (typeof Cons.prototype[name] === 'function') {
-      state.addMethodDecorator(name, decorator)
-    } else {
-      state.addFieldDecorator(name, decorator)
-    }
+    state.addFieldDecorator(name, decorator)
   } else {
     state.addClassDecorator(decorator)
   }

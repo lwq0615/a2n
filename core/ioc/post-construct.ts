@@ -7,5 +7,5 @@ export const PostConstruct: MethodDecorator = function (target: any, key: string
   // 将当前method注册为handler
   const state = getState(target.constructor)
   state.initOverTasks.push(target[key])
-  state.addMethodDecorator(key, PostConstruct)
+  state.addFieldDecorator(key, PostConstruct)
 }

@@ -55,16 +55,12 @@ export interface Control {
 
 export interface RequestMapping {
   (path: string): MethodDecorator
-  <T>(
-    target: object,
-    propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<T>,
-  ): TypedPropertyDescriptor<T> | void
+  <T>(target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<T>): TypedPropertyDescriptor<T> | void
 }
 
 export interface RequestParamDecorator {
   (name: string): ParameterDecorator
-  (target: object, propertyKey: string | symbol | undefined, parameterIndex: number): void
+  (target: object, propertyKey: string | undefined, parameterIndex: number): void
 }
 
 export type Context = {

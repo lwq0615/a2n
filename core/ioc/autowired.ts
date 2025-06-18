@@ -46,18 +46,18 @@ function getTask(fieldName: string, injectBean?: string | Promise<any> | BeanCla
 /**
  * 在加载到Service时将其注册到bean容器中
  */
-export const Autowired: AutowiredType = function (Cons: object | string | Promise<any>, propertyKey?: string | symbol) {
+export const Autowired: AutowiredType = function (Cons: object | string | Promise<any>, propertyKey?: string) {
   if (typeof Cons === 'string' || Cons instanceof Promise) {
     return function (target, key) {
       const task = getTask(key as string, Cons)
       const state = getState(target)
-      state.addMethodDecorator(key, Autowired)
+      state.addFieldDecorator(key as string, Autowired)
       state.autowiredTasks.push(task)
     } as PropertyDecorator
   } else {
-    const task = getTask(propertyKey as string, Reflect.getMetadata('design:type', Cons, propertyKey))
+    const task = getTask(propertyKey, Reflect.getMetadata('design:type', Cons, propertyKey))
     const state = getState(Cons.constructor as BeanClass)
-    state.addMethodDecorator(propertyKey, Autowired)
+    state.addFieldDecorator(propertyKey, Autowired)
     state.autowiredTasks.push(task)
   }
 }

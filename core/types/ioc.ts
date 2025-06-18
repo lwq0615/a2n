@@ -3,7 +3,7 @@ import { Route } from './control'
 
 export interface Autowired {
   (Cons: string | Promise<any>): PropertyDecorator
-  (target: object, propertyKey: string | symbol): void
+  (target: object, propertyKey: string): void
 }
 
 // bean状态中心
@@ -17,22 +17,23 @@ export class BeanState {
 
   beanClass: BeanClass
   classDecorators: Set<Function> = new Set()
-  methodDecorators: { [name: string | symbol]: Set<Function> } = {}
-  fieldDecorators: { [name: string | symbol]: Set<Function> } = {}
+  methodDecorators: { [name: string]: Set<Function> } = {}
+  fieldDecorators: { [name: string]: Set<Function> } = {}
   addClassDecorator(decorator: Function) {
     this.classDecorators.add(decorator)
   }
-  addMethodDecorator(name: string | symbol, decorator: Function) {
-    if (!this.methodDecorators[name]) {
-      this.methodDecorators[name] = new Set()
+  addFieldDecorator(name: string, decorator: Function) {
+    if (typeof this.beanClass.prototype[name] === 'function') {
+      if (!this.methodDecorators[name]) {
+        this.methodDecorators[name] = new Set()
+      }
+      this.methodDecorators[name].add(decorator)
+    } else {
+      if (!this.fieldDecorators[name]) {
+        this.fieldDecorators[name] = new Set()
+      }
+      this.fieldDecorators[name].add(decorator)
     }
-    this.methodDecorators[name].add(decorator)
-  }
-  addFieldDecorator(name: string | symbol, decorator: Function) {
-    if (!this.fieldDecorators[name]) {
-      this.fieldDecorators[name] = new Set()
-    }
-    this.fieldDecorators[name].add(decorator)
   }
   /**
    * 判断【类|方法|属性】是否添加了装饰器
@@ -40,7 +41,7 @@ export class BeanState {
    * @param name 可选，方法or属性名称
    * @returns
    */
-  hasDecorator(decorator: Function, name?: string | symbol) {
+  hasDecorator(decorator: Function, name?: string) {
     if (name) {
       return this.methodDecorators[name]?.has(decorator) || this.fieldDecorators[name]?.has(decorator)
     }

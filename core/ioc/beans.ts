@@ -65,7 +65,8 @@ export async function getBean<T extends BeanClass = BeanClass>(
     // 例如单例1 -> 多例 -> 单例2，单例2则是未注入状态
     await injectBean(bean, option)
     if (isStart) {
-      doInitOverTasks([...option.cache.values()].filter((bean) => getState(bean).scope === BeanScope.PROTOTYPE))
+      doInitOverTasks([...option.cache.values()])
+      // TODO
     }
     return bean
   }
@@ -175,7 +176,7 @@ export async function initBeanFinish() {
 }
 
 /**
- * 执行完后才能依赖注入bean的@PostConstruct
+ * 执行完成依赖注入bean的@PostConstruct
  */
 function doInitOverTasks(beans: BeanInstance[]) {
   for (const bean of beans) {

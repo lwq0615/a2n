@@ -15,7 +15,7 @@ function regMapping(path: string, type: Method) {
   const regMethod: MethodDecorator = (target, key, descriptor) => {
     const Cons = target.constructor as BeanClass
     const state = getState(Cons)
-    state.addMethodDecorator(key, getDecoratorByType(type))
+    state.addFieldDecorator(key as string, getDecoratorByType(type))
     if (!state.controlMethods[key]) {
       state.controlMethods[key] = new Route()
     }
@@ -30,21 +30,21 @@ function regMapping(path: string, type: Method) {
 
 function getMethodDecorator(
   target: string | object,
-  propertyKey: string | symbol,
+  propertyKey: string,
   descriptor: TypedPropertyDescriptor<unknown>,
   type: Method,
 ) {
   if (typeof target === 'string') {
     return regMapping(target, type) as any
   } else {
-    getState(target.constructor as BeanClass).addMethodDecorator(propertyKey, getDecoratorByType(type))
+    getState(target).addFieldDecorator(propertyKey, getDecoratorByType(type))
     regMapping('', type)(target, propertyKey, descriptor)
   }
 }
 
 export const RequestMapping: RequestMappingType = (
   target: string | object,
-  propertyKey?: string | symbol,
+  propertyKey?: string,
   descriptor?: TypedPropertyDescriptor<unknown>,
 ) => {
   return getMethodDecorator(target, propertyKey, descriptor, Method.ALL)
@@ -52,7 +52,7 @@ export const RequestMapping: RequestMappingType = (
 
 export const Get: RequestMappingType = (
   target: string | object,
-  propertyKey?: string | symbol,
+  propertyKey?: string,
   descriptor?: TypedPropertyDescriptor<unknown>,
 ) => {
   return getMethodDecorator(target, propertyKey, descriptor, Method.GET)
@@ -60,7 +60,7 @@ export const Get: RequestMappingType = (
 
 export const Post: RequestMappingType = (
   target: string | object,
-  propertyKey?: string | symbol,
+  propertyKey?: string,
   descriptor?: TypedPropertyDescriptor<unknown>,
 ) => {
   return getMethodDecorator(target, propertyKey, descriptor, Method.POST)
@@ -68,7 +68,7 @@ export const Post: RequestMappingType = (
 
 export const Put: RequestMappingType = (
   target: string | object,
-  propertyKey?: string | symbol,
+  propertyKey?: string,
   descriptor?: TypedPropertyDescriptor<unknown>,
 ) => {
   return getMethodDecorator(target, propertyKey, descriptor, Method.PUT)
@@ -76,7 +76,7 @@ export const Put: RequestMappingType = (
 
 export const Delete: RequestMappingType = (
   target: string | object,
-  propertyKey?: string | symbol,
+  propertyKey?: string,
   descriptor?: TypedPropertyDescriptor<unknown>,
 ) => {
   return getMethodDecorator(target, propertyKey, descriptor, Method.DELETE)
