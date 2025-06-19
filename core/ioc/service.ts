@@ -14,7 +14,7 @@ const Bean: Service = (source) => {
     } as ClassDecorator
   } else {
     if (!(source instanceof Function)) {
-      throw new Error('Bean注入只接收string类型或者undefined参数')
+      throw new Error('@Bean参数类型错误')
     }
     const state = getState(source)
     state.addClassDecorator(Bean)
