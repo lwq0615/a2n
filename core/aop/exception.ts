@@ -6,7 +6,7 @@ import { Context, ErrHandler } from '@core/types'
 let errHandlers: ErrHandler[] = []
 
 export function setErrorHandlers(errHandler: ErrHandler[]) {
-  errHandlers = errHandler
+  errHandlers = errHandler?.sort((a, b) => a.index - b.index)
 }
 
 export async function doErrHandler(err: Error, ctx: Context) {

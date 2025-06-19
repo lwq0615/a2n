@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import { BeanClass, Context } from '.'
 
 export type AspectHandle = (Cons: BeanClass, name: string) => void
@@ -38,6 +37,10 @@ export abstract class AroundInterceptor {
  * 异常处理器
  */
 export abstract class ErrHandler {
+  /**
+   * 错误处理器的处理顺序，值越小越先执行
+   */
+  index = 0
   /**
    * @param err 错误对象
    * @param ctx 请求上下文

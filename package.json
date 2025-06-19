@@ -13,7 +13,6 @@
   },
   "scripts": {
     "dev": "node webpack.config.js",
-    "test": "node bin/index.js dev",
     "build": "node core/build/webpack.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

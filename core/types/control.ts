@@ -63,7 +63,7 @@ export interface RequestParamDecorator {
   (target: object, propertyKey: string | undefined, parameterIndex: number): void
 }
 
-export type Context = {
+export interface Context {
   request: Request
   response: Response
   params: Request['params']
@@ -73,4 +73,4 @@ export type Context = {
   method: string
 }
 
-export type GetContext = () => Context
+export type GetContext = () => Context | undefined

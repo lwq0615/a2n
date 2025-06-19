@@ -194,11 +194,11 @@ declare namespace a2n {
   const registerCustomDecorator: types.RegisterCustomerDecorator
 
   /**
-   * 注册自定义装饰器
+   * 请求上下文
    */
-  const Context: types.Context
+  interface Context extends types.Context {}
 
-
+  // 获取请求上下文
   const getContext: types.GetContext
 }
 

@@ -117,18 +117,27 @@ function onClose() {
 
 // 关闭服务
 export const close: Close = (callback) => {
+  console.info('Closing service')
   server?.close((...args) => {
+    console.info('Service has been shut down')
     callback?.(...args)
     onClose()
   })
 }
 
+let firstClose = true
 // 监听 SIGINT 信号（Ctrl+C）
 process.on('SIGINT', () => {
-  close()
+  if (firstClose) {
+    close()
+    firstClose = false
+  }
 })
 
 // 监听 SIGTERM 信号（系统终止）
 process.on('SIGTERM', () => {
-  close()
+  if (firstClose) {
+    close()
+    firstClose = false
+  }
 })
