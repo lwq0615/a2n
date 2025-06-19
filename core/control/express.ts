@@ -12,7 +12,13 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 
 export const asyncRequestLocalStorage = new AsyncLocalStorage<{
   ctx: Context
-  requestScopeBeanMap: Map<BeanClass, BeanInstance>
+  requestScopeBeanMap: Map<
+    BeanClass,
+    {
+      instance: BeanInstance
+      initOver: boolean
+    }
+  >
 }>()
 
 export const getContext: GetContext = () => {

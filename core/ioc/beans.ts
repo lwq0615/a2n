@@ -10,7 +10,8 @@ import { isAspect, isBean, isControl } from '@core/utils/state'
 import { getBeanStateList, getState, getStateMap } from './bean-state'
 
 // bean容器, 单例池
-const beanMap: Map<BeanClass, BeanInstance> = new Map()
+const singletonBeanMap: Map<BeanClass, BeanInstance> = new Map()
+// 具名bean和bean类型的映射
 const nameBeanMap: { [name: string]: BeanClass } = {}
 
 export type GetBeanOption = {
@@ -48,15 +49,18 @@ export async function getBean<T extends BeanClass = BeanClass>(
     const requestScopeBeanMap = asyncRequestLocalStorage.getStore()?.requestScopeBeanMap
     if (state.scope === BeanScope.SINGLETON) {
       // 单例模式，从单例池查找
-      bean = beanMap.get(Cons)
+      bean = singletonBeanMap.get(Cons)
     } else if (state.scope === BeanScope.REQUEST && requestScopeBeanMap) {
       // 如果是请求作用域，且已经存在于上下文，从上下文获取
-      bean = requestScopeBeanMap.get(Cons)
-      if (bean) {
-        return bean
+      const requestBean = requestScopeBeanMap.get(Cons)
+      if (requestBean) {
+        return requestBean.instance
       } else {
         bean = createBean(Cons)
-        requestScopeBeanMap.set(Cons, bean)
+        requestScopeBeanMap.set(Cons, {
+          instance: bean,
+          initOver: false,
+        })
       }
     } else {
       // 多例模式，创建新的bean
@@ -67,9 +71,16 @@ export async function getBean<T extends BeanClass = BeanClass>(
     // 例如单例1 -> 多例 -> 单例2，单例2则是未注入状态
     await injectBean(bean, option)
     if (isStart) {
-      doInitOverTasks([...option.cache.values()])
+      doPostConstruct([...option.cache.values()])
       if (requestScopeBeanMap) {
-        doInitOverTasks([...requestScopeBeanMap.values()])
+        // 过滤还未执行PostConstruct的bean
+        const requestBeans = [...requestScopeBeanMap.values()].filter((item) => {
+          return !item.initOver
+        })
+        doPostConstruct(requestBeans.map((item) => item.instance))
+        requestBeans.forEach((item) => {
+          item.initOver = true
+        })
       }
     }
     return bean
@@ -104,17 +115,17 @@ export function setBean(source: BeanClass | string, Cons?: BeanClass) {
       throw new Error('重复的bean名称: ' + source)
     }
     nameBeanMap[source] = Cons
-    // 多例模式，不在单例池创建bean
-    if (getState(Cons).scope === BeanScope.PROTOTYPE) {
+    // 非单例模式，不在单例池创建bean
+    if (getState(Cons).scope !== BeanScope.SINGLETON) {
       return
     }
-    beanMap.set(Cons, createBean(Cons))
+    singletonBeanMap.set(Cons, createBean(Cons))
   } else {
-    // 多例模式，不在单例池创建bean
-    if (getState(source).scope === BeanScope.PROTOTYPE) {
+    // 非单例模式，不在单例池创建bean
+    if (getState(source).scope !== BeanScope.SINGLETON) {
       return
     }
-    beanMap.set(source, createBean(source))
+    singletonBeanMap.set(source, createBean(source))
   }
 }
 
@@ -148,14 +159,14 @@ export async function initBeanFinish() {
     state.setBeanTask?.()
   }
   // 开始对单例池的bean进行依赖注入
-  for (const Cons of beanMap.keys()) {
+  for (const Cons of singletonBeanMap.keys()) {
     // 在前面的bean注入中可能就依赖了后面的bean，所以在注入前面的bean过程中，后面的bean也可能已经被注入完成了
     if (getState(Cons).injectOver) {
       continue
     }
     await injectBean(await getBean(Cons))
   }
-  doInitOverTasks([...beanMap.values()])
+  doPostConstruct([...singletonBeanMap.values()])
   // 控制器注册接口路由
   for (const state of getStateMap().values()) {
     if (isControl(state.beanClass)) {
@@ -184,7 +195,7 @@ export async function initBeanFinish() {
 /**
  * 执行完成依赖注入bean的@PostConstruct
  */
-function doInitOverTasks(beans: BeanInstance[]) {
+function doPostConstruct(beans: BeanInstance[]) {
   for (const bean of beans) {
     getState(bean).initOverTasks.forEach((task) => {
       task.call(bean)

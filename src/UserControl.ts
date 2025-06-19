@@ -1,5 +1,6 @@
-import { Autowired, Control, Get, Param, Query } from 'a2n'
+import { Autowired, Control, Get, getBean, Param, Query } from 'a2n'
 import UserService from './UserService'
+import RoleService from '@/src/RoleService'
 
 @Control('user')
 export default class UserControl {
@@ -13,8 +14,10 @@ export default class UserControl {
   }
 
   @Get
-  get1(@Query query: any) {
+  async get1(@Query query: any) {
     this.service.getUser(query)
+    await getBean(RoleService)
+    await getBean(RoleService)
     return 'query23'
   }
 }
