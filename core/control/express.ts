@@ -99,10 +99,10 @@ export const regRoutes = function (Cons: BeanClass) {
         },
         () => {
           // 拦截器
-          const callback = () => {
+          const next = () => {
             return route.handler(...params)
           }
-          doFilter(callback)
+          doFilter(next)
         },
       )
     })

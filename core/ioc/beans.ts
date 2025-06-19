@@ -175,7 +175,7 @@ export async function initBeanFinish() {
   }
   // 设置扫描生效的拦截器
   const task1 = Promise.all([getBeans(Interceptor), getBeans(AroundInterceptor)]).then((res) => {
-    setInterceptors(res[0], res[1]?.[0])
+    setInterceptors(res[0], res[1])
   })
   // 设置扫描生效的异常处理器
   const task2 = getBeans(ErrHandler).then((res) => {

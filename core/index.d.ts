@@ -200,6 +200,8 @@ declare namespace a2n {
 
   // 获取请求上下文
   const getContext: types.GetContext
+
+  const NextFunction: types.NextFunction
 }
 
 export = a2n

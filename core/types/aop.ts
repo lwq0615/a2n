@@ -9,15 +9,21 @@ export interface AspectItem {
   handle: AspectHandle | AroundAspectHandle
 }
 
+export type NextFunction = () => Promise<any>
+
 /**
  * 拦截器
  */
 export abstract class Interceptor {
   /**
+   * 拦截器的处理顺序，值越小越先执行
+   */
+  index = 0
+  /**
    * @param ctx 请求上下文
    * @return true：不拦截，false：拦截请求
    */
-  abstract doFilter(ctx: Context): Promise<boolean>
+  abstract doFilter(ctx: Context): Promise<boolean> | boolean
 }
 
 /**
@@ -26,11 +32,15 @@ export abstract class Interceptor {
  */
 export abstract class AroundInterceptor {
   /**
+   * 拦截器的处理顺序，值越小越先执行
+   */
+  index = 0
+  /**
    * @param callback 要执行的控制器方法
    * @param ctx 请求上下文
    * @return 拦截器返回的值会作为请求响应值
    */
-  abstract doFilter(callback: Function, ctx: Context): Promise<any>
+  abstract doFilter(callback: NextFunction, ctx: Context): Promise<any>
 }
 
 /**

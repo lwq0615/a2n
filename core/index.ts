@@ -16,7 +16,17 @@ export {
   Service,
 } from '@core/ioc'
 
-export { After, AppLifecycle, Around, AroundInterceptor, Aspect, Before, ErrHandler, Interceptor } from '@core/aop'
+export {
+  After,
+  AppLifecycle,
+  Around,
+  AroundInterceptor,
+  Aspect,
+  Before,
+  ErrHandler,
+  Interceptor,
+  NextFunction,
+} from '@core/aop'
 
 export { getConfig, setConfig } from '@core/config'
 export {
