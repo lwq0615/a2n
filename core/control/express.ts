@@ -22,7 +22,7 @@ export const asyncRequestLocalStorage = new AsyncLocalStorage<{
 }>()
 
 export const getContext: GetContext = () => {
-  return asyncRequestLocalStorage.getStore().ctx
+  return asyncRequestLocalStorage.getStore()?.ctx
 }
 
 const bodyParser = require('body-parser')
