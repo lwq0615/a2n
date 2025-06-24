@@ -1,6 +1,7 @@
 import { getConfig } from '@core/config'
-import { BeanClass } from '@core/types'
+import { BeanClass, BeanInstance } from '@core/types'
 import { getState } from './bean-state'
+
 const _ = require('lodash')
 
 /**
@@ -8,7 +9,7 @@ const _ = require('lodash')
  */
 export const Config = function (name: string) {
   return function (target: any, fieldName: string) {
-    const task = function () {
+    const task = function (this: BeanInstance) {
       this[fieldName] = _.get(getConfig(), name)
     }
     const state = getState(target.constructor as BeanClass)

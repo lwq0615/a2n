@@ -9,7 +9,7 @@ export function setErrorHandlers(errHandler: ErrHandler[]) {
   errHandlers = errHandler?.sort((a, b) => a.index - b.index)
 }
 
-export async function doErrHandler(err: Error, ctx: Context) {
+export async function doErrHandler(err: any, ctx: Context) {
   console.error(err)
   let value: any = 'Internal Server Error'
   ctx.response.status(500)

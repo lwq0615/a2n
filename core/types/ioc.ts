@@ -1,5 +1,5 @@
 import { AspectItem } from './aop'
-import { Route } from './control'
+import { MethodParams, Route } from './control'
 
 export interface Autowired {
   (Cons: string | Promise<any>): PropertyDecorator
@@ -49,10 +49,14 @@ export class BeanState {
     }
     return this.classDecorators.has(decorator)
   }
-  setBeanTask: Function
+  setBeanTask?: Function
   // 控制器处理器
   controlMethods: {
-    [methodName: string | symbol]: Route
+    [methodName: string | symbol]: Route | undefined
+  } = {}
+  // 控制器参数
+  methodParams: {
+    [methodName: string | symbol]: MethodParams | undefined
   } = {}
   controlMapping: string = ''
   // 依赖注入任务列表

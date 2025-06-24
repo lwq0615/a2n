@@ -57,7 +57,7 @@ export abstract class ErrHandler {
    * @param value 上一个异常处理器传递的响应返回值
    * @return 请求的响应返回值
    */
-  abstract handler(err: Error, ctx: Context, value?: any): any
+  abstract handler(err: any, ctx: Context, value?: any): any
 }
 
 /**

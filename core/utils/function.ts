@@ -12,7 +12,7 @@ export function getFunParameterNames(fn: Function): string[] {
 
   const result = code.slice(code.indexOf('(') + 1, code.indexOf(')')).match(/([^\s,]+)/g)
 
-  return result === null ? [] : result
+  return result || []
 }
 
 /**

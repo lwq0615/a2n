@@ -1,5 +1,5 @@
 import { getState } from '@core/ioc/bean-state'
-import { AroundAspectHandle, AspectHandle, AspectItem, BeanClass, BeanInstance } from '@core/types'
+import { AspectItem, BeanClass, BeanInstance } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect } from '@core/utils/state'
 import { getAspects } from './aspect'
@@ -27,7 +27,7 @@ function isMatch(aspect: AspectItem, Cons: BeanClass, name: string) {
 }
 
 export function getProxy(bean: BeanInstance): BeanInstance {
-  if (!isNeedProxy(Reflect.getPrototypeOf(bean).constructor as BeanClass)) {
+  if (!isNeedProxy(Reflect.getPrototypeOf(bean)!.constructor as BeanClass)) {
     return bean
   }
   return new Proxy(bean, {
@@ -38,7 +38,7 @@ export function getProxy(bean: BeanInstance): BeanInstance {
       // 切面编程
       return function (...params: any) {
         const aspects = getAspects()
-        const Cons = Reflect.getPrototypeOf(target).constructor as BeanClass
+        const Cons = Reflect.getPrototypeOf(target)!.constructor as BeanClass
         const before = aspects.beforeAspects.filter((item) => isMatch(item, Cons, key))
         const around = aspects.aroundAspects.filter((item) => isMatch(item, Cons, key))
         const after = aspects.afterAspects.filter((item) => isMatch(item, Cons, key))

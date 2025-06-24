@@ -27,7 +27,7 @@ function createBean(Cons: BeanClass) {
 export async function getBean<T extends BeanClass = BeanClass>(
   Cons: T | string,
   option: GetBeanOption = {},
-): Promise<BeanInstance<T>> {
+): Promise<BeanInstance<T> | undefined> {
   if (typeof Cons === 'string') {
     return await getBean(nameBeanMap[Cons], option)
   } else {
@@ -37,7 +37,7 @@ export async function getBean<T extends BeanClass = BeanClass>(
     }
     // 创建缓存池，该bean和依赖的bean注入时会存入缓存池，防止循环依赖
     const isStart = !option.cache
-    if (isStart) {
+    if (!option.cache) {
       option.cache = new Map<BeanClass, BeanInstance>()
     }
     // 如果缓存池已经存在该类型的bean，从缓存池获取
@@ -110,7 +110,7 @@ export async function getBeans<T extends BeanClass>(
 
 // 单例池生成bean & 注册bean的name和class映射
 export function setBean(source: BeanClass | string, Cons?: BeanClass) {
-  if (typeof source === 'string') {
+  if (typeof source === 'string' && Cons) {
     if (source in nameBeanMap) {
       throw new Error('重复的bean名称: ' + source)
     }
@@ -122,10 +122,10 @@ export function setBean(source: BeanClass | string, Cons?: BeanClass) {
     singletonBeanMap.set(Cons, createBean(Cons))
   } else {
     // 非单例模式，不在单例池创建bean
-    if (getState(source).scope !== BeanScope.SINGLETON) {
+    if (getState(source as BeanClass).scope !== BeanScope.SINGLETON) {
       return
     }
-    singletonBeanMap.set(source, createBean(source))
+    singletonBeanMap.set(source as BeanClass, createBean(source as BeanClass))
   }
 }
 

@@ -1,4 +1,4 @@
-import { Bean, Context, getContext, registerCustomDecorator } from 'a2n'
+import { Bean, getContext, registerCustomDecorator } from 'a2n'
 
 export const CustomAspect: MethodDecorator = (target, name) => {
   registerCustomDecorator(CustomAspect, target, name)
@@ -8,7 +8,7 @@ export const CustomAspect: MethodDecorator = (target, name) => {
 export default class UserService {
   @CustomAspect
   getUser(query: any) {
-    const ctx: Context = getContext()
-    return ctx.request.path
+    const ctx = getContext()
+    return ctx?.request.path
   }
 }

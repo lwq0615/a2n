@@ -11,10 +11,7 @@ export function getState(Cons: BeanClass | object): BeanState {
   if (typeof Cons === 'object') {
     return getState(Cons.constructor)
   }
-  if (!Cons) {
-    return null
-  }
-  let state: BeanState = states.get(Cons)
+  let state = states.get(Cons)
   if (state) {
     return state
   }

@@ -1,6 +1,6 @@
-import { doErrHandler } from './exception'
-import { AroundInterceptor, Interceptor, NextFunction } from '@core/types'
 import { getContext } from '@core/control'
+import { AroundInterceptor, Interceptor, NextFunction } from '@core/types'
+import { doErrHandler } from './exception'
 
 let interceptors: Interceptor[] = []
 let aroundInterceptors: AroundInterceptor[] = []
@@ -11,7 +11,7 @@ export function setInterceptors(interceptor: Interceptor[], around: AroundInterc
 }
 
 export async function doFilter(next: NextFunction) {
-  const ctx = getContext()
+  const ctx = getContext()!
   try {
     // 拦截器
     for (const interceptor of interceptors) {

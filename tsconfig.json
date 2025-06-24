@@ -11,6 +11,7 @@
     "noImplicitAny": true,
     "module": "CommonJS",
     "target": "ES6",
+    "strict": true,
     "allowJs": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,

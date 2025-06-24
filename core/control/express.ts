@@ -6,9 +6,12 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 import { Express } from 'express-serve-static-core'
 import * as http from 'http'
-import { doFilter } from '../aop'
-import { initBeanFinish } from '../ioc'
 import { AsyncLocalStorage } from 'node:async_hooks'
+import { doFilter } from '../aop'
+import { getBean, initBeanFinish } from '../ioc'
+import { getFunParameterNames } from '@core/utils/function'
+
+const bodyParser = require('body-parser')
 
 export const asyncRequestLocalStorage = new AsyncLocalStorage<{
   ctx: Context
@@ -24,10 +27,8 @@ export const asyncRequestLocalStorage = new AsyncLocalStorage<{
 export const getContext: GetContext = () => {
   return asyncRequestLocalStorage.getStore()?.ctx
 }
-
-const bodyParser = require('body-parser')
 export const app: Express = express()
-let server: http.Server = null
+let server: http.Server
 
 /**
  * 解析post请求参数
@@ -45,7 +46,8 @@ export const regRoutes = function (Cons: BeanClass) {
   const globalBaseUrl = getConfig().baseUrl
   const baseUrl = state.controlMapping
   keyList.forEach((methodName) => {
-    const route = state.controlMethods[methodName]
+    const route = state.controlMethods[methodName]!
+    const routeHandler = async (...params: any) => (await getBean(Cons))?.[methodName](...params)
     // 规范化路由路径
     const pathArr: string[] = (globalBaseUrl + '/' + baseUrl + '/' + route.path)
       .split('/')
@@ -78,17 +80,19 @@ export const regRoutes = function (Cons: BeanClass) {
         [ParamType.RESPONSE]: res,
       }
       // 参数注入
-      for (const i in route.paramNames) {
+      const paramNameList = getFunParameterNames(Reflect.get(Cons.prototype, methodName))
+      for (const i in paramNameList) {
         // 通过注解注入的参数
-        if (route.params[i]) {
-          if (route.params[i].name) {
-            params[i] = paramMap[route.params[i].type][route.params[i].name]
+        const decoratorInfo = state.methodParams[methodName]?.decoratorInfoList[i]
+        if (decoratorInfo && Object.values(ParamType).includes(decoratorInfo.type)) {
+          if (decoratorInfo.data?.[0]) {
+            params[i] = paramMap[decoratorInfo.type][decoratorInfo.data?.[0]]
           } else {
-            params[i] = paramMap[route.params[i].type]
+            params[i] = paramMap[decoratorInfo.type]
           }
         } else {
           // 参数没有注解，通过参数名称从query获取
-          params[i] = queryParams[route.paramNames[i]]
+          params[i] = queryParams[paramNameList[i]]
         }
       }
       res.contentType('application/json')
@@ -100,7 +104,7 @@ export const regRoutes = function (Cons: BeanClass) {
         () => {
           // 拦截器
           const next = () => {
-            return route.handler(...params)
+            return routeHandler(...params)
           }
           doFilter(next)
         },

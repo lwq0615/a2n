@@ -4,11 +4,11 @@ import UserService from './UserService'
 @Control
 export default class UserControl {
   @Autowired
-  service: UserService
+  service?: UserService
 
   @Get
   get1(@Query query: any) {
-    this.service.getUser(query)
+    this.service?.getUser(query)
     // await getBean(RoleService)
     // await getBean(RoleService)
     return 'query23'

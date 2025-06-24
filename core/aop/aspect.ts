@@ -61,14 +61,14 @@ export const Aspect: ClassDecorator = (Cons: any) => {
  * @param {Function} match 装饰器
  */
 export function Before(match: RegExp | Function): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function (target, key, descriptor) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addFieldDecorator(key, Before)
     state.beforeAspects.push({
       [name]: match,
-      handle: target[key],
+      handle: Reflect.get(target, key),
     })
   }
 }
@@ -78,14 +78,14 @@ export function Before(match: RegExp | Function): MethodDecorator {
  * @param {Function} match 装饰器
  */
 export function After(match: RegExp | Function): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function (target, key, descriptor) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addFieldDecorator(key, After)
     state.afterAspects.push({
       [name]: match,
-      handle: target[key],
+      handle: Reflect.get(target, key),
     })
   }
 }
@@ -95,14 +95,14 @@ export function After(match: RegExp | Function): MethodDecorator {
  * @param {Function} match 装饰器
  */
 export function Around(match: RegExp | Function): MethodDecorator {
-  return function (target: any, key: string, descriptor: object) {
+  return function (target, key, descriptor) {
     const name = typeof match === 'function' ? 'decorator' : 'reg'
     const Cons = target.constructor
     const state = getState(Cons)
     state.addFieldDecorator(key, Around)
     state.aroundAspects.push({
       [name]: match,
-      handle: target[key],
+      handle: Reflect.get(target, key),
     })
   }
 }

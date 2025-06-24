@@ -15,20 +15,21 @@ export enum Method {
 /**
  * 路由信息
  */
-export class Route {
-  path: string = null
-  type: Method = Method.ALL
-  handler: Function = null
-  params: ParamInfo[] = []
-  paramNames: string[] = []
+export interface Route {
+  path?: string
+  type: Method
+}
+
+export interface MethodParams {
+  decoratorInfoList: DecoratorInfo[]
 }
 
 /**
  * 参数信息
  */
-export interface ParamInfo {
+export interface DecoratorInfo {
   type: ParamType
-  name?: string
+  data?: any[]
 }
 
 /**
@@ -60,7 +61,7 @@ export interface RequestMapping {
 
 export interface RequestParamDecorator {
   (name: string): ParameterDecorator
-  (target: object, propertyKey: string | undefined, parameterIndex: number): void
+  (target: object, propertyKey: string, parameterIndex: number): void
 }
 
 export interface Context {
