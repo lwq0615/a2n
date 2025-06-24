@@ -75,6 +75,11 @@ declare namespace a2n {
   const Control: types.Control
 
   /**
+   * 标记一个类为接口类，所有的方法会导出为接口
+   */
+  const ApiExport: ClassDecorator
+
+  /**
    * @param source bean名称
    * 标记一个类业务层bean对象，该对象将会注册一个实例到bean容器中
    */

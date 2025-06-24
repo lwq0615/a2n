@@ -1,4 +1,4 @@
-import ApiExport from '@core/control/api-export'
+import { ApiExport } from '@core/control/api-export'
 
 @ApiExport
 export default class ExportApi {

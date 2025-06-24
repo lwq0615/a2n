@@ -8,7 +8,7 @@ import { BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect, isBean, isControl } from '@core/utils/state'
 import { getBeanStateList, getState, getStateMap } from './bean-state'
-import ApiExport from '@core/control/api-export'
+import { ApiExport } from '@core/control/api-export'
 
 // bean容器, 单例池
 const singletonBeanMap: Map<BeanClass, BeanInstance> = new Map()

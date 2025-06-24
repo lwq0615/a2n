@@ -1,4 +1,5 @@
 export { Control } from '@core/control/control'
+export { ApiExport } from '@core/control/api-export'
 export { Body, Param, Query, Req, Res } from '@core/control/param-type'
 export { Delete, Get, Post, Put, RequestMapping } from '@core/control/request-method'
 export { app, close, start, getContext } from './express'

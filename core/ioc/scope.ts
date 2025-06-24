@@ -1,7 +1,7 @@
 import { BeanScope } from '@core/types'
 import { getState } from './bean-state'
 import { isAspect, isControl } from '@core/utils/state'
-import ApiExport from '@core/control/api-export'
+import { ApiExport } from '@core/control/api-export'
 
 export const Scope = function (scope: BeanScope): ClassDecorator {
   return function (Cons: any) {
