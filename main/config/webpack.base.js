@@ -56,12 +56,12 @@ function getWebConfig(webpackConfig, options, args) {
   })
 
   const baseConfig = {
-    entry: path.resolve(__dirname, '../start.ts'),
+    entry: path.resolve(__dirname, '../start.js'),
     mode: 'development',
     target: 'node',
     module: {
       rules: [
-        { include: path.resolve(__dirname, '../start.ts') },
+        { include: path.resolve(__dirname, '../start.js') },
         { include: /__a2n\.inject\.js$/ },
         { exclude: /node_modules/ },
       ].map((item) => {

@@ -9,7 +9,8 @@ import * as http from 'http'
 import { AsyncLocalStorage } from 'node:async_hooks'
 import { doFilter } from '../aop'
 import { getBean, initBeanFinish } from '../ioc'
-import { getFunParameterNames } from '@core/utils/function'
+import { getFunParameterNames, isFunction } from '@core/utils/function'
+import { formatUrl } from '@core/utils/common'
 
 const bodyParser = require('body-parser')
 
@@ -36,78 +37,124 @@ let server: http.Server
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+function requestHandler() {
+  const next = async () => {
+    const ctx = getContext()!
+    const { control: Cons, method: methodName } = ctx
+    const state = getState(Cons)
+    const params: any[] = []
+    const queryParams = ctx.query
+    const bodyParams = ctx.body
+    const urlParams = ctx.params
+    const paramMap = {
+      [ParamType.QUERY]: queryParams,
+      [ParamType.BODY]: bodyParams,
+      [ParamType.PARAM]: urlParams,
+      [ParamType.REQUEST]: ctx.request,
+      [ParamType.RESPONSE]: ctx.response,
+    }
+    // 参数注入
+    const paramNameList = getFunParameterNames(Reflect.get(Cons.prototype, methodName))
+    for (const i in paramNameList) {
+      // 通过注解注入的参数
+      const decoratorInfo = state.methodParams[methodName]?.decoratorInfoList[i]
+      if (decoratorInfo && Object.values(ParamType).includes(decoratorInfo.type)) {
+        if (decoratorInfo.data?.[0]) {
+          params[i] = paramMap[decoratorInfo.type][decoratorInfo.data?.[0]]
+        } else {
+          params[i] = paramMap[decoratorInfo.type]
+        }
+      } else {
+        // 参数没有注解，通过参数名称从query获取
+        params[i] = queryParams[paramNameList[i]]
+      }
+    }
+    return (await getBean(Cons))?.[methodName](...params)
+  }
+  // 拦截器
+  return doFilter(next)
+}
+
+// 检查重复的接口路径
 const paths: { [path: string]: Method } = {}
+function validateSamePath(path: string, type: Method) {
+  if (path in paths && type === paths[path]) {
+    throw new Error("重复的接口: '" + path + "'")
+  }
+  paths[path] = type
+}
+
+function createContext(req: Request, res: Response, Cons: BeanClass, methodName: string): Context {
+  return {
+    request: req,
+    response: res,
+    params: req.params,
+    query: req.query,
+    body: req.body,
+    control: Cons,
+    method: methodName,
+  }
+}
+
 /**
  * 将路由注册到express
  */
-export const regRoutes = function (Cons: BeanClass) {
+export const regControl = function (Cons: BeanClass) {
   const state = getState(Cons)
   const keyList = Object.keys(state.controlMethods)
   const globalBaseUrl = getConfig().baseUrl
   const baseUrl = state.controlMapping
   keyList.forEach((methodName) => {
     const route = state.controlMethods[methodName]!
-    const routeHandler = async (...params: any) => (await getBean(Cons))?.[methodName](...params)
-    // 规范化路由路径
-    const pathArr: string[] = (globalBaseUrl + '/' + baseUrl + '/' + route.path)
-      .split('/')
-      .filter((item: string) => item)
-    const realPath = '/' + pathArr.join('/')
-    if (realPath in paths && route.type === paths[realPath]) {
-      throw new Error("重复的接口: '" + realPath + "'")
-    }
-    paths[realPath] = route.type
+    const realPath = formatUrl(globalBaseUrl + '/' + baseUrl + '/' + route.path)
+    validateSamePath(realPath, route.type)
     // 注册路由
     app[route.type](realPath, async (req: Request, res: Response) => {
-      const params: any[] = []
-      const queryParams = req.query
-      const bodyParams = req.body
-      const urlParams = req.params
-      const ctx: Context = {
-        request: req,
-        response: res,
-        params: urlParams,
-        query: queryParams,
-        body: bodyParams,
-        control: Cons,
-        method: methodName,
-      }
-      const paramMap = {
-        [ParamType.QUERY]: queryParams,
-        [ParamType.BODY]: bodyParams,
-        [ParamType.PARAM]: urlParams,
-        [ParamType.REQUEST]: req,
-        [ParamType.RESPONSE]: res,
-      }
-      // 参数注入
-      const paramNameList = getFunParameterNames(Reflect.get(Cons.prototype, methodName))
-      for (const i in paramNameList) {
-        // 通过注解注入的参数
-        const decoratorInfo = state.methodParams[methodName]?.decoratorInfoList[i]
-        if (decoratorInfo && Object.values(ParamType).includes(decoratorInfo.type)) {
-          if (decoratorInfo.data?.[0]) {
-            params[i] = paramMap[decoratorInfo.type][decoratorInfo.data?.[0]]
-          } else {
-            params[i] = paramMap[decoratorInfo.type]
-          }
-        } else {
-          // 参数没有注解，通过参数名称从query获取
-          params[i] = queryParams[paramNameList[i]]
-        }
-      }
+      const ctx = createContext(req, res, Cons, methodName)
       res.contentType('application/json')
-      asyncRequestLocalStorage.run(
+      return asyncRequestLocalStorage.run(
         {
           ctx,
           requestScopeBeanMap: new Map(),
         },
-        () => {
-          // 拦截器
-          const next = () => {
-            return routeHandler(...params)
-          }
-          doFilter(next)
+        () => requestHandler(),
+      )
+    })
+  })
+}
+
+function exportRequestHandler() {
+  const next = async () => {
+    const { control, method, body = [] } = getContext()!
+    if (!Array.isArray(body)) {
+      throw new Error('ApiExport参数错误')
+    }
+    return (await getBean(control))?.[method](...body)
+  }
+  // 拦截器
+  return doFilter(next)
+}
+
+export function regApiExport(Cons: BeanClass) {
+  const clsFilePath = Reflect.get(Cons, '__filePath')
+  const keyList = Object.getOwnPropertyNames(Cons.prototype).filter((name) =>
+    isFunction(Reflect.get(Cons.prototype, name)),
+  )
+  const globalBaseUrl = getConfig().baseUrl
+  const baseUrl = clsFilePath.slice(0, clsFilePath.lastIndexOf('.'))
+  keyList.forEach((methodName) => {
+    const realPath = formatUrl(globalBaseUrl + '/' + baseUrl + '/' + methodName)
+    validateSamePath(realPath, Method.POST)
+    // 注册路由
+    app.post(realPath, async (req: Request, res: Response) => {
+      const ctx = createContext(req, res, Cons, methodName)
+      res.contentType('application/json')
+      return asyncRequestLocalStorage.run(
+        {
+          ctx,
+          requestScopeBeanMap: new Map(),
         },
+        () => exportRequestHandler(),
       )
     })
   })

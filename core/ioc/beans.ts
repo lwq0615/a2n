@@ -3,11 +3,12 @@ import { setAspectBeans } from '@core/aop/aspect'
 import { setErrorHandlers } from '@core/aop/exception'
 import { setInterceptors } from '@core/aop/interceptor'
 import { getProxy, startProxy } from '@core/aop/proxy'
-import { asyncRequestLocalStorage, regRoutes } from '@core/control/express'
+import { asyncRequestLocalStorage, regApiExport, regControl } from '@core/control/express'
 import { BeanClass, BeanInstance, BeanScope, BeanState } from '@core/types'
 import { isFunction } from '@core/utils/function'
 import { isAspect, isBean, isControl } from '@core/utils/state'
 import { getBeanStateList, getState, getStateMap } from './bean-state'
+import ApiExport from '@core/control/api-export'
 
 // bean容器, 单例池
 const singletonBeanMap: Map<BeanClass, BeanInstance> = new Map()
@@ -170,7 +171,9 @@ export async function initBeanFinish() {
   // 控制器注册接口路由
   for (const state of getStateMap().values()) {
     if (isControl(state.beanClass)) {
-      regRoutes(state.beanClass)
+      regControl(state.beanClass)
+    } else if (state.hasDecorator(ApiExport)) {
+      regApiExport(state.beanClass)
     }
   }
   // 设置扫描生效的拦截器

@@ -1,3 +1,5 @@
+import { BeanClass } from '@core/types'
+
 export function getLocalIpAddress() {
   try {
     const os = require('os')
@@ -26,4 +28,23 @@ export function getLocalIpAddress() {
   } catch {
     return ''
   }
+}
+
+/**
+ * 判断是否是一个类Class
+ */
+export function isClass(obj: any): obj is BeanClass {
+  if (typeof obj != 'function') return false
+  const str = obj.toString()
+
+  // async function or arrow function
+  if (obj.prototype === undefined) return false
+  // generator function or malformed definition
+  if (obj.prototype.constructor !== obj) return false
+  // ES6 class
+  if (str.slice(0, 5) == 'class') return true
+  // has own prototype properties
+  if (Object.getOwnPropertyNames(obj.prototype).length >= 2) return true
+
+  return false
 }

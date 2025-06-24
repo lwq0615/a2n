@@ -1,10 +1,11 @@
-const { start, setConfig } = require(process.env.npmName as string)
+const { start, setConfig } = require(process.env.npmName)
 import * as chalk from 'chalk'
 import * as symbol from 'log-symbols'
-const { getLocalIpAddress } = require('./ip')
+
+const { getLocalIpAddress, isClass } = require('./utils')
 const fs = require('fs')
 const path = require('path')
-const a2nConfig = require(process.env.a2nConfigPath as string)
+const a2nConfig = require(process.env.a2nConfigPath)
 const config = setConfig(a2nConfig)
 
 // 扫描componentScan配置目录下的Bean
@@ -36,7 +37,11 @@ if (!fs.existsSync(scanPath)) {
     if (!config.hideScanFile) {
       console.info('- ' + path.resolve(process.env.componentScan, filepath))
     }
-    requireComponent(filepath)
+    const cls = requireComponent(filepath).default
+    if (!isClass(cls)) {
+      return
+    }
+    Reflect.set(cls, '__filePath', filepath.substring(1))
   })
   start({
     callback: () => {

@@ -15,6 +15,7 @@ export class BeanState {
     this.beanClass = Cons
   }
 
+  filePath: string = ''
   beanClass: BeanClass
   classDecorators: Set<Function> = new Set()
   methodDecorators: { [name: string | symbol]: Set<Function> } = {}

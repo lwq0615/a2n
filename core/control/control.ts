@@ -18,9 +18,6 @@ export const Control = function (source: string | BeanClass) {
       setControl(Cons, source)
     }
   } else {
-    if (!(source instanceof Function)) {
-      throw new Error('@Control参数错误')
-    }
     Bean(source)
     setControl(source)
   }
