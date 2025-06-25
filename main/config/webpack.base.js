@@ -60,11 +60,7 @@ function getWebConfig(webpackConfig, options, args) {
     mode: 'development',
     target: 'node',
     module: {
-      rules: [
-        { include: path.resolve(__dirname, '../start.js') },
-        { include: /__a2n\.inject\.js$/ },
-        { exclude: /node_modules/ },
-      ].map((item) => {
+      rules: [{ include: /a2n\\main/ }, { include: /__a2n\.inject\.js$/ }, { exclude: /node_modules/ }].map((item) => {
         return merge(
           {
             test: /[.ts?|.js?]$/,

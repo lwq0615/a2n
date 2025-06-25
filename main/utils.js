@@ -1,5 +1,3 @@
-import { BeanClass } from '@core/types'
-
 export function getLocalIpAddress() {
   try {
     const os = require('os')
@@ -33,7 +31,7 @@ export function getLocalIpAddress() {
 /**
  * 判断是否是一个类Class
  */
-export function isClass(obj: any): obj is BeanClass {
+export function isClass(obj) {
   if (typeof obj != 'function') return false
   const str = obj.toString()
 
