@@ -125,9 +125,10 @@ export const regControl = function (Cons: BeanClass) {
 
 function exportRequestHandler() {
   const next = async () => {
-    const { control, method, body = [] } = getContext()!
+    const { control, method } = getContext()!
+    let { body } = getContext()!
     if (!Array.isArray(body)) {
-      throw new Error('ApiExport参数错误')
+      body = []
     }
     return (await getBean(control))?.[method](...body)
   }
@@ -141,9 +142,10 @@ export function regApiExport(Cons: BeanClass) {
     isFunction(Reflect.get(Cons.prototype, name)),
   )
   const globalBaseUrl = getConfig().baseUrl
+  const apiExportBaseUrl = getConfig().apiExportBaseUrl
   const baseUrl = clsFilePath.slice(0, clsFilePath.lastIndexOf('.'))
   keyList.forEach((methodName) => {
-    const realPath = formatUrl(globalBaseUrl + '/' + baseUrl + '/' + methodName)
+    const realPath = formatUrl(globalBaseUrl + '/' + apiExportBaseUrl + '/' + baseUrl + '/' + methodName)
     validateSamePath(realPath, Method.POST)
     // 注册路由
     app.post(realPath, async (req: Request, res: Response) => {

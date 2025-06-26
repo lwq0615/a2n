@@ -4,6 +4,8 @@
 module.exports = {
   // 全局接口前缀
   baseUrl: '',
+  // 导出接口的前缀
+  apiExportBaseUrl: '',
   // 组件扫描路径，该路径下的js,ts文件将会被容器扫描
   componentScan: 'src',
   // 服务启动端口号

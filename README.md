@@ -8,6 +8,7 @@
 
 [npm-url]: https://www.npmjs.com/package/a2n
 [github-url]: https://github.com/lwq0615/a2n
+[a2n-export-plugin-url]: https://github.com/lwq0615/a2n-export-plugin
   
 </div>
 
@@ -22,6 +23,7 @@
 - 🔨 实现了 Spring 中 AOP，IOC，自动配置等主要的功能
 - 🌈 支持自定义装饰器
 - 📦 自动追踪的全局ctx上下文
+- 🔨 根据文件目录和类结构自动生成接口
 
 ## 📦 快速开始
 
@@ -73,6 +75,8 @@ npm run build
 module.exports = {
   // 全局接口前缀
   baseUrl: '/api',
+  // 导出接口的前缀
+  apiExportBaseUrl: '',
   // 组件扫描路径，该路径下的js,ts文件将会被容器扫描，默认src
   componentScan: 'src',
   // 服务启动端口号，默认8080
@@ -298,3 +302,34 @@ export default class AspectHandler {
 ```
 
 * 至此，调用任何装饰了`CustomAspect`的bean函数，都会触发`AspectHandler.before`逻辑，例如`UserService.getUser`函数，
+
+
+### ApiExport自动生成接口
+
+快速将一个类的所有函数导出为接口，主要目的是配合[a2n-export-plugin][a2n-export-plugin-url]插件使用
+
+```ts
+// src/api-export.ts
+import { ApiExport } from '@core/control/api-export'
+
+@ApiExport
+export default class ExportApi {
+  async getName(id: number, age: number) {
+    return [id, age]
+  }
+}
+```
+
+在以上demo中，通过为类添加@ApiExport装饰器，生成如下接口
+
+* url: /api-export/getName <br/>
+* body: [id, age]
+
+> * url的生成规则：baseUrl+apiExportBaseUrl+文件路径+函数名（baseUrl和apiExportBaseUrl来源于a2n配置文件，文件路径为基于componentScan的相对路径） <br/>
+> * body参数的规则：body传参固定为数组，数组中的每个元素会被解构到函数的入参
+
+请求接口
+
+```ts
+axios.post("/api-export/getName", [id, age])
+```

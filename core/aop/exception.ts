@@ -11,7 +11,7 @@ export function setErrorHandlers(errHandler: ErrHandler[]) {
 
 export async function doErrHandler(err: any, ctx: Context) {
   console.error(err)
-  let value: any = 'Internal Server Error'
+  let value: any = err instanceof Error ? err.message : 'Internal Server Error'
   ctx.response.status(500)
   for (const errHandler of errHandlers) {
     if (typeof errHandler.handler !== 'function') {
