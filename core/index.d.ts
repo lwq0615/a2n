@@ -78,6 +78,7 @@ declare namespace a2n {
    * 标记一个类为接口类，所有的方法会导出为接口
    */
   const ApiExport: ClassDecorator
+  const ApiExportRequest: types.ApiExportRequest
 
   /**
    * @param source bean名称
