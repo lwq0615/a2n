@@ -75,3 +75,18 @@ export interface Context {
 }
 
 export type GetContext = () => Context | undefined
+
+export class ApiExportRequest {
+  /**
+   * 静态创建方法，返回子类实例
+   * @param args 子类构造函数所需参数（可选）
+   * @returns 子类实例
+   */
+  static request<T extends ApiExportRequest>(
+    this: new (...args: any[]) => T, // 约束当前类为 T 的构造函数
+    ...args: ConstructorParameters<typeof this> // 自动推导子类构造函数参数类型
+  ): T {
+    // 通过 new 调用当前构造函数（子类构造函数）创建实例
+    return new this(...args)
+  }
+}
