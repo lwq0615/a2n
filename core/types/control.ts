@@ -76,6 +76,15 @@ export interface Context {
 
 export type GetContext = () => Context | undefined
 
+// 更精确的版本：只保留函数属性，并将返回值包装为 Promise
+type PickAndWrapFunctionsWithPromise<T> = {
+  [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K] extends (...args: infer Args) => infer Return
+    ? Return extends Promise<infer InnerReturn>
+      ? (...args: Args) => Promise<InnerReturn> // 已经是 Promise，保持原样
+      : (...args: Args) => Promise<Return> // 包装为 Promise
+    : never
+}
+
 export class ApiExportRequest {
   /**
    * 静态创建方法，返回子类实例
@@ -84,9 +93,7 @@ export class ApiExportRequest {
    */
   static request<T extends ApiExportRequest>(
     this: new (...args: any[]) => T, // 约束当前类为 T 的构造函数
-    ...args: ConstructorParameters<typeof this> // 自动推导子类构造函数参数类型
-  ): T {
-    // 通过 new 调用当前构造函数（子类构造函数）创建实例
-    return new this(...args)
+  ) {
+    return {} as PickAndWrapFunctionsWithPromise<T>
   }
 }
